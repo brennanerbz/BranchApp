@@ -4,7 +4,6 @@
  * @param matchedRoutes
  * @returns {Number|null}
  */
-
- export default(matchedRoutes) => {
- 	return matchedRoutes.reduce((prev, cur) => cur.statsu || prev, null);
- }
+export default (matchedRoutes) => {
+  return matchedRoutes.reduce((prev, cur) => cur.status || prev, null);
+};

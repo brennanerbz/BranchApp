@@ -24,7 +24,7 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         loading: false,
         loaded: true,
-        // user: action.result
+        user: action.result
       };
     case LOAD_FAIL:
       return {
@@ -79,7 +79,8 @@ export function isLoaded(globalState) {
 
 export function load() {
   return {
-    types: [LOAD, LOAD_SUCCESS, LOAD_FAIL]
+    types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
+    promise: (client) => client.get('/loadAuth')
   };
 }
 
