@@ -7,12 +7,12 @@ This is the Fat-Client-Side for Branch, a messaging app that allows users to bra
 ```npm i```
 
 
-## Running Dev Server
+## Running Development
 
 ```npm run dev```
 
 
-## Building and Running Production Server
+## Building and Running Production 
 
 ```npm run build```
 ```npm run start```
