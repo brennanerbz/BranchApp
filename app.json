@@ -1,0 +1,17 @@
+{
+  "name": "BranchApp",
+  "description": "Chat app with ability to branch into sub-topics",
+  "repository": "https://github.com/brennanerbz/BranchApp",
+  "keywords": [
+    "react",
+    "redux",
+    "chat",
+    "messenger",
+    "branch",
+    "hot reloading",
+    "react-hot-reloader",
+    "redux",
+    "hashtag",
+    "babel"
+  ]
+}
