@@ -8,7 +8,7 @@ import createHistory from 'history/lib/createBrowserHistory';
 import useScroll from 'scroll-behavior/lib/useStandardScroll';
 import createStore from './redux/create';
 import ApiClient from './helpers/ApiClient';
-import io from 'socket.io-client';
+// import io from 'socket.io-client';
 import {Provider} from 'react-redux';
 import {reduxReactRouter, ReduxRouter} from 'redux-router';
 
@@ -24,6 +24,7 @@ const scrollableHistory = useScroll(createHistory);
 const dest = document.getElementById('content');
 const store = createStore(reduxReactRouter, makeRouteHooksSafe(getRoutes), scrollableHistory, client, window.__data);
 
+/*
 function initSocket() {
   const socket = io('', {path: '/ws'});
   socket.on('news', (data) => {
@@ -38,6 +39,8 @@ function initSocket() {
 }
 
 global.socket = initSocket();
+
+*/
 
 const component = (
   <ReduxRouter routes={getRoutes(store)} />
@@ -58,15 +61,15 @@ if (process.env.NODE_ENV !== 'production') {
   }
 }
 
-if (__DEVTOOLS__ && !window.devToolsExtension) {
-  const DevTools = require('./containers/DevTools/DevTools');
-  ReactDOM.render(
-    <Provider store={store} key="provider">
-      <div>
-        {component}
-        <DevTools />
-      </div>
-    </Provider>,
-    dest
-  );
-}
+// if (__DEVTOOLS__ && !window.devToolsExtension) {
+//   const DevTools = require('./containers/DevTools/DevTools');
+//   ReactDOM.render(
+//     <Provider store={store} key="provider">
+//       <div>
+//         {component}
+//         <DevTools />
+//       </div>
+//     </Provider>,
+//     dest
+//   );
+// }
