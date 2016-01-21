@@ -39,8 +39,8 @@ export default class Chat extends Component {
   }
 
   render() {
-    const {user} = this.props;
-    const style = require('./Chat.scss');
+    const { user, appHeight, appWidth } = this.props,
+    style = require('./Chat.scss');
     return (
       <div id={style.chat}>
         <Header/>
@@ -48,8 +48,14 @@ export default class Chat extends Component {
           id={style.chat_body} 
           className="flex_vertical flex_spacer">
           <section className="flex_horizontal flex_spacer">
-            <Navigation/>
-            <Feed/>
+            <Navigation
+              appHeight={appHeight}
+              appWidth={appWidth}
+            />
+            <Feed
+              appHeight={appHeight}
+              appWidth={appWidth}
+            />
           </section>
         </div>
         <Footer/>

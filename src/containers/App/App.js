@@ -41,10 +41,14 @@ export default class App extends Component {
       height: this.refs.app.clientHeight,
       width: this.refs.app.clientWidth
     });
-    window.addEventListener('resize', this.updateAppHeight)
+    window.addEventListener('resize', this.updateAppSize)
   }
 
-  updateAppHeight = () => {
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateAppSize)
+  }
+
+  updateAppSize = () => {
     this.setState({
       height: this.refs.app.clientHeight,
       width: this.refs.app.clientWidth
@@ -56,18 +60,21 @@ export default class App extends Component {
     this.props.logout();
   }
 
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.updateAppHeight)
-  }
-
   render() {
-    const {user} = this.props;
-    const styles = require('./App.scss');
+    const { user } = this.props,
+    { height, width } = this.state,
+    appChildrenWithProps = React.Children.map(this.props.children, (child) => {
+      return React.cloneElement(child, {
+        appHeight: height,
+        appWidth: width
+      })
+    }),
+    styles = require('./App.scss');
     return (
       <div id={styles.app} ref="app">
         <Helmet {...config.app.head}/>
         <div className={styles.client_ui}>
-          {this.props.children}
+          {appChildrenWithProps}
         </div>
       </div>
     );
