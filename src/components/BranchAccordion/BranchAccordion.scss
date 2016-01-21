@@ -1,3 +1,36 @@
-.branch_accordion_item_wrapper {
-	
+.branch_accordion_wrapper {
+	position: relative;
+	height: 100%;
+	width: 100%;
+	padding: 1.5rem 0 1.5rem 0;
+	.branch_accordion{
+		margin-left: 3rem;
+		border-bottom: 1px solid #EDF0F6;
+		.branch_name {
+			margin-left: 0px;
+		}
+		.branch_signal {
+			position: absolute;
+			left: -7px;
+		}
+		.branch_icon {
+			position: absolute;
+			left: 0.95rem;
+			top: 17px;
+			.circle {
+				background: #D8D8D8;
+				color: #555459;
+			}
+			.active {
+				background: #2A86FF;
+				color: #fff;
+				font-weight: 600;
+			}
+		}
+		.branch_actions {
+			position: absolute;
+			right: 1rem;
+			top: 1.5rem;
+		}
+	}
 }

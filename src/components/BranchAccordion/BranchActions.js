@@ -5,9 +5,10 @@ export default class BranchActions extends Component {
 	}
 
 	render() {
+		const style = require('./BranchAccordion.scss');
 		return(
-			<div className="branch_actions">
-				<h3>Branch actions</h3>
+			<div className={style.branch_actions}>
+				<span className="glyphicon glyphicon-plus-sign"></span>
 			</div>
 		);
 	}

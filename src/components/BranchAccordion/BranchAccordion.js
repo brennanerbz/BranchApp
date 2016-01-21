@@ -14,19 +14,21 @@ export default class BranchAccordion extends Component {
 
 	render() {
 		const style = require('./BranchAccordion.scss');
-		return(
-			<div className={style.branch_accordion_item_wrapper}>
-				<BranchSignal/>
-				<BranchIcon/>
-				<h3 className="branch_name">
-					Branch name
-				</h3>
-				<BranchActions/>
-				{
-					Array.from({length: 3}).map(b => {
-						return <FeedItem/>
-					})
-				}
+		return (
+			<div className={style.branch_accordion_wrapper}>
+				<div className={style.branch_accordion}>
+					<BranchSignal/>
+					<BranchIcon />
+					<h3 className={style.branch_name}>
+						Branch name
+					</h3>
+					<BranchActions/>
+					{
+						Array.from({length: 3}).map((b, i) => {
+							return <FeedItem key={i}/>
+						})
+					}
+				</div>
 			</div>
 		);
 	}

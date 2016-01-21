@@ -4,7 +4,6 @@
 	padding: 0.85rem 1rem 0;
 	width: 250px;
 	height: 55px;
-	border-bottom: 1px solid #EDF0F6;
 	border-right: 1px solid #EDF0F6;
 	cursor: pointer;
 	position: relative;
@@ -22,14 +21,20 @@
 	right: 6;
 	.explore_input {
 		padding: 1.5px 1.75rem;
-	    font-size: 15px;
+	    font-size: 14px;
 	    font-weight: 400;
 	    height: 1.9rem;
 	    width: 100%;
-	    background: #FFF;
-	    border: 1px solid rgba(214,214,214,.61);
+	    background: #f6f7f8;
+	    border: 1px solid rgba(214,214,214,.41);
 	    margin-right: 0;
 	    outline: 0;
+	    &:hover {
+	    	border-color: rgba(214,214,214,.61)
+	    }
+	    &:focus {
+	    	background: #fff;
+	    }
 	}
 	#explore_icon {
 		position: absolute;
@@ -37,7 +42,7 @@
 		top: 8px;
 		left: 8px;
 		color: #CCC;
-		opacity: 0.875;
+		opacity: 0.95;
 	}
 }
 

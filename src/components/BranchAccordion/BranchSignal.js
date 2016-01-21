@@ -5,9 +5,10 @@ export default class BranchSignal extends Component {
 	}
 
 	render() {
+		const style = require('./BranchAccordion.scss');
 		return(
-			<div className="branch_signal">
-				<h3>Branch signal</h3>
+			<div className={style.branch_signal}>
+				<span className="glyphicon glyphicon-ok-circle"></span>
 			</div>
 		);
 	}

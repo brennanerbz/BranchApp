@@ -22,7 +22,7 @@ export default class ExploreBox extends Component {
 						className="button outline">
 						<span 
 						id={styles.open_branch_icon}
-						className="glyphicon glyphicon-pencil"></span>
+						className="glyphicon glyphicon-edit"></span>
 					</button>
 				</span>
 			</div>
