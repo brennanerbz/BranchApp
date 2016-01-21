@@ -6,7 +6,7 @@ export default class ExploreBox extends Component {
 
 	render() {
 		return(
-			<div>
+			<div id="explore_box">
 				<h1>Explore Box</h1>
 			</div>
 		);
