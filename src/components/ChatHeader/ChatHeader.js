@@ -12,6 +12,9 @@ export default class ChatHeader extends Component {
 		return(
 			<div id="chat_header">
 				<h1>Chat header</h1>
+				<span id="branch_logo">
+					<h2>Branch logo</h2>
+				</span>
 				<ExploreBox/>
 				<FeedHeader/>
 				<UserInfo/>

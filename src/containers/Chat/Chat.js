@@ -44,7 +44,7 @@ export default class Chat extends Component {
     return (
       <div id="chat" className="flex_vertical">
         <Header/>
-        <div className="flex_vertical flex_spacer">
+        <div id="chat_body" className="flex_vertical flex_spacer">
           <section className="flex_horizontal flex_spacer">
             <Navigation/>
             <Feed/>
