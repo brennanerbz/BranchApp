@@ -5,10 +5,27 @@ export default class BranchSignal extends Component {
 	}
 
 	render() {
-		const style = require('./BranchAccordion.scss');
+		const { active, unread } = this.props,
+		style = require('./BranchAccordion.scss');
 		return(
-			<div className={style.branch_signal}>
-				<span className="glyphicon glyphicon-ok-circle"></span>
+			<div className={style.branch_signal + ' ' + (active ? style.active : '')}>
+				{ /* Unread notification */ }
+				{
+					unread && !active
+					&&
+					<span 
+					style={{height: '10px', width: '10px', background: '#F44E4E'}} 
+					className={'circle'}>
+					</span>
+				}
+				
+				{ /* Active branch */}
+				{
+					active
+					&&
+					<span className={style.signal}>
+					</span>
+				}
 			</div>
 		);
 	}

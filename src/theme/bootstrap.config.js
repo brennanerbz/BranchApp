@@ -16,11 +16,11 @@ module.exports = {
   verbose: false,
   debug: false,
   scripts: {
-    transition: true,
+    transition: false,
     alert: false,
     button: false,
     carousel: false,
-    collapse: true,
+    collapse: false,
     dropdown: false,
     modal: false,
     tooltip: false,

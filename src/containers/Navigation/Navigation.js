@@ -38,7 +38,7 @@ export default class Navigation extends Component {
 				className="flex_vertical">
 				<div className={style.navigation_wrapper}>
 					{Array.from({length: 50}).map((a, i) => {
-						return <BranchAccordion key={i}/>
+						return <BranchAccordion key={i} index={i}/>
 					})}
 				</div>
 			</div>

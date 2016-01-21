@@ -1,36 +1,61 @@
-.branch_accordion_wrapper {
+.branch_accordion_container {
 	position: relative;
 	height: 100%;
 	width: 100%;
-	padding: 1.5rem 0 1.5rem 0;
-	.branch_accordion{
+	.branch_accordion_wrapper {
+		height: 100%;
+		width: 100%;
 		margin-left: 3rem;
+		padding: 1.5rem 0 1.5rem 0;
 		border-bottom: 1px solid #EDF0F6;
-		.branch_name {
-			margin-left: 0px;
-		}
-		.branch_signal {
-			position: absolute;
-			left: -7px;
-		}
-		.branch_icon {
-			position: absolute;
-			left: 0.95rem;
-			top: 17px;
-			.circle {
-				background: #D8D8D8;
-				color: #555459;
+		.branch_accordion{
+			margin-left: 10px;
+			.branch_name {
+				margin-left: 0px;
+				font-size: 15px;
+				&.active {
+					color: #2A86FF;
+					font-weight: 600;
+				}
+				&.inactive {
+					color: #555459;
+				}
 			}
-			.active {
-				background: #2A86FF;
-				color: #fff;
-				font-weight: 600;
+			.branch_signal {
+				position: absolute;
+				left: -5px;
+			    top: 1.7rem;
+			    &.active {
+			    	top: 1.1rem;
+			    	left: -4px;
+			    	.signal {
+			    		display: block;
+			    		height: 30px;
+			    		width: 10px;
+			    		border-radius: 6px;
+			    		background: #2A86FF;
+			    	}
+			    }
 			}
-		}
-		.branch_actions {
-			position: absolute;
-			right: 1rem;
-			top: 1.5rem;
+			.branch_icon {
+				position: absolute;
+				left: 0.85rem;
+				top: 18px;
+				.inactive {
+					background: #D8D8D8;
+					color: #555459;
+				}
+				.active {
+					background: #2A86FF;
+					color: #fff;
+					font-weight: 600;
+				}
+			}
+			.branch_actions {
+				position: absolute;
+				right: 1rem;
+				top: 1.5rem;
+			}
 		}
 	}
 }

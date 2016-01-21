@@ -5,10 +5,11 @@ export default class BranchIcon extends Component {
 	}
 
 	render() {
-		const style = require('./BranchAccordion.scss');
+		const { active } = this.props,
+		style = require('./BranchAccordion.scss');
 		return (
 			<div className={style.branch_icon}>
-				<span className={style.active + ' circle'}>FB</span>
+				<span className={'circle' + ' ' + (active ? style.active : style.inactive)}>FB</span>
 			</div>
 		);
 	}
