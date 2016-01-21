@@ -7,7 +7,7 @@ export default class Feed extends Component {
 
 	render() {
 		return(
-			<div id="feed">
+			<div id="feed" className="flex_vertical flex_spacer">
 				<h1>Feed</h1>
 				{Array.from({length: 2}).map(m => {
 					return <Message/>

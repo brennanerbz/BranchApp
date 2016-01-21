@@ -7,7 +7,7 @@ export default class Navigation extends Component {
 
 	render() {
 		return(
-			<div>
+			<div id="navigation" className="navigation_wrapper">
 				<h1>Navigation</h1>
 				{Array.from({length: 2}).map(a => {
 					return <BranchAccordion/>

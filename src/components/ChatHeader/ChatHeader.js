@@ -3,21 +3,19 @@ import ExploreBox from '../ExploreBox/ExploreBox';
 import FeedHeader from './FeedHeader';
 import UserInfo from '../UserInfo/UserInfo';
 
-
 export default class ChatHeader extends Component {
 	static propTypes = {
 	}
 
 	render() {
+		const style = require('./ChatHeader.scss');
 		return(
-			<div id="chat_header">
-				<h1>Chat header</h1>
-				<span id="branch_logo">
-					<h2>Branch logo</h2>
-				</span>
-				<ExploreBox/>
-				<FeedHeader/>
-				<UserInfo/>
+			<div id={style.chat_header}>
+				<div id={style.chat_header_wrapper}>
+					<ExploreBox/>
+					<FeedHeader/>
+					<UserInfo/>
+				</div>
 			</div>
 		);
 	}

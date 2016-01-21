@@ -6,8 +6,17 @@ export default class FeedHeader extends Component {
 
 	render() {
 		return(
-			<div id="feed_header">
-				<h2>Feed header</h2>
+			<div id="feed_header" className="overflow_ellipsis">
+				<h2>
+					<span className="name">
+						<span className="prefix_icon feed"></span>
+						Feed name
+					</span>
+					<span className="members">
+						<span className="prefix_icon member"></span>
+						<span className="member_count">3</span>
+					</span>
+				</h2>
 			</div>
 		);
 	}

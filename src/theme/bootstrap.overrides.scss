@@ -14,3 +14,30 @@
   color: #33e0ff;
   background-color: transparent;
 }
+
+html {
+	font-size: 100%;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    margin-top: 0!important;
+    padding-top: 0!important;
+}
+body {
+	height: 100%;
+	width: 100%;
+	min-width: 8in;
+	font-family: "Helvetica Neue",Helvetica,"Segoe UI",Tahoma,Arial,sans-serif;
+	-webkit-font-smoothing: antialiased;
+	font-size: 1pc;
+	line-height: 1rem;
+	background: #fff;
+	color: #555459;
+	padding: 0!important;
+	margin: 0!important;
+	// overflow-y: hidden;
+	// overflow-x: hidden;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
