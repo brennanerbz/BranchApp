@@ -7,8 +7,9 @@ export default class UserInfo extends Component {
 	}
 
 	render() {
-		return(
-			<div id="user_info">
+		const styles = require('./UserInfo.scss');
+		return (
+			<div style={{border: '1px solid blue'}} id={styles.user_info} className="float_right">
 				<h2>User info</h2>
 				<Avatar/>
 				<span id="username">

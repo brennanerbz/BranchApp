@@ -6,8 +6,11 @@ export default class Navigation extends Component {
 	}
 
 	render() {
-		return(
-			<div id="navigation" className="navigation_wrapper">
+		const style = require('./Navigation.scss');
+		return (
+			<div 
+				id={style.navigation} 
+				className="navigation_wrapper flex_vertical">
 				<h1>Navigation</h1>
 				{Array.from({length: 2}).map(a => {
 					return <BranchAccordion/>

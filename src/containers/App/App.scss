@@ -1,38 +1,102 @@
-html {
-	font-size: 100%;
-    -webkit-text-size-adjust: 100%;
-    -ms-text-size-adjust: 100%;
-    margin-top: 0!important;
-    padding-top: 0!important;
-}
-body {
-	height: 100%;
-	width: 100%;
-	min-width: 8in;
-	font-family: "Helvetica Neue",Helvetica,"Segoe UI",Tahoma,Arial,sans-serif;
-	-webkit-font-smoothing: antialiased;
-	font-size: 1pc;
-	line-height: 1rem;
-	background: #fff;
-	color: #555459;
-	padding: 0!important;
-	margin: 0!important;
-	// overflow-y: hidden;
-	// overflow-x: hidden;
-	// -webkit-user-select: none;
-	// -moz-user-select: none;
-	// -ms-user-select: none;
-	// user-select: none;
-}
-
-h1, h2, h3, h4 {
-	margin-top: 0!important;
-}
-
+// App style 
 .app {
-	font-family: "Open Sans"
+	font-family: "Open Sans";
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	top: 0;
+	overflow: auto;
+	text-rendering: optimizeLegibility;
 }
 
-.client_ui {
-	width: 100%;
+// Text overflow => ellipsis
+:global .overflow_ellipsis {
+	display: block;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
 }
+
+
+/**
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    contenteditable attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that are clearfixed.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+:global .clearfix:before,
+:global .clearfix:after {
+    content: " "; 
+    display: table; 
+}
+:global .clearfix:after {
+    clear: both;
+}
+/**
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+:global .clearfix {
+    *zoom: 1;
+}
+
+
+// Floats
+:global .float_right {
+	float: right;
+}
+:global .float_left {
+	float: left;
+}
+
+
+// Flexbox
+:global .flex_vertical {
+	display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: box;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -o-box-orient: vertical;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+:global .flex_horizontal {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: box;
+	display: flex;
+	-webkit-box-orient: horizontal;
+	-o-box-orient: horizontal;
+	-webkit-flex-direction: row;
+	-ms-flex-direction: row;
+	flex-direction: row;
+	.flex_spacer {
+		min-width: 1px;
+	}
+}
+:global .flex_spacer {
+	-webkit-box-flex: 1;
+	-o-box-flex: 1;
+	box-flex: 1;
+	-webkit-flex: 1;
+	-ms-flex: 1;
+	flex: 1;
+}
+
+
+
+
+
+
+
+
+
+

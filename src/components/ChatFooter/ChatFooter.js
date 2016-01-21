@@ -6,8 +6,9 @@ export default class ChatFooter extends Component {
 	}
 
 	render() {
-		return(
-			<div id="chat_footer">
+	    const style = require('./ChatFooter.scss');
+		return (
+			<div id={style.chat_footer}>
 				<h1>Chat footer</h1>
 				<MessageComposer/>
 			</div>

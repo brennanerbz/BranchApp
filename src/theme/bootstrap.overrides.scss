@@ -14,3 +14,45 @@
   color: #33e0ff;
   background-color: transparent;
 }
+
+// Normalize
+html {
+	font-size: 100%;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    margin-top: 0!important;
+    padding-top: 0!important;
+}
+body {
+	height: 100%;
+	width: 100%;
+	min-width: 8in;
+	font-family: "Helvetica Neue",Helvetica,"Segoe UI",Tahoma,Arial,sans-serif;
+	-webkit-font-smoothing: antialiased;
+	font-size: 1pc;
+	line-height: 1rem;
+	background: #fff;
+	color: #555459;
+	padding: 0!important;
+	margin: 0!important;
+	// overflow-y: hidden;
+	// overflow-x: hidden;
+	// -webkit-user-select: none;
+	// -moz-user-select: none;
+	// -ms-user-select: none;
+	// user-select: none;
+}
+h1, h2, h3, h4 {
+	margin-top: 0!important;
+}
+a, abbr, acronym, address, applet, big, blockquote, body, caption, cite, code, dd, del, dfn, div, dl, dt, em, fieldset, form, h1, h2, h3, h4, h5, h6, html, iframe, img, ins, kbd, label, legend, li, object, ol, p, pre, q, s, samp, small, span, strike, strong, sub, sup, table, tbody, td, tfoot, th, thead, tr, tt, ul, var {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-weight: inherit;
+    font-style: inherit;
+    font-family: inherit;
+    font-size: 100%;
+    vertical-align: baseline;
+}

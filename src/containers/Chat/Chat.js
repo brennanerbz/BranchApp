@@ -42,15 +42,17 @@ export default class Chat extends Component {
     const {user} = this.props;
     const style = require('./Chat.scss');
     return (
-      <div className={style.chat}>
+      <div id={style.chat}>
         <Header/>
-        <div id="chat_body" className="flex_vertical flex_spacer">
+        <div 
+          id={style.chat_body} 
+          className="flex_vertical flex_spacer">
           <section className="flex_horizontal flex_spacer">
             <Navigation/>
             <Feed/>
-            <Footer/>
           </section>
         </div>
+        <Footer/>
       </div>
     );
   }
