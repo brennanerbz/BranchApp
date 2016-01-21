@@ -2,5 +2,14 @@
 
 Use underscore pattern
 
-```explore_box```
-``````
+```
+explore_box
+```
+
+## Functions and Variables 
+
+User camelCase pattern
+
+```
+makeData
+```
