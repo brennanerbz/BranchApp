@@ -19,12 +19,20 @@ body {
 	margin: 0!important;
 	// overflow-y: hidden;
 	// overflow-x: hidden;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
+	// -webkit-user-select: none;
+	// -moz-user-select: none;
+	// -ms-user-select: none;
+	// user-select: none;
 }
 
-h1 {
+h1, h2, h3, h4 {
 	margin-top: 0!important;
+}
+
+.app {
+	font-family: "Open Sans"
+}
+
+.client_ui {
+	width: 100%;
 }

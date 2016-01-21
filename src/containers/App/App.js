@@ -39,15 +39,12 @@ export default class App extends Component {
   render() {
     const {user} = this.props;
     const styles = require('./App.scss');
-
     return (
       <div className={styles.app}>
         <Helmet {...config.app.head}/>
-
-        <div className={styles.appContent}>
+        <div className={styles.client_ui}>
           {this.props.children}
         </div>
-
       </div>
     );
   }

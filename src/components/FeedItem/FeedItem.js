@@ -5,8 +5,9 @@ export default class FeedItem extends Component {
 	}
 
 	render() {
-		return(
-			<div className="feed_item_wrapper">
+		const style = require('./FeedItem.scss');
+		return (
+			<div className={style.feed_item_wrapper}>
 				<h4># Feed</h4>
 			</div>
 		);

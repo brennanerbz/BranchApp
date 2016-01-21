@@ -7,8 +7,9 @@ export default class ExploreBox extends Component {
 	}
 
 	render() {
+		const styles = require('./ExploreBox.scss');
 		return(
-			<div id="explore_box">
+			<div className={styles.explore_box}>
 				<h2>Explore Box</h2>
 				<span id="branch_logo">
 					<h4>Branch logo</h4>

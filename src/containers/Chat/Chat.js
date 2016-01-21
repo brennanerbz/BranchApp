@@ -23,26 +23,26 @@ export default class Chat extends Component {
     
   };
 
+  componentDidMount() {
+    global.socket = this.initSocket()
+  }
+
   initSocket = () => {
     const socket = io('', {path: '/ws'});
     return socket;
   }
 
-  componentDidMount() {
-    global.socket = this.initSocket()
-  }
-
   componentWillUnmount() {
     if (socket) {
+      return;
     }
   }
 
   render() {
-    const style = require('./Chat.scss');
     const {user} = this.props;
-
+    const style = require('./Chat.scss');
     return (
-      <div id="chat" className="flex_vertical">
+      <div className={style.chat}>
         <Header/>
         <div id="chat_body" className="flex_vertical flex_spacer">
           <section className="flex_horizontal flex_spacer">
@@ -55,3 +55,5 @@ export default class Chat extends Component {
     );
   }
 }
+
+
