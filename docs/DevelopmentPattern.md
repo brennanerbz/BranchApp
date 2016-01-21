@@ -2,7 +2,9 @@
 
 Use underscore pattern _, for e.g:
 
-```explore_box```
+```
+explore_box
+```
 
 
 
@@ -10,4 +12,6 @@ Use underscore pattern _, for e.g:
 
 Use camelCase pattern aB for e.g:
 
-```makeData```
+```
+makeData
+```
