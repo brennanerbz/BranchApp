@@ -31,16 +31,40 @@ export default class App extends Component {
     store: PropTypes.object.isRequired
   };
 
+  state = {
+    height: 0,
+    width: 0
+  }
+
+  componentDidMount() {
+    this.setState({
+      height: this.refs.app.clientHeight,
+      width: this.refs.app.clientWidth
+    });
+    window.addEventListener('resize', this.updateAppHeight)
+  }
+
+  updateAppHeight = () => {
+    this.setState({
+      height: this.refs.app.clientHeight,
+      width: this.refs.app.clientWidth
+    });
+  }
+
   handleLogout = (event) => {
     event.preventDefault();
     this.props.logout();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateAppHeight)
   }
 
   render() {
     const {user} = this.props;
     const styles = require('./App.scss');
     return (
-      <div className={styles.app}>
+      <div id={styles.app} ref="app">
         <Helmet {...config.app.head}/>
         <div className={styles.client_ui}>
           {this.props.children}

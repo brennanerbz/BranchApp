@@ -9,6 +9,7 @@ export default class Navigation extends Component {
 		const style = require('./Navigation.scss');
 		return (
 			<div 
+				style={{border: '1px solid red'}}
 				id={style.navigation} 
 				className="navigation_wrapper flex_vertical">
 				<h1>Navigation</h1>
