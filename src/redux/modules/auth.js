@@ -1,3 +1,5 @@
+import cookie from 'react-cookie';
+
 const LOAD = 'redux-example/auth/LOAD';
 const LOAD_SUCCESS = 'redux-example/auth/LOAD_SUCCESS';
 const LOAD_FAIL = 'redux-example/auth/LOAD_FAIL';
@@ -77,6 +79,13 @@ export function isLoaded(globalState) {
   return globalState.auth && globalState.auth.loaded;
 }
 
+export function checkAuth() {
+  if (cookie.load('token')) {
+    return true;
+  }
+  return false;
+}
+
 export function load() {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
@@ -85,6 +94,7 @@ export function load() {
 }
 
 export function login(name) {
+  cookie.save('token', name);
   return {
     types: [LOGIN, LOGIN_SUCCESS, LOGIN_FAIL],
     promise: (client) => client.post('/login', {
@@ -96,6 +106,7 @@ export function login(name) {
 }
 
 export function logout() {
+  cookie.remove('token');
   return {
     types: [LOGOUT, LOGOUT_SUCCESS, LOGOUT_FAIL],
     promise: (client) => client.get('/logout')

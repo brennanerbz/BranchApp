@@ -1,8 +1,18 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
+import { pushState } from 'redux-router';
+import io from 'socket.io-client';
+
+/* Components */
+import ExploreBox from '../../components/ExploreBox/ExploreBox';
+import Header from '../../components/ChatHeader/ChatHeader';
+import Footer from '../../components/ChatFooter/ChatFooter';
+import Navigation from '../Navigation/Navigation';
+import Feed from '../Feed/Feed';
 
 @connect(
-  state => ({user: state.auth.user})
+  state => ({user: state.auth.user}),
+  {pushState}
 )
 export default class Chat extends Component {
 
@@ -11,42 +21,21 @@ export default class Chat extends Component {
   };
 
   state = {
-    message: '',
-    messages: []
+    
   };
 
+  initSocket = () => {
+    const socket = io('', {path: '/ws'});
+    return socket;
+  }
+
   componentDidMount() {
-    if (socket) {
-      socket.on('msg', this.onMessageReceived);
-      setTimeout(() => {
-        socket.emit('history', {offset: 0, length: 100});
-      }, 100);
-    }
+    global.socket = this.initSocket()
   }
 
   componentWillUnmount() {
     if (socket) {
-      socket.removeListener('msg', this.onMessageReceived);
     }
-  }
-
-  onMessageReceived = (data) => {
-    const messages = this.state.messages;
-    messages.push(data);
-    this.setState({messages});
-  }
-
-  handleSubmit = (event) => {
-    event.preventDefault();
-
-    const msg = this.state.message;
-
-    this.setState({message: ''});
-
-    socket.emit('msg', {
-      from: this.props.user.name,
-      text: msg
-    });
   }
 
   render() {
@@ -54,27 +43,13 @@ export default class Chat extends Component {
     const {user} = this.props;
 
     return (
-      <div className={style.chat + ' container'}>
-        <h1 className={style}>Chat</h1>
-
-        {user &&
-        <div>
-          <ul>
-          {this.state.messages.map((msg) => {
-            return <li key={`chat.msg.${msg.id}`}>{msg.from}: {msg.text}</li>;
-          })}
-          </ul>
-          <form className="login-form" onSubmit={this.handleSubmit}>
-            <input type="text" ref="message" placeholder="Enter your message"
-             value={this.state.message}
-             onChange={(event) => {
-               this.setState({message: event.target.value});
-             }
-            }/>
-            <button className="btn" onClick={this.handleSubmit}>Send</button>
-          </form>
-        </div>
-        }
+      <div id="chat" className="">
+        <h1 className="">Chat</h1>
+        <Header/>
+        <ExploreBox/>
+        <Navigation/>
+        <Feed/>
+        <Footer/>
       </div>
     );
   }

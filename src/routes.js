@@ -1,10 +1,10 @@
 import React from 'react';
 import {IndexRoute, Route} from 'react-router';
-import { isLoaded as isAuthLoaded, load as loadAuth } from 'redux/modules/auth';
+import { isLoaded as isAuthLoaded, load as loadAuth, checkAuth as checkLoggedIn} from 'redux/modules/auth';
 import {
     App,
     Chat,
-    Home,
+    Landing,
     NotFound
   } from 'containers';
 
@@ -31,16 +31,22 @@ export default (store) => {
    */
   return (
     <Route path="/" component={App}>
-      { /* Home (main) route */ }
-      <IndexRoute component={Home}/>
+      <IndexRoute  component={checkLoggedIn() ? Landing : Chat}/>
 
-      { /* Routes requiring login */ }
-      <Route onEnter={requireLogin}>
-        <Route path="chat" component={Chat}/>
-      </Route>
-
-      { /* Catch all route */ }
       <Route path="*" component={NotFound} status={404} />
     </Route>
   );
 };
+
+
+/*
+
+<Route onEnter={requireLogin}>
+  <Route path=":common_name" component={Common}>
+    <IndexRoute component={GeneralFeed}/>
+    <Route path=":feed_name" component={Feed}/>
+  </Route>
+  <Route path="*" component={NotFound} status={404}/>
+</Route>
+
+*/
