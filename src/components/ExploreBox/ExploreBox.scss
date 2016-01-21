@@ -1,10 +1,53 @@
 .explore_box {
 	font-size: 1rem;
 	font-weight: 900;
-	padding: 0 1rem;
+	padding: 0.85rem 1rem 0;
 	width: 250px;
-	height: 72px;
-	border-bottom: 2px solid #4d394b;
+	height: 55px;
+	border-bottom: 1px solid #EDF0F6;
+	border-right: 1px solid #EDF0F6;
 	cursor: pointer;
 	position: relative;
+	#branch_logo {
+		height: 25px;
+	}
+}
+
+#explore_form {
+	margin: 0.85rem 10px 0;
+	padding-right: 21px;
+	width: 165px;
+	position: absolute;
+	top: 0;
+	right: 6;
+	.explore_input {
+		padding: 1.5px 1.75rem;
+	    font-size: 15px;
+	    font-weight: 400;
+	    height: 1.9rem;
+	    width: 100%;
+	    background: #FFF;
+	    border: 1px solid rgba(214,214,214,.61);
+	    margin-right: 0;
+	    outline: 0;
+	}
+	#explore_icon {
+		position: absolute;
+		font-size: .9rem;
+		top: 8px;
+		left: 8px;
+		color: #CCC;
+		opacity: 0.875;
+	}
+}
+
+#open_branch_button_wrapper {
+	margin: 0.85rem 1rem 0;
+	position: absolute;
+	top: 0;
+	right: 0;
+	#open_branch_icon {
+		font-size: 14px;
+		opacity: 0.75;
+	}
 }

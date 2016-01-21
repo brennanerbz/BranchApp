@@ -54,6 +54,12 @@
 }
 
 
+// Inline block
+:global .inline_block {
+	display: inline-block;
+}
+
+
 // Flexbox
 :global .flex_vertical {
 	display: -webkit-box;
@@ -90,6 +96,7 @@
 	-ms-flex: 1;
 	flex: 1;
 }
+
 
 
 

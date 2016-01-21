@@ -56,3 +56,46 @@ a, abbr, acronym, address, applet, big, blockquote, body, caption, cite, code, d
     font-size: 100%;
     vertical-align: baseline;
 }
+
+
+// Input 
+input {
+	font-size: 1.25rem;
+	line-height: normal;
+	padding: .75rem;
+	border: 1px solid #C5C5C5;
+	border-radius: .25rem;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	outline: 0;
+	color: #555459;
+	width: 100%;
+	max-width: 100%;
+	margin: 0 0 .5rem;
+	-webkit-transition: box-shadow 70ms ease-out,border-color 70ms ease-out;
+	-moz-transition: box-shadow 70ms ease-out,border-color 70ms ease-out;
+	transition: box-shadow 70ms ease-out,border-color 70ms ease-out;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	box-shadow: none;
+	height: auto;
+}
+
+
+// Button
+button {
+	padding: 6px 7px;
+	border-radius: 0.25rem;
+	border: 1px solid rgba(0,0,0,.1);
+	position: relative;
+	background: #fff;
+	color: #67686e;
+	&:active, &:focus {
+		outline: none;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+	}
+}

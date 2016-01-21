@@ -24,7 +24,7 @@ export default class Chat extends Component {
   };
 
   componentDidMount() {
-    global.socket = this.initSocket()
+    // global.socket = this.initSocket()
   }
 
   initSocket = () => {

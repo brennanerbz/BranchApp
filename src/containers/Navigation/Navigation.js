@@ -5,18 +5,46 @@ export default class Navigation extends Component {
 	static propTypes = {
 	}
 
+	state = {
+		navHeight: 0,
+	}
+
+	componentDidMount() {
+		const { appHeight } = this.props;
+		this.updateNavHeight(appHeight)
+	}
+
+	componentWillReceiveProps(nextProps) {
+		const { appHeight } = this.props;
+		if(appHeight !== nextProps.appHeight) this.updateNavHeight(nextProps.appHeight)
+	}
+
+	updateNavHeight = (height) => {
+		if(height !== 0) {
+			this.setState({
+				navHeight: height - 55
+			});
+		}
+	}
+
 	render() {
-		const style = require('./Navigation.scss');
+		let { navHeight } = this.state,
+		{ appHeight } = this.props,
+		style = require('./Navigation.scss');
 		return (
 			<div 
-				style={{border: '1px solid red'}}
+				style={{ height: navHeight}}
 				id={style.navigation} 
-				className="navigation_wrapper flex_vertical">
-				<h1>Navigation</h1>
-				{Array.from({length: 2}).map(a => {
-					return <BranchAccordion/>
-				})}
+				className="flex_vertical">
+				<div className={style.navigation_wrapper}>
+					{Array.from({length: 50}).map(a => {
+						return <BranchAccordion/>
+					})}
+				</div>
 			</div>
 		);
 	}
 }
+
+
+

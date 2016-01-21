@@ -13,9 +13,9 @@ export default class BranchAccordion extends Component {
 	}
 
 	render() {
+		const style = require('./BranchAccordion.scss');
 		return(
-			<div className="branch_accordion_item_wrapper">
-				<h2>Branch accordion</h2>
+			<div className={style.branch_accordion_item_wrapper}>
 				<BranchSignal/>
 				<BranchIcon/>
 				<h3 className="branch_name">

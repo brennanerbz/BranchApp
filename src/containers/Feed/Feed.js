@@ -25,7 +25,7 @@ export default class Feed extends Component {
 	updateFeedHeight = (height) => {
 		if(height !== 0) {
 			this.setState({
-				feedHeight: height - 138
+				feedHeight: height - 119
 			});
 		}
 	}
@@ -39,20 +39,29 @@ export default class Feed extends Component {
 	}
 
 	render() {
-		const { feedWidth, feedHeight } = this.state;
+		const { feedWidth, feedHeight } = this.state,
+		style = require('./Feed.scss');
 		return (
 			<div 
-			style={{
-				border: '1px solid red',
-				height: feedHeight
-			}}
-			id="feed" 
+			style={{height: feedHeight}}
+			id={style.feed}
 			className="flex_vertical flex_spacer">
-				<h1>Feed</h1>
-				{Array.from({length: 2}).map(m => {
-					return <Message/>
-				})}
+				<div className={style.feed_wrapper}>
+					{Array.from({length: 100}).map(m => {
+						return <Message/>
+					})}
+				</div>
 			</div>
 		);
 	}
 }
+
+
+
+
+
+
+
+
+
+
