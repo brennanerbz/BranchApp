@@ -18,6 +18,9 @@
 	word-wrap: break-word;
 	font-family: "Helvetica Neue", "Segoe UI", Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
+	&:hover {
+		background: #fafafa;
+	}
 	.message_gutter {
 		text-align: right;
 	    position: absolute;
@@ -54,13 +57,39 @@
 	.message_feedback {
 		position: absolute;
 		top: -8px;
-		right: 18px;
-		border: 1px solid rgba(0,0,0,.15);
-		border-radius: 6px;
-		overflow: hidden;
-		-webkit-transition: border 50ms ease-in 0s;
-		-moz-transition: border 50ms ease-in 0s;
-		transition: border 50ms ease-in 0s;
+		right: 20px;
 		z-index: 97;
+		.message_feedback_wrapper {
+			position: relative;
+			display: block;
+			.count, .positive, .negative {
+				position: absolute;
+				display: block;
+				color: #7f7f7f;
+			}
+			.positive, .negative {
+				cursor: pointer;
+				color: #AFB4BD;
+			}
+			.positive {
+				top: 4.75px;
+				right: 0;
+				&:hover {
+					color: #2A86FF;
+				}
+			}
+			.count {
+				top: 20px;
+				right: 5px;
+				font-size: 9pt;
+			}
+			.negative {
+				top: 35px;
+				right: 0;
+				&:hover {
+					color: #dc0d17;
+				}
+			}
+		}
 	}
 }
