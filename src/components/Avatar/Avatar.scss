@@ -1,0 +1,41 @@
+.avatar_wrapper {
+	.circle_avatar {
+		font-weight: 600;
+		display: inline-block;
+		vertical-align: middle;
+		overflow: hidden;
+		position: relative;
+		box-sizing: border-box;
+		text-align: center;
+		color: #007ee5;
+		border-radius: 1000px;
+		margin-right: 10px;
+		img {
+			display: block;
+		    width: 100%;
+		    height: 100%;
+		    -o-object-fit: cover;
+		    object-fit: cover;
+		}
+		&.c_24 {
+			width: 24px;
+			min-width: 24px;
+			height: 24px;
+			font-size: 10px;
+			line-height: 20px;
+			font-weight: 700;
+		}
+		&.c_32 {
+			width: 32px;
+			min-width: 32px;
+			height: 32px;
+			line-height: 32px;
+		}
+		&.c_36 {
+			width: 36px;
+			height: 36px;
+			min-width: 36px;
+			line-height: 36px;
+		}
+	}
+}

@@ -5,10 +5,18 @@ export default class Avatar extends Component {
 	}
 
 	render() {
-		return(
-			<span className="avatar_wrapper inline_block">
-				<div className="circle">
-					<i className="fa fa-user"></i>
+		const style = require('./Avatar.scss'),
+		defaultProfilePic = require('./DefaultProfilePic.png')
+		return (
+			<span className={'inline_block' + ' ' + style.avatar_wrapper}>
+				<div 
+				style={{border: '1px solid #e6e6e6'}} 
+				className={
+					'circle' 
+					+ ' ' + style.circle_avatar
+					+ ' ' + style.c_32
+				}>
+					<img src={defaultProfilePic}/>
 				</div>
 			</span>
 		);
