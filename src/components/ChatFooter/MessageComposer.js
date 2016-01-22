@@ -7,9 +7,9 @@ export default class MessageComposer extends Component {
 	}
 
 	render() {
+		const style = require('./ChatFooter.scss')
 		return(
-			<div id="message_composer">
-				<h2>Message composer</h2>
+			<div id={style.message_composer}>
 				<FileUpload/>
 				<MessageForm/>
 			</div>

@@ -5,9 +5,13 @@ export default class MessageForm extends Component {
 	}
 
 	render() {
+		const style = require('./ChatFooter.scss')
 		return(
-			<form id="message_form">
-				<h3>Message form</h3>
+			<form id={style.message_form}>
+				<textarea 
+				id={style.message_input}
+				placeholder="Type a message..."
+				/>
 			</form>
 		);
 	}

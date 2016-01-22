@@ -5,10 +5,11 @@ export default class FileUpload extends Component {
 	}
 
 	render() {
-		return(
-			<div id="file_upload_wrapper">
-				<h3>File upload</h3>
-			</div>
+		const style = require('./ChatFooter.scss')
+		return ( 
+			<a id={style.file_upload_wrapper}>
+				<i className="fa fa-plus"></i>
+			</a>
 		);
 	}
 }

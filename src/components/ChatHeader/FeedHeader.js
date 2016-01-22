@@ -4,18 +4,22 @@ export default class FeedHeader extends Component {
 	static propTypes = {
 	}
 
-	render() {
+	render() { 
 		const style = require('./FeedHeader.scss');
 		return (
-			<div style={{border: '1px solid blue'}} id={style.feed_header} className="overflow_ellipsis float_left">
+			<div 
+			id={style.feed_header} 
+			className="overflow_ellipsis float_left">
 				<h2>
-					<span className="name">
-						<span className="prefix_icon feed"></span>
-						Feed name
+					<span id={style.name}>
+						<span id={style.prefix_icon}>#</span>
+						feedname
 					</span>
-					<span className="members">
-						<span className="prefix_icon member"></span>
-						<span className="member_count">3</span>
+					<span id={style.members}>
+						<span id={style.member_icon}>
+							<i className="fa fa-user"></i>
+						</span>
+						<span id={style.member_count}>3</span>
 					</span>
 				</h2>
 			</div>

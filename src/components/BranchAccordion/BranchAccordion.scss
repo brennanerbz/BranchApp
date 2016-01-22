@@ -75,14 +75,15 @@
 				right: 1rem;
 				top: 18px;
 				i {
-					opacity: 0.65;
+					opacity: 0.75;
+					color: #9e9ea6;
 				}
 				button {
 					margin-left: 5px; 
 					display: inline-block;
 					&:hover {
 						i {
-							opacity: 0.9;
+							opacity: 1;
 						}
 					}
 				}
