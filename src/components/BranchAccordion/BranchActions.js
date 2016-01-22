@@ -5,10 +5,39 @@ export default class BranchActions extends Component {
 	}
 
 	render() {
-		const style = require('./BranchAccordion.scss');
+		const { collapsed, isMouseOverBranch } = this.props,
+		style = require('./BranchAccordion.scss');
 		return(
 			<div className={style.branch_actions}>
-				<span className="glyphicon glyphicon-plus-sign"></span>
+				{ /* Actions for a collapsed branch */}
+				{
+					collapsed 
+					&&
+					isMouseOverBranch
+					&&
+					<i 
+					style={{
+						fontSize: '14px', 
+						marginRight: '9px', 
+						marginTop: '7px'
+					}} 
+					className="fa fa-plus"></i>
+				}
+				{ /* Actions for an expanded branch */}
+				{
+					!collapsed
+					&&
+					<button style={{lineHeight: '26px'}} className="button outline circle">
+						<i className="fa fa-user-plus"></i>
+					</button>
+				}
+				{
+					!collapsed
+					&&
+					<button className="button outline circle">
+						<i className="fa fa-plus"></i>
+					</button>
+				}
 			</div>
 		);
 	}

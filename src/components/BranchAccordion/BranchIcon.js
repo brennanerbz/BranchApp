@@ -8,7 +8,9 @@ export default class BranchIcon extends Component {
 		const { active } = this.props,
 		style = require('./BranchAccordion.scss');
 		return (
-			<div className={style.branch_icon}>
+			<div 
+			onClick={this.props.expandAccordion}
+			className={style.branch_icon}>
 				<span className={'circle' + ' ' + (active ? style.active : style.inactive)}>FB</span>
 			</div>
 		);
