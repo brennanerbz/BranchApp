@@ -5,8 +5,9 @@ export default class MessageTs extends Component {
 	}
 
 	render() {
-		return(
-			<div className="message_ts">
+		const style = require('./Message.scss');
+		return (
+			<div className={style.message_ts}>
 				<h3>Message ts</h3>
 			</div>
 		);

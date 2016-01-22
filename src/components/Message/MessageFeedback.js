@@ -5,8 +5,9 @@ export default class MessageFeedback extends Component {
 	}
 
 	render() {
-		return(
-			<div className="message_feedback">
+		const style = require('./Message.scss');
+		return (
+			<div className={style.message_feedback}>
 				<h3>Message feedback</h3>
 			</div>
 		);

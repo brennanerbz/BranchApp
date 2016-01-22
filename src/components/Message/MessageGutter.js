@@ -5,8 +5,9 @@ export default class MessageGutter extends Component {
 	}
 
 	render() {
-		return(
-			<div className="message_gutter">
+		const style = require('./Message.scss');
+		return (
+			<div className={style.message_gutter}>
 				<h3>Message gutter</h3>
 			</div>
 		);
