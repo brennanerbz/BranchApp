@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import Message from '../../components/Message/MessageContainer';
+import MessageList from '../../components/MessageList/MessageList';
 
 export default class Feed extends Component {
 	static propTypes = {
@@ -47,9 +47,7 @@ export default class Feed extends Component {
 			id={style.feed}
 			className="flex_vertical flex_spacer">
 				<div className={style.feed_wrapper}>
-					{Array.from({length: 100}).map(m => {
-						return <Message/>
-					})}
+					<MessageList/>
 				</div>
 			</div>
 		);

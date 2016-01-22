@@ -13,9 +13,9 @@ export default class MessageContainer extends Component {
 	}
 
 	render() {
+		const style = require('./Message.scss');
 		return(
 			<div className="message_wrapper">
-				<h2>Message</h2>
 				<MessageGutter/>
 				<MessageTs/>
 				<MessageSender/>
