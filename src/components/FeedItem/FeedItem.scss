@@ -37,4 +37,10 @@
 			}
 		}
 	}
+	&.unread {
+		.feed_name {
+			color: #555459;
+			font-weight: 900;
+		}
+	}
 }
