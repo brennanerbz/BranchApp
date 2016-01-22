@@ -7,9 +7,9 @@ export default class MessageTs extends Component {
 	render() {
 		const style = require('./Message.scss');
 		return (
-			<div className={style.message_ts}>
-				<h3>Message ts</h3>
-			</div>
+			<a className={style.message_ts}>
+				10:15 pm
+			</a>
 		);
 	}
 }

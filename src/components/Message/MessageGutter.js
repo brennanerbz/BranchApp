@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import MessageIcon from './MessageIcon';
 
 export default class MessageGutter extends Component {
 	static propTypes = {
@@ -8,7 +9,7 @@ export default class MessageGutter extends Component {
 		const style = require('./Message.scss');
 		return (
 			<div className={style.message_gutter}>
-				<h3>Message gutter</h3>
+				<MessageIcon/>
 			</div>
 		);
 	}

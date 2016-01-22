@@ -1,4 +1,9 @@
 .avatar_wrapper {
+	&.avatar_message {
+		.circle_avatar {
+			margin-right: 7px;
+		}
+	}
 	.circle_avatar {
 		font-weight: 600;
 		display: inline-block;

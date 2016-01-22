@@ -3,23 +3,25 @@
 	width: 100%;
 	margin: 0 auto -1px;
 	position: relative;
-	padding: 1px 2.5rem 2px 0;
+	padding: 3.5px 2.5rem 3.5px 0;
 	border-left: none;
 	border-right: none;
 	border-top: 1px solid transparent;
 	border-bottom: 1px solid transparent;
 	color: #2c2d30;
-	font-size: 15px;
+	font-size: 14.5px;
 	line-height: 22px;
 	-webkit-user-select: text;
 	-moz-user-select: text;
 	-ms-user-select: text;
 	user-select: text;
 	word-wrap: break-word;
+	font-family: "Helvetica Neue", "Segoe UI", Helvetica, Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
 	.message_gutter {
 		text-align: right;
 	    position: absolute;
-	    top: 0;
+	    top: 5px;
 	    left: 0;
 	    width: 72px;
 	    padding-right: 10px;
@@ -27,6 +29,27 @@
 	.message_content {
 		margin-left: 72px;
 		margin-top: 0px;
+		.message_sender {
+			word-break: break-word;
+			font-weight: 900;
+			color: #233d30!important;
+			line-height: 18px;
+			display: inline;
+			margin-right: 0.25rem;
+		}
+		.message_ts {
+			margin-right: 0.25rem;
+			opacity: 1;
+			display: inline;
+			line-height: 18px;
+			color: #9e93a6;
+			font-size: 9pt;
+		}
+		.message_body {
+			display: block;
+			cursor: text;
+			margin-top: -2px;
+		}
 	}
 	.message_feedback {
 		position: absolute;

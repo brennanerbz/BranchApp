@@ -11,9 +11,11 @@ export default class MessageContent extends Component {
 		const style = require('./Message.scss');
 		return (
 			<div className={style.message_content}>
-				<MessageTs/>
 				<MessageSender/>
-				<h3>Message content</h3>
+				<MessageTs/>
+				<span className={style.message_body}>
+					Message content
+				</span>
 			</div>
 		);
 	}
