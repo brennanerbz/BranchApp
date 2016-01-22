@@ -3,6 +3,7 @@
 	border-right: 1px solid #EDF0F6;
 	position: relative;
 	overflow: auto;
+	overflow-x: hidden;
 	font-family: "Helvetica Neue", "Segoe UI", Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
 }

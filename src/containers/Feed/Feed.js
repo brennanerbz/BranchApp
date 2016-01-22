@@ -7,13 +7,19 @@ export default class Feed extends Component {
 
 	state = {
 		feedWidth: 0,
-		feedHeight: 0
+		feedHeight: 0,
+		messages: []
 	}
 
 	componentDidMount() {
 		const { appHeight, appWidth } = this.props;
 		this.updateFeedHeight(appHeight)
 		this.updateFeedHeight(appWidth)
+		setTimeout(() => {
+			this.setState({
+				messages: Array.from({length: 100})
+			});
+		}, 100)
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -39,16 +45,14 @@ export default class Feed extends Component {
 	}
 
 	render() {
-		const { feedWidth, feedHeight } = this.state,
+		const { feedWidth, feedHeight, messages } = this.state,
 		style = require('./Feed.scss');
 		return (
 			<div 
 			style={{height: feedHeight}}
 			id={style.feed}
 			className="flex_vertical flex_spacer">
-				<div className={style.feed_wrapper}>
-					<MessageList/>
-				</div>
+				<MessageList messages={messages}/>
 			</div>
 		);
 	}
