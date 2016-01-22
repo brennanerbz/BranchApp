@@ -111,6 +111,20 @@
 }
 
 
+// Dropdown
+:global .bubble_dropdown_container {
+	position: relative;
+}
+
+
+// Custom buttons
+:global .button_as_link {
+	margin: 0;
+	padding: 0;
+	cursor: pointer;
+	background: none;
+	border: none;
+}	
 
 
 

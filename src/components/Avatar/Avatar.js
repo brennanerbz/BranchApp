@@ -6,9 +6,11 @@ export default class Avatar extends Component {
 
 	render() {
 		return(
-			<div className="avatar_wrapper">
-				<h4>Avatar</h4>
-			</div>
+			<span className="avatar_wrapper inline_block">
+				<div className="circle">
+					<i className="fa fa-user"></i>
+				</div>
+			</span>
 		);
 	}
 }
