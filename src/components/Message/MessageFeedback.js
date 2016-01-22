@@ -14,7 +14,6 @@ export default class MessageFeedback extends Component {
 					{ /* Positive feedback for message */ }
 					{
 						isMouseOverMessage
-						// true
 						&&
 						<div className={style.positive}>
 							<i className="fa fa-thumbs-up"></i>
@@ -27,7 +26,6 @@ export default class MessageFeedback extends Component {
 					{ /* Negative feedback for message */ }
 					{
 						isMouseOverMessage
-						// true
 						&&
 						<div className={style.negative}>
 							<i className="fa fa-thumbs-down"></i>

@@ -14,7 +14,7 @@ export default class BranchSignal extends Component {
 					unread && !active
 					&&
 					<span 
-					style={{height: '10px', width: '10px', background: '#dc0d17;'}} 
+					style={{height: '10px', width: '10px', background: '#dc0d17'}} 
 					className={'circle'}>
 					</span>
 				}
