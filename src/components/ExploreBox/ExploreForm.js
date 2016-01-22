@@ -14,7 +14,7 @@ export default class ExploreForm extends Component {
 						type="text" 
 						id={style.explore_branches}
 						className={style.explore_input}
-						placeholder="Go to"/>
+						placeholder="Open new Branch"/>
 					</div>
 					<span id={style.explore_icon} className="glyphicon glyphicon-search"></span>
 				</form>

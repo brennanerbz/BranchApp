@@ -15,17 +15,22 @@ export default class ExploreBox extends Component {
 					<img id={styles.branch_logo} src={branchLogo}/>
 				</span>
 				<ExploreForm/>
-				<span id={styles.open_branch_button_wrapper} className="inline_block">
-					<button 
-						type="button" 
-						id="open_branch_button"
-						className="button outline">
-						<span 
-						id={styles.open_branch_icon}
-						className="glyphicon glyphicon-edit"></span>
-					</button>
-				</span>
 			</div>
 		);
 	}
 }
+
+
+{ /* Explore Button */ }
+/*
+<span id={styles.open_branch_button_wrapper} className="inline_block">
+	<button 
+		type="button" 
+		id="open_branch_button"
+		className="button outline">
+		<span 
+		id={styles.open_branch_icon}
+		className="glyphicon glyphicon-edit"></span>
+	</button>
+</span>
+*/

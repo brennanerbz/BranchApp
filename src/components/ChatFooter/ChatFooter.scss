@@ -1,10 +1,10 @@
 #chat_footer {
 	position: fixed;
-    // background: #fff;
-    background: #f6f7f8;
-    border-top: 1px solid #EDF0F6;
+    background: #fff;
+    // background: #f6f7f8;
+    // border-top: 1px solid #EDF0F6;
     bottom: 0;
-    left: 300px;
+    left: 275px;
     right: 0rem;
     height: 4rem;
     z-index: 52;
@@ -15,7 +15,7 @@
 #message_composer {
 	font-size: .9rem;
 	position: absolute;
-	bottom: 10px;
+	bottom: 22px;
 	left: 3.4rem;
 	right: 15px;
 	box-shadow: none;
