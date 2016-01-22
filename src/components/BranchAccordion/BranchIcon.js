@@ -10,7 +10,7 @@ export default class BranchIcon extends Component {
 		return (
 			<div 
 			onClick={this.props.expandAccordion}
-			className={style.branch_icon}>
+			className={style.branch_icon + ' ' + (active ? style.branch_icon_active : '')}>
 				<span className={'circle' + ' ' + (active ? style.active : style.inactive)}>FB</span>
 			</div>
 		);

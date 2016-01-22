@@ -5,11 +5,17 @@ export default class FeedItem extends Component {
 	}
 
 	render() {
-		const style = require('./FeedItem.scss');
+		const { index } = this.props,
+		style = require('./FeedItem.scss');
 		return (
-			<div className={style.feed_item_wrapper}>
-				<h4># Feed</h4>
-			</div>
+			<li className={'feed' + index + ' ' + style.feed + ' ' + (index == 0 ? style.active : '')}>
+				<a className={style.feed_name}>
+					<span className="overflow_ellipsis">
+						<span className={style.prefix_icon}>#</span>
+						feedname
+					</span>
+				</a>
+			</li>
 		);
 	}
 }

@@ -21,7 +21,7 @@ export default class BranchActions extends Component {
 						marginRight: '9px', 
 						marginTop: '7px'
 					}} 
-					className="fa fa-plus"></i>
+					className="fa fa-times"></i>
 				}
 				{ /* Actions for an expanded branch */}
 				{

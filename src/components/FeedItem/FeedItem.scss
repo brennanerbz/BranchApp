@@ -1,4 +1,40 @@
-.feed_item_wrapper {
-	height: 100%;
-	color: blue;
+.feed {
+	font-size: 15px;
+	line-height: 1.5rem;
+	height: 1.5rem;
+	margin-right: 1px;
+	position: relative;
+	clear: both;
+	overflow: hidden;
+	.feed_name {
+		color: #85898D;
+	    display: block;
+	    height: 1.5rem;
+	    padding: 0 .5rem 0 15px;
+	    border-radius: 0.25rem;
+	    background-clip: padding-box;
+	    text-decoration: none!important;
+	    cursor: pointer;
+	    .prefix_icon {
+	    	color: #85898D;
+	    	margin-left: 0px;
+	    	margin-right: 5px;
+	    }
+	}
+	&:hover:not(.active) {
+		.feed_name {
+			background: rgba(0, 0, 0, .05);;
+		}
+	}
+	&.active {
+		.feed_name {
+			background: #2A86FF;
+			opacity: 1;
+			color: #FFFFFF !important;
+			font-weight: 600;
+			.prefix_icon {
+				color: #fff;
+			}
+		}
+	}
 }

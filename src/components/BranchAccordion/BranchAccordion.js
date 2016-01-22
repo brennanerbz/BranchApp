@@ -5,7 +5,7 @@ import BranchActions from './BranchActions';
 import BranchIcon from './BranchIcon';
 import BranchSignal from './BranchSignal';
 
-import FeedItem from '../FeedItem/FeedItem';
+import FeedList from '../FeedList/FeedList';
 
 
 export default class BranchAccordion extends Component {
@@ -53,12 +53,11 @@ export default class BranchAccordion extends Component {
 							collapsed={collapsed}
 							isMouseOverBranch={isMouseOverBranch}
 						/>
-						<div id={style.accordion} className={collapsed ? style.collapsed : style.expanded}>
-							{
-								Array.from({length: 10}).map((b, i) => {
-									return <FeedItem key={i}/>
-								})
-							}
+						<div 
+						 id={style.accordion}
+						 className={collapsed ? style.collapsed : style.expanded}>
+							<FeedList
+							/>
 						</div>
 					</div>
 				</div>
