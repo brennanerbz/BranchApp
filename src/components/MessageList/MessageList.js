@@ -27,8 +27,13 @@ export default class MessageList extends Component {
 		style = require('./MessageList.scss');
 		return (
 			<div ref="message_list" id={style.message_list}>
-				{messages.map((m, i) => {
-					return <Message key={i}/>
+				{messages.map((message, i) => {
+					return (
+						<Message 
+						key={i}
+						message={message}
+						/>
+					)
 				})}
 			</div>
 		);

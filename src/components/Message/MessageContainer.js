@@ -15,16 +15,22 @@ export default class MessageContainer extends Component {
 	};
 
 	render() {
-		const { isMouseOverMessage } = this.state,
+		const { message } = this.props,
+		{ isMouseOverMessage } = this.state,
 		style = require('./Message.scss');
 		return (
 			<div 
 			onMouseOver={() => this.setState({isMouseOverMessage: true})}
 			onMouseLeave={() => this.setState({isMouseOverMessage: false})}
 			className={style.message_wrapper}>
-				<MessageGutter/>
-				<MessageContent/>
+				<MessageGutter
+					message={message}
+				/>
+				<MessageContent
+					message={message}
+				/>
 				<MessageFeedback
+					message={message}
 					isMouseOverMessage={isMouseOverMessage}
 				/>
 			</div>

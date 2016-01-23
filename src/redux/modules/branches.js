@@ -47,7 +47,6 @@ export default function reducer(state = initialState, action) {
         loaded: true
       }
     case CHANGE_ACTIVE_BRANCH:
-      console.log(action.branch_id)
       return {
         ...state,
         activeBranch: action.branch_id
