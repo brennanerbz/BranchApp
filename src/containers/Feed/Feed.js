@@ -27,16 +27,15 @@ export default class Feed extends Component {
 	state = {
 		feedWidth: 0,
 		feedHeight: 0,
-		messages: [],
-		messagesDivHeight: 0
+		messagesDivHeight: 0,
+		messages: []
 	}
 
 	componentDidMount() {
-		const { appHeight, appWidth, messages, activeFeed } = this.props;
+		const { appHeight, appWidth, activeFeed } = this.props;
 		this.updateFeedHeight(appHeight)
 		this.updateFeedHeight(appWidth)
 		// socket.emit('get messages', { feed_id: activeFeed })
-		this.updateMessages(messages, activeFeed)
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -53,24 +52,17 @@ export default class Feed extends Component {
 		const { messages, activeFeed } = nextProps;
 		// this.updateMessages(messages, activeFeed)
 		var node = this.refs.wrapper
-		this.shouldScrollToBottom = node.scrollTop + node.offsetHeight === node.scrollHeight
+		// this.shouldScrollToBottom = node.scrollTop + node.offsetHeight === node.scrollHeight
 	}
 
 	componentDidUpdate(prevProps) {
 		var node = this.refs.wrapper;
-		if(this.shouldScrollToBottom) {
-			node.scrollTop = node.scrollHeight;
-		}
-	}
-
-	updateMessages(messages, activeFeed) {
-		let filteredMessages;
-		if(messages.length > 0) {
-			filteredMessages = messages.filter(message => {
-				return message.feed_id == activeFeed 
-			})
+		// if(this.shouldScrollToBottom) {
+			// node.scrollTop = node.scrollHeight;
+		// }
+		if(this.state.messages.length !== this.props.messages.length) {
 			this.setState({
-				messages: filteredMessages
+				messages: this.props.messages
 			});
 		}
 	}
@@ -93,10 +85,11 @@ export default class Feed extends Component {
 
 	render() {
 		const { feed, branch } = this.props,
-		{ feedWidth, feedHeight, messages, messagesDivHeight } = this.state,
+		{ feedWidth, feedHeight, messagesDivHeight, messages } = this.state,
 		style = require('./Feed.scss');
 		return (
 			<div 
+			key={'feed' + feed.id}
 			style={{height: feedHeight}}
 			id={style.feed}
 			className="flex_vertical flex_spacer">
@@ -109,13 +102,17 @@ export default class Feed extends Component {
 						className={style.scrollable_area_body}>
 							<FeedPadder
 								feedHeight={feedHeight}
-								messagesDivHeight={messagesDivHeight}
+								// messagesDivHeight={messagesDivHeight}
 								feed={feed}
 								branch={branch}
+								key={'feedPadder'}
 							/>
 							<MessageList
+								feed={feed}
+								branch={branch}
 								messages={messages}
-								handleUpdateHeight={(height) => this.setState({messagesDivHeight: height})}
+								key={'messageList'}
+								// handleUpdateHeight={(height) => this.setState({messagesDivHeight: height})}
 							/>
 						</div>
 					</div>

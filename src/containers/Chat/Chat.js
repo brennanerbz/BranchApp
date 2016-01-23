@@ -45,7 +45,7 @@ export default class Chat extends Component {
   }
 
   componentDidMount() {
-    // global.socket = this.initSocket()
+    global.socket = this.initSocket()
   }
 
   componentWillReceiveProps(nextProps) {
@@ -58,7 +58,7 @@ export default class Chat extends Component {
     }
   }
 
-  initSocket = () => {
+  initSocket() {
     const socket = io('', {path: '/ws'});
     return socket;
   }
@@ -77,7 +77,7 @@ export default class Chat extends Component {
       return feed.id == activeFeed
     })[0]
     let branch = branches.filter(branch => {
-      return branch.id == feed.parent_id
+      return branch.id == activeBranch
     })[0]
     return (
       <div id={style.chat}>
@@ -104,6 +104,7 @@ export default class Chat extends Component {
               activeFeed={activeFeed}
               feed={feed}
               branch={branch}
+              key={'feed' + feed.id}
             />
           </section>
         </div>

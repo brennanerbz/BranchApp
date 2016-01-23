@@ -14,7 +14,7 @@ export default class FeedList extends Component {
 					feeds.map((feed, i) => {
 						return (
 							<FeedItem 
-							key={i} 
+							key={feed.id + i} 
 							index={i}
 							feed={feed}
 							active={feed.id == activeFeed}

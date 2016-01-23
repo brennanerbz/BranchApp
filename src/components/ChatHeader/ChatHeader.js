@@ -8,13 +8,19 @@ export default class ChatHeader extends Component {
 	}
 
 	render() {
-		const styles = require('./ChatHeader.scss');
+		const { feed, branch } = this.props,
+		styles = require('./ChatHeader.scss');
 		return (
 			<div id={styles.chat_header}>
 				<div id={styles.chat_header_wrapper} className="clearfix">
 					<ExploreBox/>
-					<FeedHeader/>
-					<UserInfo/>
+					<FeedHeader
+						feed={feed}
+						branch={branch}
+					/>
+					<UserInfo
+
+					/>
 				</div>
 			</div>
 		);

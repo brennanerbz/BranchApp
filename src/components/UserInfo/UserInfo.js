@@ -14,10 +14,10 @@ export default class UserInfo extends Component {
 			className="float_right">
 				<span className="bubble_dropdown_container">
 					<button ref="dropdown_target" className="button_as_link">
-						<Avatar/>
+						<Avatar size={36} message={false}/>
 						<span id={style.username} className="inline_block">
 							username
-						</span>
+					</span>
 						<i
 						id={style.dropdown_arrow}
 						style={{fontSize: '21px'}} 

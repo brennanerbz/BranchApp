@@ -68,7 +68,7 @@ export default class Navigation extends Component {
 					{branches.map((branch, i) => {
 						return (
 							<BranchAccordion 
-								key={i} 
+								key={branch.id + i} 
 								index={i}
 								branch={branch}
 								active={activeBranch == branch.id}

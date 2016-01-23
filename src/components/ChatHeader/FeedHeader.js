@@ -5,7 +5,8 @@ export default class FeedHeader extends Component {
 	}
 
 	render() { 
-		const style = require('./FeedHeader.scss');
+		const { feed, branch } = this.props,
+		style = require('./FeedHeader.scss');
 		return (
 			<div 
 			id={style.feed_header} 
@@ -13,7 +14,7 @@ export default class FeedHeader extends Component {
 				<h2>
 					<span id={style.name}>
 						<span id={style.prefix_icon}>#</span>
-						feedname
+						{feed.title}
 					</span>
 					<span id={style.members}>
 						<span id={style.member_icon}>
