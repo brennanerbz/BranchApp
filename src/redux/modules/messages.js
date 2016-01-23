@@ -52,6 +52,342 @@ const initialState = {
 				username: 'branchbot',
 				profile_picture: null
 			}
+		},
+		{
+			id: 1,
+			parent_id: 1,
+			user_id: 1,
+			membership_id: 1,
+			feed_id: 1,
+			text: 'Welcome to Branch! It\'s great to have you!',
+			message_type: 'text',
+			creation: Date.now(),
+			positives: 1,
+			negatives: 0,
+			user: {
+				username: 'branchbot',
+				profile_picture: null
+			}
+		},
+		{
+			id: 2,
+			parent_id: 1,
+			user_id: 1,
+			membership_id: 1,
+			feed_id: 1,
+			text: 'Thanks for having me!',
+			message_type: 'text',
+			creation: Date.now(),
+			positives: 1,
+			negatives: 0,
+			user: {
+				username: 'brennanerbz',
+				profile_picture: null
+			}
+		},
+		{
+			id: 3,
+			parent_id: 1,
+			user_id: 1,
+			membership_id: 1,
+			feed_id: 1,
+			text: 'How was your day?',
+			message_type: 'text',
+			creation: Date.now(),
+			positives: 1,
+			negatives: 0,
+			user: {
+				username: 'branchbot',
+				profile_picture: null
+			}
+		},
+		{
+			id: 1,
+			parent_id: 1,
+			user_id: 1,
+			membership_id: 1,
+			feed_id: 1,
+			text: 'Welcome to Branch! It\'s great to have you!',
+			message_type: 'text',
+			creation: Date.now(),
+			positives: 1,
+			negatives: 0,
+			user: {
+				username: 'branchbot',
+				profile_picture: null
+			}
+		},
+		{
+			id: 2,
+			parent_id: 1,
+			user_id: 1,
+			membership_id: 1,
+			feed_id: 1,
+			text: 'Thanks for having me!',
+			message_type: 'text',
+			creation: Date.now(),
+			positives: 1,
+			negatives: 0,
+			user: {
+				username: 'brennanerbz',
+				profile_picture: null
+			}
+		},
+		{
+			id: 3,
+			parent_id: 1,
+			user_id: 1,
+			membership_id: 1,
+			feed_id: 1,
+			text: 'How was your day?',
+			message_type: 'text',
+			creation: Date.now(),
+			positives: 1,
+			negatives: 0,
+			user: {
+				username: 'branchbot',
+				profile_picture: null
+			}
+		},
+		{
+			id: 1,
+			parent_id: 1,
+			user_id: 1,
+			membership_id: 1,
+			feed_id: 1,
+			text: 'Welcome to Branch! It\'s great to have you!',
+			message_type: 'text',
+			creation: Date.now(),
+			positives: 1,
+			negatives: 0,
+			user: {
+				username: 'branchbot',
+				profile_picture: null
+			}
+		},
+		{
+			id: 2,
+			parent_id: 1,
+			user_id: 1,
+			membership_id: 1,
+			feed_id: 1,
+			text: 'Thanks for having me!',
+			message_type: 'text',
+			creation: Date.now(),
+			positives: 1,
+			negatives: 0,
+			user: {
+				username: 'brennanerbz',
+				profile_picture: null
+			}
+		},
+		{
+			id: 3,
+			parent_id: 1,
+			user_id: 1,
+			membership_id: 1,
+			feed_id: 1,
+			text: 'How was your day?',
+			message_type: 'text',
+			creation: Date.now(),
+			positives: 1,
+			negatives: 0,
+			user: {
+				username: 'branchbot',
+				profile_picture: null
+			}
+		},
+		{
+			id: 1,
+			parent_id: 1,
+			user_id: 1,
+			membership_id: 1,
+			feed_id: 1,
+			text: 'Welcome to Branch! It\'s great to have you!',
+			message_type: 'text',
+			creation: Date.now(),
+			positives: 1,
+			negatives: 0,
+			user: {
+				username: 'branchbot',
+				profile_picture: null
+			}
+		},
+		{
+			id: 2,
+			parent_id: 1,
+			user_id: 1,
+			membership_id: 1,
+			feed_id: 1,
+			text: 'Thanks for having me!',
+			message_type: 'text',
+			creation: Date.now(),
+			positives: 1,
+			negatives: 0,
+			user: {
+				username: 'brennanerbz',
+				profile_picture: null
+			}
+		},
+		{
+			id: 3,
+			parent_id: 1,
+			user_id: 1,
+			membership_id: 1,
+			feed_id: 1,
+			text: 'How was your day?',
+			message_type: 'text',
+			creation: Date.now(),
+			positives: 1,
+			negatives: 0,
+			user: {
+				username: 'branchbot',
+				profile_picture: null
+			}
+		},
+		{
+			id: 1,
+			parent_id: 1,
+			user_id: 1,
+			membership_id: 1,
+			feed_id: 1,
+			text: 'Welcome to Branch! It\'s great to have you!',
+			message_type: 'text',
+			creation: Date.now(),
+			positives: 1,
+			negatives: 0,
+			user: {
+				username: 'branchbot',
+				profile_picture: null
+			}
+		},
+		{
+			id: 2,
+			parent_id: 1,
+			user_id: 1,
+			membership_id: 1,
+			feed_id: 1,
+			text: 'Thanks for having me!',
+			message_type: 'text',
+			creation: Date.now(),
+			positives: 1,
+			negatives: 0,
+			user: {
+				username: 'brennanerbz',
+				profile_picture: null
+			}
+		},
+		{
+			id: 3,
+			parent_id: 1,
+			user_id: 1,
+			membership_id: 1,
+			feed_id: 1,
+			text: 'How was your day?',
+			message_type: 'text',
+			creation: Date.now(),
+			positives: 1,
+			negatives: 0,
+			user: {
+				username: 'branchbot',
+				profile_picture: null
+			}
+		},
+		{
+			id: 1,
+			parent_id: 1,
+			user_id: 1,
+			membership_id: 1,
+			feed_id: 1,
+			text: 'Welcome to Branch! It\'s great to have you!',
+			message_type: 'text',
+			creation: Date.now(),
+			positives: 1,
+			negatives: 0,
+			user: {
+				username: 'branchbot',
+				profile_picture: null
+			}
+		},
+		{
+			id: 2,
+			parent_id: 1,
+			user_id: 1,
+			membership_id: 1,
+			feed_id: 1,
+			text: 'Thanks for having me!',
+			message_type: 'text',
+			creation: Date.now(),
+			positives: 1,
+			negatives: 0,
+			user: {
+				username: 'brennanerbz',
+				profile_picture: null
+			}
+		},
+		{
+			id: 3,
+			parent_id: 1,
+			user_id: 1,
+			membership_id: 1,
+			feed_id: 1,
+			text: 'How was your day?',
+			message_type: 'text',
+			creation: Date.now(),
+			positives: 1,
+			negatives: 0,
+			user: {
+				username: 'branchbot',
+				profile_picture: null
+			}
+		},
+		{
+			id: 1,
+			parent_id: 1,
+			user_id: 1,
+			membership_id: 1,
+			feed_id: 1,
+			text: 'Welcome to Branch! It\'s great to have you!',
+			message_type: 'text',
+			creation: Date.now(),
+			positives: 1,
+			negatives: 0,
+			user: {
+				username: 'branchbot',
+				profile_picture: null
+			}
+		},
+		{
+			id: 2,
+			parent_id: 1,
+			user_id: 1,
+			membership_id: 1,
+			feed_id: 1,
+			text: 'Thanks for having me!',
+			message_type: 'text',
+			creation: Date.now(),
+			positives: 1,
+			negatives: 0,
+			user: {
+				username: 'brennanerbz',
+				profile_picture: null
+			}
+		},
+		{
+			id: 3,
+			parent_id: 1,
+			user_id: 1,
+			membership_id: 1,
+			feed_id: 1,
+			text: 'How was your day?',
+			message_type: 'text',
+			creation: Date.now(),
+			positives: 1,
+			negatives: 0,
+			user: {
+				username: 'branchbot',
+				profile_picture: null
+			}
 		}
 	]
 }

@@ -45,7 +45,7 @@ export default class Chat extends Component {
   }
 
   componentDidMount() {
-    global.socket = this.initSocket()
+    // global.socket = this.initSocket()
   }
 
   componentWillReceiveProps(nextProps) {
@@ -73,9 +73,18 @@ export default class Chat extends Component {
       activeBranch, 
       activeFeed } = this.props,
     style = require('./Chat.scss');
+    let feed = feeds.filter(feed => {
+      return feed.id == activeFeed
+    })[0]
+    let branch = branches.filter(branch => {
+      return branch.id == feed.parent_id
+    })[0]
     return (
       <div id={style.chat}>
-        <Header/>
+        <Header
+          feed={feed}
+          branch={branch}
+        />
         <div 
           id={style.chat_body} 
           className="flex_vertical flex_spacer">
@@ -93,6 +102,8 @@ export default class Chat extends Component {
               appWidth={appWidth}
               activeBranch={activeBranch}
               activeFeed={activeFeed}
+              feed={feed}
+              branch={branch}
             />
           </section>
         </div>

@@ -1,0 +1,50 @@
+#feed_padder_div {
+	padding: 1rem 0 0 1rem;
+	margin: 1rem 0 0;
+	border-bottom: 1px solid rgba(0, 0, 0, .05);
+	#feed_padder_content {
+		padding: 0 1rem 0 0;
+		font-size: 1.1rem;
+		color: #9e9ea6;
+		line-height: 1.5rem;
+		max-width: 850px;
+		#feed_icon {
+			float: left;
+			#feed_icon_circle {
+				height: 60px;
+				width: 60px;
+				line-height: 60px;
+				font-size: 31px;
+				font-weight: 600;
+				color: #fff;
+				background: #2A86FF;
+			}
+		}
+		#feed_meta {
+			padding-left: 80px;
+			display: block;
+		}
+		h1 {
+			font-size: 30px;
+			line-height: 30px;
+			font-weight: 600;
+			color: #4d394b;
+			.prefix_icon {
+				color: #969696;
+				margin-right: 5px;
+			}
+		}
+		p {
+			color: rgba(0, 0, 0, .40);
+			margin: 0.25rem auto 1rem;
+		}
+		ul {
+			margin: 0;
+			li {
+			    margin: 0 1rem 1rem 0;
+			    list-style: none;
+			    font-size: .9rem;
+			}
+		}
+	}
+}

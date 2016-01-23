@@ -1,14 +1,17 @@
 import React, { Component, PropTypes } from 'react';
+import moment from 'moment';
 
 export default class MessageTs extends Component {
 	static propTypes = {
 	}
 
 	render() {
-		const style = require('./Message.scss');
+		const { timestamp } = this.props,
+		style = require('./Message.scss'),
+		ts = moment(timestamp).local().format('h:mm a');
 		return (
 			<a className={style.message_ts}>
-				10:15 pm
+				{ts}
 			</a>
 		);
 	}

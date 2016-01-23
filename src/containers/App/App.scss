@@ -60,6 +60,12 @@
 }
 
 
+// Relative wrapper
+:global .relative {
+	position: relative;
+}
+
+
 // Flexbox
 :global .flex_vertical {
 	display: -webkit-box;
@@ -126,6 +132,15 @@
 	border: none;
 }	
 
+
+// Link 
+a {
+	color: #0084ff;
+	cursor: pointer;
+	&:hover {
+		color: #057CEB;
+	}
+}
 
 
 

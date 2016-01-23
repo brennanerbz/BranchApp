@@ -8,17 +8,15 @@ export default class MessageList extends Component {
 	}
 
 	componentDidMount() {
+		var node = this.refs.message_list;
+		this.props.handleUpdateHeight($(node)[0].clientHeight)
 	}
 
-	componentWillUpdate() {
-		var node = this.refs.message_list
-		this.shouldScrollToBottom = node.scrollTop + node.offsetHeight === node.scrollHeight
-	}
 
-	componentDidUpdate() {
-		if(this.shouldScrollToBottom) {
-			var node = this.refs.message_list;
-			node.scrollTop = node.scrollHeight;
+	componentDidUpdate(prevProps) {
+		var node = this.refs.message_list;
+		if(prevProps.messages.length < this.props.messages.length) {
+			this.props.handleUpdateHeight(node.clientHeight)
 		}
 	}
 

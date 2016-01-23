@@ -1,3 +1,19 @@
 #feed {
-	overflow-y: auto;
+	.scrollable_area {
+		direction: ltr;
+		height: 100%;
+		overflow: hidden;
+		position: relative;
+	}
+	.scrollable_area_wrapper {
+		height: 100%;
+	    outline: none;
+	    overflow-x: hidden;
+	    overflow-y: scroll;
+	    position: relative;
+	}
+	.scrollable_area_body {
+		direction: ltr;
+		position: relative;
+	}
 }

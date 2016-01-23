@@ -5,10 +5,11 @@ export default class MessageSender extends Component {
 	}
 
 	render() {
-		const style = require('./Message.scss');
+		const { username } = this.props,
+		style = require('./Message.scss');
 		return (
 			<a className={style.message_sender}>
-				Message sender
+				{username}
 			</a>
 		);
 	}
