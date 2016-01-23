@@ -1,14 +1,14 @@
 import cookie from 'react-cookie';
 
-const LOAD = 'redux-example/auth/LOAD';
-const LOAD_SUCCESS = 'redux-example/auth/LOAD_SUCCESS';
-const LOAD_FAIL = 'redux-example/auth/LOAD_FAIL';
-const LOGIN = 'redux-example/auth/LOGIN';
-const LOGIN_SUCCESS = 'redux-example/auth/LOGIN_SUCCESS';
-const LOGIN_FAIL = 'redux-example/auth/LOGIN_FAIL';
-const LOGOUT = 'redux-example/auth/LOGOUT';
-const LOGOUT_SUCCESS = 'redux-example/auth/LOGOUT_SUCCESS';
-const LOGOUT_FAIL = 'redux-example/auth/LOGOUT_FAIL';
+const LOAD = 'BranchApp/auth/LOAD';
+const LOAD_SUCCESS = 'BranchApp/auth/LOAD_SUCCESS';
+const LOAD_FAIL = 'BranchApp/auth/LOAD_FAIL';
+const LOGIN = 'BranchApp/auth/LOGIN';
+const LOGIN_SUCCESS = 'BranchApp/auth/LOGIN_SUCCESS';
+const LOGIN_FAIL = 'BranchApp/auth/LOGIN_FAIL';
+const LOGOUT = 'BranchApp/auth/LOGOUT';
+const LOGOUT_SUCCESS = 'BranchApp/auth/LOGOUT_SUCCESS';
+const LOGOUT_FAIL = 'BranchApp/auth/LOGOUT_FAIL';
 
 const initialState = {
   loaded: false

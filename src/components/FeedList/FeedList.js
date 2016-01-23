@@ -6,12 +6,20 @@ export default class FeedList extends Component {
 	}
 
 	render() {
-		const style = require('./FeedList.scss');
+		const { feeds, activeFeed, onChangeActiveFeed } = this.props,
+		style = require('./FeedList.scss');
 		return (
 			<ul id={style.feed_list}>
 				{
-					Array.from({length: 10}).map((b, i) => {
-						return <FeedItem key={i} index={i}/>
+					feeds.map((feed, i) => {
+						return (
+							<FeedItem 
+							key={i} 
+							index={i}
+							feed={feed}
+							active={feed.id == activeFeed}
+							changeActiveFeed={onChangeActiveFeed}/>
+						)
 					})
 				}
 			</ul>

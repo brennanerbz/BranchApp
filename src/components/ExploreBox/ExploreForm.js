@@ -4,8 +4,18 @@ export default class ExploreForm extends Component {
 	static propTypes = {
 	}
 
+	state = {
+		text: ''
+	}
+
+	handleOpenBranch = () => {
+		const { text } = this.state;
+		socket.emit('go to parent', text)
+	}
+
 	render() {
-		const style = require('./ExploreBox.scss');
+		const { text } = this.state,
+		style = require('./ExploreBox.scss');
 		return (
 			<span id="explore_form_wrapper" className="inline_block">
 				<form id={style.explore_form}>
@@ -14,7 +24,20 @@ export default class ExploreForm extends Component {
 						type="text" 
 						id={style.explore_branches}
 						className={style.explore_input}
-						placeholder="Open new Branch"/>
+						value={text}
+						placeholder="Open new Branch"
+						onChange={(e) => {
+							this.setState({
+								text: e.target.value
+							});
+						}}
+						onKeyDown={(e) => {
+							e.preventDefault()
+							if(e.which == 13) {
+								this.handleOpenBranch()
+							}
+						}}
+						/>
 					</div>
 					<span id={style.explore_icon} className="fa fa-arrow-right"></span>
 				</form>

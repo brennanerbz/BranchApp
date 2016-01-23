@@ -41,14 +41,14 @@ export default class App extends Component {
       height: this.refs.app.clientHeight,
       width: this.refs.app.clientWidth
     });
-    window.addEventListener('resize', this.updateAppSize)
+    window.addEventListener('resize', ::this.updateAppSize)
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.updateAppSize)
+    window.removeEventListener('resize', ::this.updateAppSize)
   }
 
-  updateAppSize = () => {
+  updateAppSize() {
     this.setState({
       height: this.refs.app.clientHeight,
       width: this.refs.app.clientWidth

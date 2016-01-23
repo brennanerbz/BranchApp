@@ -23,7 +23,7 @@ export default class BranchAccordion extends Component {
 	}
 
 	render() {
-		const { index } = this.props,
+		const { index, branch, active, activeFeed, feeds } = this.props,
 		{ collapsed, isMouseOverBranch } = this.state,
 		style = require('./BranchAccordion.scss');
 		return (
@@ -33,9 +33,10 @@ export default class BranchAccordion extends Component {
 			className={style.branch_accordion_container}>
 				<div className={style.branch_accordion_wrapper}>
 					<div className={style.branch_accordion}>
-						<BranchSignal active={index == 0} unread={true}/>
+						<BranchSignal active={active} unread={true}/>
 						<BranchIcon 
-						active={index == 0}
+						active={active}
+						branch={branch}
 						expandAccordion={() => this.setState({
 							collapsed: !collapsed
 						})}
@@ -46,17 +47,21 @@ export default class BranchAccordion extends Component {
 								collapsed: !collapsed
 							});
 						}}
-						className={style.branch_name + ' ' + (index == 0 ? style.active : style.inactive)}>
-							Branch name
+						className={style.branch_name + ' ' + (active ? style.active : style.inactive)}>
+							{ branch.title } 
 						</h3>
 						<BranchActions
 							collapsed={collapsed}
 							isMouseOverBranch={isMouseOverBranch}
+							branch={branch}
 						/>
 						<div 
 						 id={style.accordion}
 						 className={collapsed ? style.collapsed : style.expanded}>
 							<FeedList
+								feeds={feeds}
+								activeFeed={activeFeed}
+								onChangeActiveFeed={this.props.onChangeActiveFeed}
 							/>
 						</div>
 					</div>

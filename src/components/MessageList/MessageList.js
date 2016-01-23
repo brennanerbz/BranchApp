@@ -10,9 +10,16 @@ export default class MessageList extends Component {
 	componentDidMount() {
 	}
 
+	componentWillUpdate() {
+		var node = this.refs.message_list
+		this.shouldScrollToBottom = node.scrollTop + node.offsetHeight === node.scrollHeight
+	}
+
 	componentDidUpdate() {
-		var node = this.refs.message_list;
-		node.scrollTop = node.scrollHeight;
+		if(this.shouldScrollToBottom) {
+			var node = this.refs.message_list;
+			node.scrollTop = node.scrollHeight;
+		}
 	}
 
 	render() {

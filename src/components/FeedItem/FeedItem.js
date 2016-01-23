@@ -5,19 +5,22 @@ export default class FeedItem extends Component {
 	}
 
 	render() {
-		const { index } = this.props,
+		const { index, feed, active, changeActiveFeed} = this.props,
 		style = require('./FeedItem.scss');
 		return (
 			<li 
+			onClick={() => {
+				if(!active) changeActiveFeed(feed)
+			}}
 			className={'feed' + 
 			index + ' ' + 
 			style.feed + ' ' + 
-			(index == 0 ? style.active : '')
+			(active ? style.active : '')
 			+ (index == 1 ? style.unread : '')}>
 				<a className={style.feed_name}>
 					<span className="overflow_ellipsis">
 						<span className={style.prefix_icon}>#</span>
-						feedname
+						{ feed.title }
 					</span>
 				</a>
 			</li>
