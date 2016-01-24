@@ -11,7 +11,7 @@ import * as messageActions from '../../redux/modules/messages';
 
 @connect(
 	state => ({
-		messages: state.messages.messages
+		// messages: state.messages.messages
 	}),
 	dispatch => ({
 		...bindActionCreators({
@@ -27,8 +27,7 @@ export default class Feed extends Component {
 	state = {
 		feedWidth: 0,
 		feedHeight: 0,
-		messagesDivHeight: 0,
-		messages: []
+		messagesDivHeight: 0
 	}
 
 	componentDidMount() {
@@ -60,11 +59,6 @@ export default class Feed extends Component {
 		// if(this.shouldScrollToBottom) {
 			// node.scrollTop = node.scrollHeight;
 		// }
-		if(this.state.messages.length !== this.props.messages.length) {
-			this.setState({
-				messages: this.props.messages
-			});
-		}
 	}
 
 	updateFeedHeight(height) {
@@ -85,11 +79,10 @@ export default class Feed extends Component {
 
 	render() {
 		const { feed, branch } = this.props,
-		{ feedWidth, feedHeight, messagesDivHeight, messages } = this.state,
+		{ feedWidth, feedHeight, messagesDivHeight } = this.state,
 		style = require('./Feed.scss');
 		return (
 			<div 
-			key={'feed' + feed.id}
 			style={{height: feedHeight}}
 			id={style.feed}
 			className="flex_vertical flex_spacer">
@@ -110,7 +103,6 @@ export default class Feed extends Component {
 							<MessageList
 								feed={feed}
 								branch={branch}
-								messages={messages}
 								key={'messageList'}
 								// handleUpdateHeight={(height) => this.setState({messagesDivHeight: height})}
 							/>

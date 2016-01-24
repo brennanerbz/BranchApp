@@ -23,7 +23,7 @@ export default class MessageForm extends Component {
 		// { user, membership, feed } = this.props;
 		if(text.length > 0) {
 			var newMessage = {
-				id: Math.floor(Math.random() * 1000),
+				id: Math.floor(Math.random() * 10000),
 				parent_id: 1,
 				user_id: 1,
 				membership_id: 1,

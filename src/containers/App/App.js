@@ -15,7 +15,8 @@ function fetchData(getState, dispatch) {
   return Promise.all(promises);
 }
 
-@connectData(fetchData)
+// @connectData(fetchData)
+
 @connect(
   state => ({user: state.auth.user}),
   {logout, pushState})

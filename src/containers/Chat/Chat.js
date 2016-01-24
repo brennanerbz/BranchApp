@@ -15,11 +15,12 @@ import Feed from '../Feed/Feed';
 
 // when the chat container is mounted, we want to set up listeners for the events that will take place. each of the listeners will have corresponding redux function and state.
 
-function fetchData(getState, dispatch) {
+// function fetchData(getState, dispatch) {
   // for the initial load, we want to get all memberships, feeds and messages for the active feed
-}
+// }
 
-@connectData(fetchData)
+// @connectData(fetchData)
+
 @connect(
   state => ({
     user: state.auth.user,
@@ -45,7 +46,7 @@ export default class Chat extends Component {
   }
 
   componentDidMount() {
-    global.socket = this.initSocket()
+    // global.socket = this.initSocket()
   }
 
   componentWillReceiveProps(nextProps) {
@@ -53,9 +54,9 @@ export default class Chat extends Component {
 
 
   componentWillUnmount() {
-    if (socket) {
-      return;
-    }
+    // if (socket) {
+    //   return;
+    // }
   }
 
   initSocket() {
@@ -104,7 +105,6 @@ export default class Chat extends Component {
               activeFeed={activeFeed}
               feed={feed}
               branch={branch}
-              key={'feed' + feed.id}
             />
           </section>
         </div>

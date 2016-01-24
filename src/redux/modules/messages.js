@@ -4,61 +4,12 @@ export const RECEIVE_VOTE = 'BranchApp/messages/RECEIVE_VOTE';
 
 const initialState = {
 	loaded: false,
-	messages: [
-		{
-			id: 1,
-			parent_id: 1,
-			user_id: 1,
-			membership_id: 1,
-			feed_id: 1,
-			text: 'Welcome to Branch! It\'s great to have you!',
-			message_type: 'text',
-			creation: Date.now(),
-			positives: 1,
-			negatives: 0,
-			user: {
-				username: 'branchbot',
-				profile_picture: null
-			}
-		},
-		{
-			id: 2,
-			parent_id: 1,
-			user_id: 1,
-			membership_id: 1,
-			feed_id: 1,
-			text: 'Thanks for having me!',
-			message_type: 'text',
-			creation: Date.now(),
-			positives: 1,
-			negatives: 0,
-			user: {
-				username: 'brennanerbz',
-				profile_picture: null
-			}
-		},
-		{
-			id: 3,
-			parent_id: 1,
-			user_id: 1,
-			membership_id: 1,
-			feed_id: 1,
-			text: 'How was your day?',
-			message_type: 'text',
-			creation: Date.now(),
-			positives: 1,
-			negatives: 0,
-			user: {
-				username: 'branchbot',
-				profile_picture: null
-			}
-		}
-	]
+	messagesObject: {},
+	messages: []
 }
 
-
-export default function reducer(state = initialState, action){
-	let { messages, loaded } = state;
+export default function reducer(state = initialState, action) {
+	let { messages, messagesObject, loaded } = state;
 
 	switch(action.type) {
 		case RECEIVE_MESSAGES:
@@ -68,10 +19,11 @@ export default function reducer(state = initialState, action){
 				messages: messages
 			}
 		case RECEIVE_MESSAGE:
-			messages.push(action.message)
+			messagesObject[action.message.id] = action.message
 			return {
 				...state,
-				messages: messages
+				messages: [...state.messages, action.message],
+				messagesObject: messagesObject
 			}
 		case RECEIVE_VOTE:
 			messages = messages.map(message => {
