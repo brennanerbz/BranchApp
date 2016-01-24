@@ -18,6 +18,16 @@
 	word-wrap: break-word;
 	font-family: "Helvetica Neue", "Segoe UI", Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
+	opacity: 0.2;
+	-moz-transition: opacity 35ms ease-in;
+	transition: opacity 35ms ease-in;
+	-webkit-transition: opacity 35ms ease-in;
+	&.message_rendered {
+		opacity: 1;
+		-moz-transition: opacity 35ms ease-in;
+		transition: opacity 35ms ease-in;
+		-webkit-transition: opacity 35ms ease-in;
+	}
 	&:hover {
 		background: #fafafa;
 	}
@@ -92,4 +102,31 @@
 			}
 		}
 	}
+}
+
+.message-enter {
+  opacity: 0.01;
+  transition: opacity .5s ease-in;
+}
+
+.message-enter.message-enter-active {
+  opacity: 1;
+}
+
+.message-leave {
+  opacity: 1;
+  transition: opacity .5s ease-in;
+}
+
+.message-leave.message-leave-active {
+  opacity: 0.01;
+}
+
+.message-appear {
+  opacity: 0.01;
+  transition: opacity .5s ease-in;
+}
+
+.message-appear.message-appear-active {
+  opacity: 1;
 }
