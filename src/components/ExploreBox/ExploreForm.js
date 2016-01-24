@@ -25,7 +25,7 @@ export default class ExploreForm extends Component {
 						id={style.explore_branches}
 						className={style.explore_input}
 						value={text}
-						placeholder="Open new Branch"
+						placeholder="Open Branch"
 						onChange={(e) => {
 							this.setState({
 								text: e.target.value

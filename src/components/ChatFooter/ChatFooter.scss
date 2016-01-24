@@ -3,8 +3,9 @@
     background: #fff;
     // background: #f6f7f8;
     // border-top: 1px solid #EDF0F6;
+    // border-top: 1px solid #E1E1E1;
     bottom: 0;
-    left: 275px;
+    left: 255px;
     right: 0rem;
     height: 4rem;
     z-index: 52;
@@ -15,7 +16,7 @@
 #message_composer {
 	font-size: .9rem;
 	position: absolute;
-	bottom: 22px;
+	bottom: 21px;
 	left: 3.4rem;
 	right: 15px;
 	box-shadow: none;
@@ -51,7 +52,8 @@
     	    width: 100%;
     	    font-size: 14.5px;
     	    line-height: 1.2rem;
-    	    border: 1.5px solid #E0E0E0;
+    	    // border: 1.5px solid #E0E0E0;
+    	    border: 1.5px solid #D8D8D8;
     	    border-left: none;
     	    background-clip: padding-box;
     	    margin: 0;

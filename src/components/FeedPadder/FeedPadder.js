@@ -8,7 +8,7 @@ export default class FeedPadder extends Component {
 		const { feed, branch, appHeight, feedHeight } = this.props,
 		style = require('./FeedPadder.scss');
 		let height;
-		if(feedHeight - 240 > 0) height = feedHeight - 240
+		if(feedHeight - 180 > 0) height = feedHeight - 180
 		else height = 0
 		return (
 			<div style={{height: ''}} id={style.feed_padder_wrapper}>

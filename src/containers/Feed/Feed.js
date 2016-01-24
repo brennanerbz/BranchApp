@@ -11,7 +11,7 @@ import * as messageActions from '../../redux/modules/messages';
 
 @connect(
 	state => ({
-		// messages: state.messages.messages
+		messages: state.messages.messages
 	}),
 	dispatch => ({
 		...bindActionCreators({
@@ -35,6 +35,9 @@ export default class Feed extends Component {
 		this.updateFeedHeight(appHeight)
 		this.updateFeedHeight(appWidth)
 		// socket.emit('get messages', { feed_id: activeFeed })
+		var node = this.refs.wrapper;
+		node.scrollTop = node.scrollHeight
+		this.shouldScrollToBottom = true
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -49,16 +52,15 @@ export default class Feed extends Component {
 
 	componentWillUpdate(nextProps) {
 		const { messages, activeFeed } = nextProps;
-		// this.updateMessages(messages, activeFeed)
 		var node = this.refs.wrapper
-		// this.shouldScrollToBottom = node.scrollTop + node.offsetHeight === node.scrollHeight
+		this.shouldScrollToBottom = node.scrollTop + node.offsetHeight === node.scrollHeight
 	}
 
 	componentDidUpdate(prevProps) {
 		var node = this.refs.wrapper;
-		// if(this.shouldScrollToBottom) {
-			// node.scrollTop = node.scrollHeight;
-		// }
+		if(this.shouldScrollToBottom) {
+			node.scrollTop = node.scrollHeight;
+		}
 	}
 
 	updateFeedHeight(height) {
@@ -78,7 +80,7 @@ export default class Feed extends Component {
 	}
 
 	render() {
-		const { feed, branch } = this.props,
+		const { feed, branch, messages } = this.props,
 		{ feedWidth, feedHeight, messagesDivHeight } = this.state,
 		style = require('./Feed.scss');
 		return (
@@ -104,6 +106,7 @@ export default class Feed extends Component {
 								feed={feed}
 								branch={branch}
 								key={'messageList'}
+								messages={messages}
 								// handleUpdateHeight={(height) => this.setState({messagesDivHeight: height})}
 							/>
 						</div>

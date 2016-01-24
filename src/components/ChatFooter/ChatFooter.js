@@ -10,7 +10,7 @@ export default class ChatFooter extends Component {
 		return (
 			<div 
 				id={style.chat_footer}>
-				<MessageComposer/>
+				<MessageComposer {...this.props}/>
 			</div>
 		);
 	}

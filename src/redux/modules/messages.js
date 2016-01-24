@@ -4,12 +4,11 @@ export const RECEIVE_VOTE = 'BranchApp/messages/RECEIVE_VOTE';
 
 const initialState = {
 	loaded: false,
-	messagesObject: {},
 	messages: []
 }
 
 export default function reducer(state = initialState, action) {
-	let { messages, messagesObject, loaded } = state;
+	let { messages, loaded } = state;
 
 	switch(action.type) {
 		case RECEIVE_MESSAGES:
@@ -19,11 +18,9 @@ export default function reducer(state = initialState, action) {
 				messages: messages
 			}
 		case RECEIVE_MESSAGE:
-			messagesObject[action.message.id] = action.message
 			return {
 				...state,
-				messages: [...state.messages, action.message],
-				messagesObject: messagesObject
+				messages: [...state.messages, action.message]
 			}
 		case RECEIVE_VOTE:
 			messages = messages.map(message => {

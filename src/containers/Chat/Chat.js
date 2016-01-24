@@ -108,7 +108,9 @@ export default class Chat extends Component {
             />
           </section>
         </div>
-        <Footer/>
+        <Footer
+          activeFeed={activeFeed}
+        />
       </div>
     );
   }

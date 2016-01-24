@@ -2,12 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import Message from '../Message/MessageContainer';
 import {connect} from 'react-redux';
 
-@connect(
-	state => ({
-		messages: state.messages.messages,
-		messagesObject: state.messages.messagesObject
-	})
-)
 export default class MessageList extends Component {
 	static propTypes = {
 	}
@@ -18,11 +12,9 @@ export default class MessageList extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		console.log(nextProps)
 	}
 
 	componentWillUpdate(nextProps) {
-		console.log(nextProps)
 	}
 
 	componentDidUpdate(prevProps) {
@@ -30,7 +22,7 @@ export default class MessageList extends Component {
 	}
 
 	render() {
-		let { feed, branch, messages, messagesObject } = this.props,
+		let { feed, branch, messages } = this.props,
 		style = require('./MessageList.scss');
 		let filteredMessages = messages.filter(message => {
 			return message.feed_id === feed.id

@@ -8,7 +8,7 @@ export default class ExploreBox extends Component {
 
 	render() {
 		const styles = require('./ExploreBox.scss'),
-		branchLogo = require('./SlackLogo.png');
+		branchLogo = require('./MessengerLogo.png');
 		return (
 			<div className={styles.explore_box + ' float_left'}>
 				<span id="branch_logo_wrapper" className="inline_block">

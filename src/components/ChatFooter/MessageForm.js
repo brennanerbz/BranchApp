@@ -8,6 +8,15 @@ export default class MessageForm extends Component {
 		text: ''
 	}
 
+	componentDidMount() {
+		this.refs.message_input.focus()
+	}
+
+	componentDidUpdate(prevProps) {
+		const { activeFeed } = this.props;
+		if(prevProps.activeFeed !== activeFeed) this.refs.message_input.focus()
+	}
+
 	handleTyping() {
 		// const { user, membership, feed } = this.props;
 		// var userTyping = {
@@ -53,6 +62,9 @@ export default class MessageForm extends Component {
 			<form key="messageForm" onSubmit={(e) => e.preventDefault()} id={style.message_form}>
 				<textarea 
 				id={style.message_input}
+				ref="message_input"
+				tabIndex={1}
+				autofocus={true}
 				placeholder="Type a message..."
 				value={text}
 				onChange={(e) => {
