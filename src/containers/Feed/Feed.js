@@ -80,7 +80,7 @@ export default class Feed extends Component {
 	}
 
 	render() {
-		const { feed, branch, messages } = this.props,
+		const { feed, branch, membership, messages } = this.props,
 		{ feedWidth, feedHeight, messagesDivHeight } = this.state,
 		style = require('./Feed.scss');
 		return (
@@ -105,6 +105,7 @@ export default class Feed extends Component {
 							<MessageList
 								feed={feed}
 								branch={branch}
+								membership={membership}
 								key={'messageList'}
 								messages={messages}
 								// handleUpdateHeight={(height) => this.setState({messagesDivHeight: height})}

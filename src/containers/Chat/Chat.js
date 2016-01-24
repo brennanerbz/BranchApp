@@ -71,9 +71,13 @@ export default class Chat extends Component {
       appWidth, 
       branches, 
       feeds, 
+      memberships,
       activeBranch, 
       activeFeed } = this.props,
     style = require('./Chat.scss');
+    let membership = memberships.filter(membership => {
+      return membership.feed_id == activeFeed
+    })[0]
     let feed = feeds.filter(feed => {
       return feed.id == activeFeed
     })[0]
@@ -85,6 +89,7 @@ export default class Chat extends Component {
         <Header
           feed={feed}
           branch={branch}
+          membership={membership}
         />
         <div 
           id={style.chat_body} 
@@ -105,11 +110,15 @@ export default class Chat extends Component {
               activeFeed={activeFeed}
               feed={feed}
               branch={branch}
+              membership={membership}
             />
           </section>
         </div>
         <Footer
           activeFeed={activeFeed}
+          feed={feed}
+          branch={branch}
+          membership={membership}
         />
       </div>
     );

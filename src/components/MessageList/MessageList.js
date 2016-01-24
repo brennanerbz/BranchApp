@@ -22,7 +22,7 @@ export default class MessageList extends Component {
 	}
 
 	render() {
-		let { feed, branch, messages } = this.props,
+		let { feed, branch, membership, messages } = this.props,
 		style = require('./MessageList.scss');
 		let filteredMessages = messages.filter(message => {
 			return message.feed_id === feed.id
@@ -34,6 +34,10 @@ export default class MessageList extends Component {
 						<Message 
 							key={'message' + message.id + i}
 							message={message}
+							feed={feed}
+							membership={membership}
+							// membership={membership}
+							// user={user}
 						/>
 					)
 				})}

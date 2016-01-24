@@ -1,5 +1,5 @@
 
-const RECEIVE_FEED_MEMBERSHIPS = 'BranchApp/feeds/RECEIVE_FEED_MEMBERSHIPS';
+const RECEIVE_MEMBERSHIPS = 'BranchApp/feeds/RECEIVE_MEMBERSHIPS';
 const RECEIVE_ALL_FEEDS = 'BranchApp/feeds/RECEIVE_ALL_FEEDS';
 const NEW_FEED = 'BranchApp/feeds/NEW_FEED';
 const RECEIVE_FEED = 'BranchApp/feeds/RECEIVE_FEED';
@@ -11,7 +11,38 @@ const CHANGE_ACTIVE_FEED = 'BranchApp/feeds/CHANGE_ACTIVE_FEED';
 
 const initialState = {
   loaded: false,
-  memberships: [],
+  memberships: [
+    {
+      id: Math.floor(Math.random() * 10000),
+      user_id: 1,
+      feed_id: 1,
+      alias: '',
+      open: true,
+      deleted: false,
+      creation: Date.now(),
+      modified: null
+    },
+    {
+      id: Math.floor(Math.random() * 10000),
+      user_id: 1,
+      feed_id: 2,
+      alias: '',
+      open: true,
+      deleted: false,
+      creation: Date.now(),
+      modified: null
+    },
+    {
+      id: Math.floor(Math.random() * 10000),
+      user_id: 1,
+      feed_id: 3,
+      alias: '',
+      open: true,
+      deleted: false,
+      creation: Date.now(),
+      modified: null
+    }
+  ],
   feeds: [
     {
       id: 1,
@@ -56,7 +87,7 @@ export default function reducer(state = initialState, action) {
       feeds = state.feeds;
 
   switch (action.type) {
-    case RECEIVE_FEED_MEMBERSHIPS:
+    case RECEIVE_MEMBERSHIPS:
       let f = []
       action.memberships.forEach(membership => f.push(membership.feed))
       return {
@@ -65,10 +96,9 @@ export default function reducer(state = initialState, action) {
         feeds: f
       }
     case RECEIVE_ALL_FEEDS:
-      feeds.concat(action.feeds)
       return {
         ...state,
-        feeds: feeds,
+        feeds: [...state.feeds, action.feeds],
         loaded: true
       }
     case NEW_FEED:
@@ -113,9 +143,9 @@ export function changeActiveFeed(feed_id) {
 
 
 //socket.on('receive child memberships')
-export function receiveFeedMemberships(memberships) {
+export function receiveMemberships(memberships) {
   return {
-    type: RECEIVE_FEED_MEMBERSHIPS,
+    type: RECEIVE_MEMBERSHIPS,
     memberships
   }
 }

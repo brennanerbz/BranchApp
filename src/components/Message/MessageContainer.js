@@ -25,7 +25,7 @@ export default class MessageContainer extends Component {
 	}
 
 	render() {
-		const { message } = this.props,
+		const { message, feed, membership } = this.props,
 		{ isMouseOverMessage, messageRendered } = this.state,
 		style = require('./Message.scss');
 		return (
@@ -41,6 +41,9 @@ export default class MessageContainer extends Component {
 					key={'messageContent' + message.id}
 				/>
 				<MessageFeedback
+					// user={{id: 1}}
+					membership={membership}
+					feed={feed}
 					message={message}
 					isMouseOverMessage={isMouseOverMessage}
 				/>
