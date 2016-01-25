@@ -14,7 +14,8 @@ export default class BranchAccordion extends Component {
 
 	state = {
 		collapsed: true,
-		isMouseOverBranch: false
+		isMouseOverBranch: false,
+		showInlineFeedCreation: false
 	}
 
 	componentDidMount() {
@@ -22,9 +23,24 @@ export default class BranchAccordion extends Component {
 		if(index == 0) this.setState({collapsed: false});
 	}
 
+	handleOpenNewFeed() {
+		this.setState({
+			showInlineFeedCreation: true
+		});
+	}
+
+	createNewFeed() {
+		console.log('new feed')
+		setTimeout(() => {
+			this.setState({
+				showInlineFeedCreation: false
+			});
+		}, 50)
+	}
+
 	render() {
 		const { index, branch, active, activeFeed, feeds } = this.props,
-		{ collapsed, isMouseOverBranch } = this.state,
+		{ collapsed, isMouseOverBranch, showInlineFeedCreation } = this.state,
 		style = require('./BranchAccordion.scss');
 		return (
 			<div 
@@ -54,6 +70,7 @@ export default class BranchAccordion extends Component {
 							collapsed={collapsed}
 							isMouseOverBranch={isMouseOverBranch}
 							branch={branch}
+							openNewFeed={::this.handleOpenNewFeed}
 						/>
 						<div 
 						 id={style.accordion}
@@ -62,6 +79,9 @@ export default class BranchAccordion extends Component {
 								feeds={feeds}
 								activeFeed={activeFeed}
 								onChangeActiveFeed={this.props.onChangeActiveFeed}
+								showInlineFeedCreation={showInlineFeedCreation}
+								createNewFeed={() => ::this.createNewFeed()}
+								closeNewFeed={() => this.setState({showInlineFeedCreation: false})}
 							/>
 						</div>
 					</div>

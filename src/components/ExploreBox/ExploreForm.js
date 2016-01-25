@@ -10,7 +10,7 @@ export default class ExploreForm extends Component {
 
 	handleOpenBranch = () => {
 		const { text } = this.state;
-		socket.emit('go to parent', text)
+		// socket.emit('go to parent', text)
 	}
 
 	render() {
@@ -32,8 +32,8 @@ export default class ExploreForm extends Component {
 							});
 						}}
 						onKeyDown={(e) => {
-							e.preventDefault()
 							if(e.which == 13) {
+								e.preventDefault()
 								this.handleOpenBranch()
 							}
 						}}

@@ -37,7 +37,7 @@ export default class FeedPadder extends Component {
 		let height;
 		// if(feedHeight - paddingContentHeight > 0) height = feedHeight - paddingContentHeight
 		// else height = 0
-		if(feedWidth > 800) height = feedHeight - 185
+		if(feedWidth > 850) height = feedHeight - 185
 		else height = feedHeight - 205
 		return (
 			<div style={{height: ''}} id={style.feed_padder_wrapper}>

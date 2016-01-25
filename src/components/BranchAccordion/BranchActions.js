@@ -34,7 +34,7 @@ export default class BranchActions extends Component {
 				{
 					!collapsed
 					&&
-					<button className="button outline circle">
+					<button onClick={() => this.props.openNewFeed()} className="button outline circle">
 						<i className="fa fa-plus"></i>
 					</button>
 				}
