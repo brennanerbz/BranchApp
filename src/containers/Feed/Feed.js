@@ -97,6 +97,7 @@ export default class Feed extends Component {
 						className={style.scrollable_area_body}>
 							<FeedPadder
 								feedHeight={feedHeight}
+								feedWidth={feedWidth}
 								// messagesDivHeight={messagesDivHeight}
 								feed={feed}
 								branch={branch}
