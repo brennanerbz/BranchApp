@@ -25,22 +25,18 @@ export default class Landing extends Component {
         		</div>
         	</div>
         	<div id={style.landing_body}>
-        		<div id={style.landing_body_wrapper}>
-	        		<div id={style.app_promo_wrapper}>
-	        			<div id={style.main_img_wrapper}>
-	        			</div>
-	        			<div id={style.app_content_panel}>
-	        				<div id={style.app_intro_txt}>
-	        					<h1>A messaging app to discover the world around you</h1>
-	        					<h2>Open and discover real-time conversations about things that interest with you with friends, family and people in your community.
-	        					</h2>
-	        				</div>
-	        				<div id={style.app_register_form}>
-	        					<SignUpForm 
-	        					/>
-	        				</div>
-	        			</div>
-	        		</div>
+        		<div id={style.landing_body_wrapper} className="clearfix">
+        			<div id={style.main_img_wrapper}>
+        			</div>
+    				<div id={style.app_intro_txt}>
+    					<h1>A messaging app to discover the world around you</h1>
+    					<h2>Open and discover real-time conversations about things that interest with you with friends, family and people in your community.
+    					</h2>
+    				</div>
+    				<div id={style.app_register_form}>
+    					<SignUpForm 
+    					/>
+    				</div>
         		</div>
         	</div>
         	<div id={style.landing_footer}>

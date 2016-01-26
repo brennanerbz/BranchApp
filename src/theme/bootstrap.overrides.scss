@@ -62,8 +62,9 @@ a, abbr, acronym, address, applet, big, blockquote, body, caption, cite, code, d
 input {
 	font-size: 1.25rem;
 	line-height: normal;
+	height: 32px;
 	padding: .75rem;
-	border: 1px solid #C5C5C5;
+	border: 1px solid rgba(0, 0, 0, .20);
 	border-radius: .25rem;
 	-webkit-appearance: none;
 	-moz-appearance: none;
@@ -80,6 +81,13 @@ input {
 	-moz-osx-font-smoothing: grayscale;
 	box-shadow: none;
 	height: auto;
+	&:hover {
+		border: 1px solid rgba(0, 0, 0, .30);
+	}
+	&:focus {
+		border: 1px solid #498DFF;
+		outline: none;
+	}
 }
 
 

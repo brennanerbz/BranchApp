@@ -143,6 +143,25 @@ a {
 }
 
 
+:global .button {
+	width: 100%;
+	font-family: "Helvetica Neue",Helvetica,"Segoe UI",Tahoma,Arial,sans-serif;
+	box-shadow: none;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-shadow: none;
+    white-space: nowrap;
+    border-radius: 4px;
+    color: #fff;
+	&.primary {
+		background-color: #0084ff;
+		background-image: none;
+		border: 1px solid #0084ff;
+	}
+}
 
 
 
