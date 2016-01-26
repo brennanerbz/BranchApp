@@ -2,13 +2,53 @@ import React, { Component } from 'react';
 import { pushState } from 'redux-router';
 import Helmet from 'react-helmet';
 
+import LogInForm from '../../components/LogInForm/LogInForm';
+import SignUpForm from '../../components/SignUpForm/SignUpForm';
+
+
 export default class Landing extends Component {
   render() {
-    const styles = require('./Landing.scss');
+    const style = require('./Landing.scss'),
+    brandLogo = require('../../components/ExploreBox/messengerLogo.png')
     return (
-      <div id="landing" className="">
+      <div id={style.landing_page}>
         <Helmet title="Home"/>
-        <h1>Landing</h1>
+        <div id={style.landing_page_wrapper}>
+        	<div id={style.landing_header}>
+        		<div id={style.landing_header_wrapper} className="relative clearfix">
+	        		<div id={style.logo_wrapper}>
+	        			<img id={style.brand_logo} src={brandLogo}/>
+	        		</div>
+	        		<div id={style.log_in_wrapper} className="float_right">
+	        			<LogInForm/>
+	        		</div>
+        		</div>
+        	</div>
+        	<div id={style.landing_body}>
+        		<div id={style.landing_body_wrapper}>
+	        		<div id={style.app_promo_wrapper}>
+	        			<div id={style.main_img_wrapper}>
+	        			</div>
+	        			<div id={style.app_content_panel}>
+	        				<div id={style.app_intro_txt}>
+	        					<h1>A messaging app to discover the world around you</h1>
+	        					<h2>Open and discover real-time conversations about things that interest with you with friends, family and people in your community.
+	        					</h2>
+	        				</div>
+	        				<div id={style.app_register_form}>
+	        					<SignUpForm 
+	        					/>
+	        				</div>
+	        			</div>
+	        		</div>
+        		</div>
+        	</div>
+        	<div id={style.landing_footer}>
+        		<div id={style.landing_footer_wrapper} className="relative">
+        		<p>&copy; Branch 2015. View our <a>Data Policy</a> and <a>Terms</a></p>
+        		</div>
+        	</div>
+    	</div>
       </div>
     );
   }

@@ -74,9 +74,7 @@ export default class App extends Component {
     return (
       <div id={styles.app} ref="app">
         <Helmet {...config.app.head}/>
-        <div className={styles.client_ui}>
           {appChildrenWithProps}
-        </div>
       </div>
     );
   }
