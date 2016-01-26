@@ -36,7 +36,7 @@ export default class Landing extends Component {
         			<div id={style.main_img_wrapper}>
         			</div>
     				<div id={style.app_intro_txt}>
-    					<h1>A messaging app to discover the world around you</h1>
+    					<h1>A messaging app to talk about what interests you</h1>
     					<h2>Open and discover real-time conversations about things that interest with you with friends, family and people in your community.
     					</h2>
     				</div>

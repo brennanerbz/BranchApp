@@ -89,6 +89,10 @@ input {
 			border: 1px solid #498DFF;
 			outline: none;
 		}
+		&.error {
+			border: 1px solid #ED7272!important;
+			color: #D66060!important;
+		}
 	}
 }
 

@@ -50,4 +50,10 @@
 		margin-top: 10px;
 		margin-bottom: 10px;
 	}
+	p {
+		&.error {
+			color: #D66060;
+			margin-top: 10px;
+		}
+	}
 }
