@@ -46,7 +46,16 @@ export default class Chat extends Component {
   }
 
   componentDidMount() {
-    // global.socket = this.initSocket()
+    global.socket = this.initSocket()
+    socket.on('connect', () => {
+    })
+    socket.on('my response', (res) => {
+      console.log('response:', res)
+    })
+    socket.on('connected', (res) => {
+      console.log('connected: ', res)
+    })
+    socket.emit('request connect')
   }
 
   componentWillReceiveProps(nextProps) {
@@ -60,7 +69,8 @@ export default class Chat extends Component {
   }
 
   initSocket() {
-    const socket = io('', {path: '/ws'});
+    // import config 
+    const socket = io.connect('http://127.0.0.1:5000/chat');
     return socket;
   }
 

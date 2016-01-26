@@ -79,11 +79,12 @@ export function isLoaded(globalState) {
   return globalState.auth && globalState.auth.loaded;
 }
 
+// Change these values to access chat / landing 
 export function checkAuth() {
   if (cookie.load('token')) {
-    return true;
+    return false;
   }
-  return false;
+  return true;
 }
 
 export function load() {

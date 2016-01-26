@@ -12,8 +12,8 @@ const environment = {
 module.exports = Object.assign({
   host: process.env.HOST || 'localhost',
   port: process.env.PORT,
-  apiHost: process.env.APIHOST || '127.0.0.1',
-  apiPort: process.env.APIPORT,
+  apiHost: '127.0.0.1',
+  apiPort: '5000',
   app: {
     title: 'Branch',
     description: 'Chat for the 21st century.',

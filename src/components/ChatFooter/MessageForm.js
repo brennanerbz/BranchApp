@@ -18,13 +18,19 @@ export default class MessageForm extends Component {
 	}
 
 	handleTyping() {
-		// const { user, membership, feed } = this.props;
-		// var userTyping = {
-		// 	user_id: user.id,
-		// 	membership_id: membership.id,
-		// 	feed_id: feed.id
-		// }
-		// socket.emit('typing', userTyping)
+		const { user, membership, feed } = this.props;
+		var userTyping = {
+			user_id: 1,
+			membership_id: 1,
+			feed_id: 1
+		}
+		// socket.emit('user typing', userTyping)
+		socket.emit('my event', 
+			{
+				name: 'nate dogg',
+				purpose: 'take over the world'
+			}
+		)
 	}
 
 	handleSubmitMessage() {

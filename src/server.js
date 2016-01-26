@@ -39,8 +39,8 @@ app.use('/api', (req, res) => {
   proxy.web(req, res, {target: targetUrl});
 });
 
-app.use('/ws', (req, res) => {
-  proxy.web(req, res, {target: targetUrl + '/ws'});
+app.use('/chat', (req, res) => {
+  proxy.web(req, res, {target: targetUrl + '/chat'});
 });
 
 server.on('upgrade', (req, socket, head) => {
