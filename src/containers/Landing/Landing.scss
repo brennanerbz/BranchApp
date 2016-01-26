@@ -36,7 +36,9 @@
 	position: fixed;
 	z-index: 100;
 	width: 100%;
+	background: #fff;
 	border-bottom: 1px solid #EDF0F6;
+    box-shadow: 0 0px 1px rgba(0,0,0,.1);
 	#landing_header_wrapper {
 		padding: 0;
 	    background: #fff;
@@ -72,6 +74,8 @@
 // Body
 #landing_body {
 	padding-top: 85px;
+	height: 100%;
+	background: #fafafa;
 	#landing_body_wrapper {
 		margin: 0;
 		list-style: none;
@@ -85,7 +89,7 @@
 		-webkit-flex-flow: row wrap;
 		justify-content: space-around;
 		
-		padding-top: 11.5em;
+		padding-top: 12.5em;
 		@media screen and (max-width: 1000px) {
 			margin: 0 auto!important;
 			padding-top: 3.5em;
@@ -157,11 +161,13 @@
 	bottom: 0;
 	left: 0;
 	width: 100%;
+	background: #fff;
 	border-top: 1px solid #EDF0F6;
 	#landing_footer_wrapper {
-		padding: 1.5em;
+		padding: 2em;
 		display: table;
 		margin: 0 auto;
 		text-align: center;
+	    background: #fff;
 	}
 }
