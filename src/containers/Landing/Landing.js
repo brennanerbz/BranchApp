@@ -16,11 +16,18 @@ export default class Landing extends Component {
         <div id={style.landing_page_wrapper}>
         	<div id={style.landing_header}>
         		<div id={style.landing_header_wrapper} className="relative clearfix">
-	        		<div id={style.logo_wrapper}>
-	        			<img id={style.brand_logo} src={brandLogo}/>
+	        		<div id={style.head_logo_link} className="float_left">
+	        			<a id={style.headlink}>
+	        				<div className="inline_block">
+	        					<img id={style.brand_logo} src={brandLogo}/>
+	        				</div>
+	        				<h1 id={style.brand_name} className="inline_block">
+	        					<div id={style.brand_link}>Branch</div>
+	        				</h1>
+	        			</a>
 	        		</div>
 	        		<div id={style.log_in_wrapper} className="float_right">
-	        			<LogInForm/>
+	        			<LogInForm inline={true}/>
 	        		</div>
         		</div>
         	</div>
@@ -34,6 +41,7 @@ export default class Landing extends Component {
     					</h2>
     				</div>
     				<div id={style.app_register_form}>
+    					<h1>Sign up</h1>
     					<SignUpForm 
     					/>
     				</div>
