@@ -61,7 +61,8 @@ module.exports = {
       __CLIENT__: true,
       __SERVER__: false,
       __DEVELOPMENT__: false,
-      __DEVTOOLS__: false
+      __DEVTOOLS__: false,
+      __HEROKUSERVER___: true
     }),
 
     // ignore dev config

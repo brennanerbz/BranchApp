@@ -6,6 +6,9 @@ const methods = ['get', 'post', 'put', 'patch', 'del'];
 
 function formatUrl(path) {
   const adjustedPath = path[0] !== '/' ? '/' + path : path;
+  if(__HEROKUSERVER__) {
+    return config.herokuApi + adjustedPath
+  }
   return 'http://' + config.apiHost + ':' + config.apiPort + adjustedPath;
   // if (__SERVER__) {
     // Prepend host and port of the API server to the path.
