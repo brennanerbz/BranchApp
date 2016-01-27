@@ -62,7 +62,7 @@ module.exports = {
       __SERVER__: false,
       __DEVELOPMENT__: false,
       __DEVTOOLS__: false,
-      __HEROKUSERVER___: true
+      __HEROKUSERVER__: true
     }),
 
     // ignore dev config

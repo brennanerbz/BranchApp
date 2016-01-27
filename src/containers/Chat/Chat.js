@@ -4,6 +4,8 @@ import { pushState } from 'redux-router';
 import io from 'socket.io-client';
 import { bindActionCreators } from 'redux';
 
+/* Config */
+import config from '../../config';
 /* Helpers */
 import connectData from 'helpers/connectData';
 
@@ -46,8 +48,10 @@ export default class Chat extends Component {
   }
 
   componentDidMount() {
+    console.log(this.props.user)
     global.socket = this.initSocket()
-    socket.on('connect', () => {
+    socket.on('connect', (res) => {
+      console.log('connect:', res)
     })
     socket.on('my response', (res) => {
       console.log('response:', res)
@@ -55,7 +59,12 @@ export default class Chat extends Component {
     socket.on('connected', (res) => {
       console.log('connected: ', res)
     })
-    socket.emit('request connect')
+    socket.on('disconnected', (res) => {
+      console.log('disconnected:', res)
+    })
+    socket.emit('request connect', {
+      user_id: this.props.user
+    })
   }
 
   componentWillReceiveProps(nextProps) {
@@ -63,14 +72,20 @@ export default class Chat extends Component {
 
 
   componentWillUnmount() {
-    // if (socket) {
-    //   return;
-    // }
+    console.log('unmounting')
+    if (socket) {
+      // socket.emit('request disconnect')
+    }
   }
 
   initSocket() {
-    // import config 
-    const socket = io.connect('http://127.0.0.1:5000/chat');
+    let socketAddress;
+    if(__HEROKUSERVER__) {
+      socketAddress = config.herokuApi + '/chat'
+    } else {
+      socketAddress = config.apiHost + ':' + config.apiPort + '/chat'
+    }
+    const socket = io(socketAddress);
     return socket;
   }
 

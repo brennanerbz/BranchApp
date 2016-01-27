@@ -93,7 +93,7 @@ module.exports = {
       __SERVER__: false,
       __DEVELOPMENT__: true,
       __DEVTOOLS__: true, // <-------- DISABLE redux-devtools HERE
-      __HEROKUSERVER__: false
+      __HEROKUSERVER__: true
     }),
     webpackIsomorphicToolsPlugin.development()
   ]

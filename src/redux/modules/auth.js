@@ -129,7 +129,8 @@ export function loadAuthCookie() {
     type: LOAD_AUTH_COOKIE
   }
 }
-export function login(loginInfo) {
+export function login(loginInfo, replaceState) {
+  replaceState(null, '/')
   return {
     types: [LOGIN, LOGIN_SUCCESS, LOGIN_FAIL],
     promise: (client) => client.post('/login', loginInfo)

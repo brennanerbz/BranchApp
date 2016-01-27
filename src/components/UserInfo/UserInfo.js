@@ -22,7 +22,9 @@ export default class UserInfo extends Component {
 		const style = require('./UserInfo.scss');
 		return (
 			<div 
-			onClick={() => this.props.logout()}
+			onClick={() => {
+				this.props.logout()
+			}}
 			id={style.user_info} 
 			className="float_right">
 				<span className="bubble_dropdown_container">

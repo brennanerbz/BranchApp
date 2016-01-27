@@ -6,6 +6,7 @@ import {
     App,
     Chat,
     Landing,
+    Index,
     NotFound
   } from 'containers';
 
@@ -31,7 +32,7 @@ export default (store) => {
   */
   return (
     <Route path="/" component={App}>
-      <IndexRoute component={cookie.load('loginResult') ? Chat : Landing}/>
+      <IndexRoute component={Index}/>
       <Route path="*" component={NotFound} status={404} />
     </Route>
   )

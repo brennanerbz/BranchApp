@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import {connect} from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { replaceState } from 'redux-router';
 import { isEmpty, validateEmail } from '../../utils/validation';
 import * as loginActions from '../../redux/modules/auth';
 
@@ -10,7 +11,8 @@ import * as loginActions from '../../redux/modules/auth';
 	}),
 	dispatch => ({
 		...bindActionCreators({
-			...loginActions
+			...loginActions,
+			replaceState
 		}, dispatch)
 	})
 )
@@ -24,14 +26,14 @@ export default class LogInForm extends Component {
 	}
 
 	handleSubmitLogIn() {
-		const { login } = this.props;
+		const { login, replaceState } = this.props;
 		const { email, password } = this.state;
 		if(!isEmpty(email) && !isEmpty(password)) {
 			const user = {
 				email: email,
 				password: password
 			}
-			login(user)
+			login(user, replaceState)
 			this.setState({
 				email: '',
 				password: ''

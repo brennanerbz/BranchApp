@@ -57,10 +57,9 @@ export default class App extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (!this.props.user && nextProps.user) {
-      console.log('logged in')
       this.props.pushState(null, '/')
+      this.updateAppSize()
     } else if (this.props.user && !nextProps.user) {
-      console.log('logged out')
     }
   }
 
@@ -81,7 +80,8 @@ export default class App extends Component {
     appChildrenWithProps = React.Children.map(this.props.children, (child) => {
       return React.cloneElement(child, {
         appHeight: height,
-        appWidth: width
+        appWidth: width,
+        user: user
       })
     }),
     styles = require('./App.scss');

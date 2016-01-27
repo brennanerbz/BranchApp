@@ -33,7 +33,7 @@ export default class Feed extends Component {
 	componentDidMount() {
 		const { appHeight, appWidth, activeFeed } = this.props;
 		this.updateFeedHeight(appHeight)
-		this.updateFeedHeight(appWidth)
+		this.updateFeedWidth(appWidth)
 		// socket.emit('get messages', { feed_id: activeFeed })
 		var node = this.refs.wrapper;
 		node.scrollTop = node.scrollHeight
