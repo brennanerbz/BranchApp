@@ -16,6 +16,8 @@ const SIGNUP = 'BranchApp/auth/SIGNUP';
 const SIGNUP_SUCCESS = 'BranchApp/auth/SIGNUP_SUCCESS';
 const SIGNUP_FAILURE = 'BranchApp/auth/SIGNUP_FAILURE';
 
+const LOAD_AUTH_COOKIE = 'BranchApp/auth/LOAD_AUTH_COOKIE';
+
 const initialState = {
   loaded: false
 };
@@ -48,11 +50,19 @@ export default function reducer(state = initialState, action = {}) {
         errorOnLogIn: false
       };
     case LOGIN_SUCCESS:
-      cookie.save('user_id', action.result.id);
+      cookie.save('loginResult', action.result);
       return {
         ...state,
         loggingIn: false,
         user: action.result
+      };
+    case LOAD_AUTH_COOKIE:
+      const loginResult = cookie.load('loginResult');
+      const user = loginResult ? loginResult.id : null
+      return {
+        ...state,
+        loaded: user === null ? false : true,
+        user: user
       };
     case LOGIN_FAIL:
       return {
@@ -105,24 +115,20 @@ export default function reducer(state = initialState, action = {}) {
   }
 }
 
+
 export function isLoaded(globalState) {
-  return globalState.auth && globalState.auth.loaded;
+  return globalState.auth && globalState.auth.loaded
 }
-
-// Change these values to access chat / landing 
-export function checkAuth() {
-  // cookie.remove('user_id')
-  return !!cookie.load('user_id')
+export function loadAuth() {
+  return (dispatch) => {
+    dispatch(loadAuthCookie());
+  }
 }
-
-export function load() {
+export function loadAuthCookie() {
   return {
-    types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get('/loadAuth')
-  };
+    type: LOAD_AUTH_COOKIE
+  }
 }
-
-
 export function login(loginInfo) {
   return {
     types: [LOGIN, LOGIN_SUCCESS, LOGIN_FAIL],
@@ -130,37 +136,15 @@ export function login(loginInfo) {
   };
 }
 export function logout() {
-  cookie.remove('token');
+  cookie.remove('loginResult');
   return {
-    types: [LOGOUT, LOGOUT_SUCCESS, LOGOUT_FAIL],
-    promise: (client) => client.get('/logout')
+    type: LOGOUT_SUCCESS
   };
 }
-
-/*
-export function login(loginInfo) {
-  return(dispatch, getState) => {
-    request
-    .post('http://127.0.0.1:5000/login')
-    .send(loginInfo)
-    .end((err, res) => {
-      if(res.ok) {
-        console.log(res)
-        const user = res.body
-        dispatch({type: LOGIN_SUCCESS, user})
-      }
-    })
-  }
-}
-*/
-
-// SignUp
-export function signup(user) {
-  console.log(user)
+export function signup() {
   return {
     types: [SIGNUP, SIGNUP_SUCCESS, SIGNUP_FAILURE],
     promise: (client) => client.post('/signup', user)
   }
 }
-
 

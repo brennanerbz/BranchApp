@@ -1,30 +1,36 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { IndexLink } from 'react-router';
 import Helmet from 'react-helmet';
-import { isLoaded as isAuthLoaded, load as loadAuth, logout, checkAuth } from 'redux/modules/auth';
-import { pushState, replaceState } from 'redux-router';
+import { isLoaded as isAuthLoaded, loadAuthCookie, loadAuth } from 'redux/modules/auth';
+import { pushState } from 'redux-router';
 import connectData from 'helpers/connectData';
 import config from '../../config';
 
 function fetchData(getState, dispatch) {
-  const promises = [];
-  if (!isAuthLoaded(getState())) {
-    promises.push(dispatch(loadAuth()));
-  }
-  return Promise.all(promises);
+  // const promises = [];
+  // if (!isAuthLoaded(getState())) {
+  //   promises.push(dispatch(loadAuthCookie()));
+  // }
+  // return Promise.all(promises);
+  bindActionCreators({loadAuthCookie}, dispatch).loadAuthCookie();
 }
 
-// @connectData(fetchData)
-
+@connectData(fetchData)
 @connect(
   state => ({user: state.auth.user}),
-  {logout, pushState})
+  dispatch => ({
+    ...bindActionCreators({
+      loadAuth,
+      pushState
+    }, dispatch)
+  })
+)
 export default class App extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
     user: PropTypes.object,
-    logout: PropTypes.func.isRequired,
     pushState: PropTypes.func.isRequired
   };
 
@@ -35,6 +41,10 @@ export default class App extends Component {
   state = {
     height: 0,
     width: 0
+  }
+
+  componentWillMount() {
+    this.props.loadAuth()
   }
 
   componentDidMount() {
@@ -63,11 +73,6 @@ export default class App extends Component {
       height: this.refs.app.clientHeight,
       width: this.refs.app.clientWidth
     });
-  }
-
-  handleLogout = (event) => {
-    event.preventDefault();
-    this.props.logout();
   }
 
   render() {

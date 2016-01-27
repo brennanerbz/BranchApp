@@ -1,5 +1,6 @@
 import superagent from 'superagent';
 import config from '../config';
+import cookie from 'react-cookie';
 
 const methods = ['get', 'post', 'put', 'patch', 'del'];
 
@@ -24,6 +25,10 @@ class _ApiClient {
     methods.forEach((method) =>
       this[method] = (path, data) => new Promise((resolve, reject) => {
         const request = superagent[method](formatUrl(path));
+
+        if(cookie && cookie.load('loginResult')) {
+          request.set('authorization', 'Bearer ' + cookie.load('loginResult').id)
+        }
 
         if (data) {
           request.send(data);

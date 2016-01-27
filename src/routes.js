@@ -1,6 +1,7 @@
 import React from 'react';
+import cookie from 'react-cookie';
 import {IndexRoute, Route} from 'react-router';
-import { isLoaded as isAuthLoaded, load as loadAuth, checkAuth as checkLoggedIn} from 'redux/modules/auth';
+import { isLoaded as isAuthLoaded, loadAuthCookie } from 'redux/modules/auth';
 import {
     App,
     Chat,
@@ -9,48 +10,30 @@ import {
   } from 'containers';
 
 export default (store) => {
-  const requireLogin = (nextState, replaceState, cb) => {
+  const checkLogin = (nextState, replaceState, cb) => {
     function checkAuth() {
       const { auth: { user }} = store.getState();
-      if (!user) {
+      if (user) {
         replaceState(null, '/');
       }
       cb();
     }
 
     if (!isAuthLoaded(store.getState())) {
-      store.dispatch(loadAuth()).then(checkLoggedIn);
+      store.dispatch(loadAuthCookie()).then(checkAuth);
     } else {
-      checkLoggedIn();
+      checkAuth();
     }
   };
 
-  /**
-   * Please keep routes in alphabetical order
-  return (
-    <Route path="/" component={App}>
-      <IndexRoute component={checkLoggedIn() ? Chat : Landing}/>
-      <Route path="*" component={NotFound} status={404} />
-    </Route>
-  );
+  /*
+  Please keep routes in alphabetical order
   */
   return (
-    {
-      component: App,
-      childRoutes: [
-
-        {
-          path: '/',
-          getComponent: (location, cb) => {
-            if (checkLoggedIn()) {
-              return cb(null, Chat)
-            }
-            return cb(null, Landing)
-          },
-        }
-
-      ]
-    }
+    <Route path="/" component={App}>
+      <IndexRoute component={cookie.load('loginResult') ? Chat : Landing}/>
+      <Route path="*" component={NotFound} status={404} />
+    </Route>
   )
 };
 
@@ -65,5 +48,21 @@ export default (store) => {
   </Route>
   <Route path="*" component={NotFound} status={404}/>
 </Route>
+{
+      component: App,
+      childRoutes: [
+        {
+          onEnter: checkLogin,
+          childRoutes: [
+            {
+              path: '/',
+              getComponent: (location, cb) => {
+                return cb(null, Chat)
+              },
+            }
+          ]
+        }
+      ]
+    }
 
 */

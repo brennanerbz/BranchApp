@@ -11,6 +11,7 @@ import ApiClient from './helpers/ApiClient';
 import Html from './helpers/Html';
 import PrettyError from 'pretty-error';
 import http from 'http';
+import cookie from 'react-cookie';
 
 import {ReduxRouter} from 'redux-router';
 import createHistory from 'history/lib/createMemoryHistory';
@@ -35,14 +36,13 @@ app.use(favicon(path.join(__dirname, '..', 'static', 'favicon.ico')));
 app.use(Express.static(path.join(__dirname, '..', 'static')));
 
 // Proxy to API server
+// Add cookies sent from client
 app.use('/api', (req, res) => {
   proxy.web(req, res, {target: targetUrl});
 });
-
 app.use('/chat', (req, res) => {
   proxy.web(req, res, {target: targetUrl + '/chat'});
 });
-
 server.on('upgrade', (req, socket, head) => {
   proxy.ws(req, socket, head);
 });
@@ -62,6 +62,9 @@ proxy.on('error', (error, req, res) => {
 });
 
 app.use((req, res) => {
+
+  cookie.plugToRequest(req, res);
+  
   if (__DEVELOPMENT__) {
     // Do not cache webpack stats: the script file would change since
     // hot module replacement is enabled in the development env
