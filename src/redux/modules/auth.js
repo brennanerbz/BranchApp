@@ -58,7 +58,7 @@ export default function reducer(state = initialState, action = {}) {
       };
     case LOAD_AUTH_COOKIE:
       const loginResult = cookie.load('loginResult');
-      const user = loginResult ? loginResult.id : null
+      const user = loginResult ? loginResult : null
       return {
         ...state,
         loaded: user === null ? false : true,
@@ -97,6 +97,7 @@ export default function reducer(state = initialState, action = {}) {
         signUpError: null
       }
     case SIGNUP_SUCCESS:
+      cookie.save('loginResult', action.result)
       return {
         ...state,
         loggingIn: false,
@@ -142,7 +143,7 @@ export function logout() {
     type: LOGOUT_SUCCESS
   };
 }
-export function signup() {
+export function signup(user) {
   return {
     types: [SIGNUP, SIGNUP_SUCCESS, SIGNUP_FAILURE],
     promise: (client) => client.post('/signup', user)
