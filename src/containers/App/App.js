@@ -2,8 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { IndexLink } from 'react-router';
 import Helmet from 'react-helmet';
-import { isLoaded as isAuthLoaded, load as loadAuth, logout } from 'redux/modules/auth';
-import { pushState } from 'redux-router';
+import { isLoaded as isAuthLoaded, load as loadAuth, logout, checkAuth } from 'redux/modules/auth';
+import { pushState, replaceState } from 'redux-router';
 import connectData from 'helpers/connectData';
 import config from '../../config';
 
@@ -43,6 +43,15 @@ export default class App extends Component {
       width: this.refs.app.clientWidth
     });
     window.addEventListener('resize', ::this.updateAppSize)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!this.props.user && nextProps.user) {
+      console.log('logged in')
+      this.props.pushState(null, '/')
+    } else if (this.props.user && !nextProps.user) {
+      console.log('logged out')
+    }
   }
 
   componentWillUnmount() {

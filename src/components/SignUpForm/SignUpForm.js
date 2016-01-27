@@ -50,7 +50,7 @@ export default class SignUpForm extends Component {
 					email: email,
 					password: password
 				}
-				// signup(newUser)
+				signup(newUser)
 				this.setState({
 					username: '',
 					email: '',

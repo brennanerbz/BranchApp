@@ -13,30 +13,47 @@ export default (store) => {
     function checkAuth() {
       const { auth: { user }} = store.getState();
       if (!user) {
-        // oops, not logged in, so can't be here!
         replaceState(null, '/');
       }
       cb();
     }
 
     if (!isAuthLoaded(store.getState())) {
-      store.dispatch(loadAuth()).then(checkAuth);
+      store.dispatch(loadAuth()).then(checkLoggedIn);
     } else {
-      checkAuth();
+      checkLoggedIn();
     }
   };
 
   /**
    * Please keep routes in alphabetical order
-   */
   return (
     <Route path="/" component={App}>
-      <IndexRoute  component={checkLoggedIn() ? Landing : Chat}/>
-
+      <IndexRoute component={checkLoggedIn() ? Chat : Landing}/>
       <Route path="*" component={NotFound} status={404} />
     </Route>
   );
+  */
+  return (
+    {
+      component: App,
+      childRoutes: [
+
+        {
+          path: '/',
+          getComponent: (location, cb) => {
+            if (checkLoggedIn()) {
+              return cb(null, Chat)
+            }
+            return cb(null, Landing)
+          },
+        }
+
+      ]
+    }
+  )
 };
+
 
 
 /*

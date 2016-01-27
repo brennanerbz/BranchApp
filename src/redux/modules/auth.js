@@ -1,4 +1,5 @@
 import cookie from 'react-cookie';
+import request from 'superagent';
 
 const LOAD = 'BranchApp/auth/LOAD';
 const LOAD_SUCCESS = 'BranchApp/auth/LOAD_SUCCESS';
@@ -43,10 +44,11 @@ export default function reducer(state = initialState, action = {}) {
     case LOGIN:
       return {
         ...state,
-        loggingIn: true
+        loggingIn: true,
+        errorOnLogIn: false
       };
     case LOGIN_SUCCESS:
-      cookie.save('token', action.result.token);
+      cookie.save('user_id', action.result.id);
       return {
         ...state,
         loggingIn: false,
@@ -57,6 +59,7 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         loggingIn: false,
         user: null,
+        errorOnLogIn: true,
         loginError: action.error
       };
     case LOGOUT:
@@ -80,6 +83,7 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         loggingIn: true,
+        errorOnSignUp: false,
         signUpError: null
       }
     case SIGNUP_SUCCESS:
@@ -93,6 +97,7 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         loggingIn: false,
         user: null,
+        errorOnSignUp: true,
         signUpError: action.error
       }
     default:
@@ -106,10 +111,8 @@ export function isLoaded(globalState) {
 
 // Change these values to access chat / landing 
 export function checkAuth() {
-  if (cookie.load('token')) {
-    return false;
-  }
-  return true;
+  // cookie.remove('user_id')
+  return !!cookie.load('user_id')
 }
 
 export function load() {
@@ -119,16 +122,11 @@ export function load() {
   };
 }
 
-// LogIn
-export function login(email, password) {
+
+export function login(loginInfo) {
   return {
     types: [LOGIN, LOGIN_SUCCESS, LOGIN_FAIL],
-    promise: (client) => client.post('/login', {
-      data: {
-        email: email,
-        password: password
-      }
-    })
+    promise: (client) => client.post('/login', loginInfo)
   };
 }
 export function logout() {
@@ -139,8 +137,26 @@ export function logout() {
   };
 }
 
+/*
+export function login(loginInfo) {
+  return(dispatch, getState) => {
+    request
+    .post('http://127.0.0.1:5000/login')
+    .send(loginInfo)
+    .end((err, res) => {
+      if(res.ok) {
+        console.log(res)
+        const user = res.body
+        dispatch({type: LOGIN_SUCCESS, user})
+      }
+    })
+  }
+}
+*/
+
 // SignUp
 export function signup(user) {
+  console.log(user)
   return {
     types: [SIGNUP, SIGNUP_SUCCESS, SIGNUP_FAILURE],
     promise: (client) => client.post('/signup', user)

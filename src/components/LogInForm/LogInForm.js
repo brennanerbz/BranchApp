@@ -1,5 +1,19 @@
 import React, { Component, PropTypes } from 'react';
+import {connect} from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { isEmpty, validateEmail } from '../../utils/validation';
+import * as loginActions from '../../redux/modules/auth';
 
+@connect(
+	state => ({
+		logInError: state.auth.logInError
+	}),
+	dispatch => ({
+		...bindActionCreators({
+			...loginActions
+		}, dispatch)
+	})
+)
 export default class LogInForm extends Component {
 	static propTypes = {
 	}
@@ -10,7 +24,19 @@ export default class LogInForm extends Component {
 	}
 
 	handleSubmitLogIn() {
-
+		const { login } = this.props;
+		const { email, password } = this.state;
+		if(!isEmpty(email) && !isEmpty(password)) {
+			const user = {
+				email: email,
+				password: password
+			}
+			login(user)
+			this.setState({
+				email: '',
+				password: ''
+			});
+		}
 	}
 
 	renderInlineLogInForm() {
@@ -44,7 +70,7 @@ export default class LogInForm extends Component {
 						onKeyDown={(e) => {
 							if(e.keyCode == 13) { 
 								e.preventDefault()
-								::this.handleSubmitLogIn()
+								this.handleSubmitLogIn()
 							}
 						}}/>
 					<a className={style.forgot}>Forgot password?</a> 

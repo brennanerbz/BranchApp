@@ -5,12 +5,12 @@ const methods = ['get', 'post', 'put', 'patch', 'del'];
 
 function formatUrl(path) {
   const adjustedPath = path[0] !== '/' ? '/' + path : path;
-  if (__SERVER__) {
+  return 'http://' + config.apiHost + ':' + config.apiPort + adjustedPath;
+  // if (__SERVER__) {
     // Prepend host and port of the API server to the path.
-    return 'http://' + config.apiHost + ':' + config.apiPort + adjustedPath;
-  }
+  // }
   // Prepend `/api` to relative URL, to proxy to API server.
-  return '/api' + adjustedPath;
+  // return 'http://' + config.apiHost + ':' + config.apiPort + '/api' + adjustedPath;
 }
 
 /*
@@ -22,16 +22,8 @@ function formatUrl(path) {
 class _ApiClient {
   constructor(req) {
     methods.forEach((method) =>
-      this[method] = (path, { params, data } = {}) => new Promise((resolve, reject) => {
+      this[method] = (path, data) => new Promise((resolve, reject) => {
         const request = superagent[method](formatUrl(path));
-
-        if (params) {
-          request.query(params);
-        }
-
-        if (__SERVER__ && req.get('cookie')) {
-          request.set('cookie', req.get('cookie'));
-        }
 
         if (data) {
           request.send(data);
