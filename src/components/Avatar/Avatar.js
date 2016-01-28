@@ -7,7 +7,7 @@ export default class Avatar extends Component {
 	}
 
 	render() {
-		const { size, message } = this.props,
+		const { size, message, picture } = this.props,
 		style = require('./Avatar.scss'),
 		defaultProfilePic = require('./DefaultProfilePic.png')
 		return (
@@ -17,13 +17,12 @@ export default class Avatar extends Component {
 				+ ' ' + (message ? style.avatar_message : '')
 			}>
 				<div 
-				// style={{border: '1px solid #e6e6e6'}} 
 				className={
 					'circle' 
 					+ ' ' + style.circle_avatar
 					+ ' ' + style[`c_${String(size)}`]
 				}>
-					<img src={defaultProfilePic}/>
+					<img src={picture !== null ? picture : defaultProfilePic}/>
 				</div>
 			</span>
 		);

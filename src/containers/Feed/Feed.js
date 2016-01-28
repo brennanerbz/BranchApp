@@ -80,7 +80,7 @@ export default class Feed extends Component {
 	}
 
 	render() {
-		const { feed, branch, membership, messages } = this.props,
+		const { feed, branch, membership, messages, user } = this.props,
 		{ feedWidth, feedHeight, messagesDivHeight } = this.state,
 		style = require('./Feed.scss');
 		return (
@@ -104,6 +104,7 @@ export default class Feed extends Component {
 								key={'feedPadder'}
 							/>
 							<MessageList
+								user={user}
 								feed={feed}
 								branch={branch}
 								membership={membership}

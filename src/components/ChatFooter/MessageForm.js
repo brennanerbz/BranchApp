@@ -20,27 +20,23 @@ export default class MessageForm extends Component {
 	handleTyping() {
 		const { user, membership, feed } = this.props;
 		var userTyping = {
-			user_id: 1,
+			user_id: user.id,
 			membership_id: 1,
-			feed_id: 1
+			feed_id: feed.id
 		}
-		// socket.emit('user typing', userTyping)
-		socket.emit('my event', 
-			{
-				name: 'nate dogg',
-				purpose: 'take over the world'
-			}
-		)
+		console.log(userTyping)
+		socket.emit('user typing', userTyping)
 	}
 
 	handleSubmitMessage() {
 		const { text } = this.state;
-		// { user, membership, feed } = this.props;
+		const { user, membership, feed } = this.props;
+		// CHANGE THE NEWMESSAGE OBJECT ONCE MEMBERSHIP IS IN
 		if(text.length > 0) {
 			var newMessage = {
 				id: Math.floor(Math.random() * 10000),
 				parent_id: 1,
-				user_id: 1,
+				user_id: user.id,
 				membership_id: 1,
 				feed_id: 1,
 				text: text,
@@ -49,7 +45,7 @@ export default class MessageForm extends Component {
 				positives: 1,
 				negatives: 0,
 				user: {
-					username: 'brennanerbz',
+					username: user.username,
 					profile_picture: null
 				}
 			}

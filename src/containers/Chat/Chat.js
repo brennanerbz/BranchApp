@@ -112,6 +112,7 @@ export default class Chat extends Component {
     return (
       <div id={style.chat}>
         <Header
+          user={user}
           feed={feed}
           branch={branch}
           membership={membership}
@@ -121,6 +122,7 @@ export default class Chat extends Component {
           className="flex_vertical flex_spacer">
           <section className="flex_horizontal flex_spacer">
             <Navigation
+              user={user}
               appHeight={appHeight}
               appWidth={appWidth}
               branches={branches}
@@ -129,6 +131,7 @@ export default class Chat extends Component {
               activeFeed={activeFeed}
             />
             <Feed
+              user={user}
               appHeight={appHeight}
               appWidth={appWidth}
               activeBranch={activeBranch}
@@ -140,6 +143,7 @@ export default class Chat extends Component {
           </section>
         </div>
         <Footer
+          user={user}
           activeFeed={activeFeed}
           feed={feed}
           branch={branch}

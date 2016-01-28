@@ -6,10 +6,11 @@ export default class MessageGutter extends Component {
 	}
 
 	render() {
+		const { message } = this.props;
 		const style = require('./Message.scss');
 		return (
 			<div className={style.message_gutter}>
-				<MessageIcon/>
+				<MessageIcon user={message.user}/>
 			</div>
 		);
 	}

@@ -6,10 +6,11 @@ export default class MessageIcon extends Component {
 	}
 
 	render() {
+		const { user } = this.props;
 		const style = require('./Message.scss');
 		return (
 			<div className={style.message_icon}>
-				<Avatar size={36} message={true}/>
+				<Avatar size={36} message={true} picture={user.profile_picture}/>
 			</div>
 		);
 	}
