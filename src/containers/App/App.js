@@ -9,6 +9,7 @@ import connectData from 'helpers/connectData';
 import config from '../../config';
 
 import Modal from '../../components/Modal/Modal';
+import Popover from '../../components/Popovers/Popover';
 
 function fetchData(getState, dispatch) {
   bindActionCreators({loadAuthCookie}, dispatch).loadAuthCookie();
@@ -89,6 +90,7 @@ export default class App extends Component {
         <Helmet {...config.app.head}/>
           {appChildrenWithProps}
           <Modal/>
+          <Popover/>
       </div>
     );
   }

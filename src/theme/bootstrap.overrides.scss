@@ -205,3 +205,29 @@ button {
 	}
 }
 
+// Popover 
+.popover {
+	min-width: 350px;
+	padding: 0!important;
+    border: 1px solid rgba(0, 0, 0, 0.11);
+    border-radius: 5px;
+    -webkit-box-shadow: 0 5px 9px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 5px 9px rgba(0, 0, 0, 0.15);
+    &.bottom {
+    	.arrow {
+    		border-bottom-color: rgba(0, 0, 0, 0.17);
+    	}
+    }
+	.popover-title {
+		background: #fff;
+		padding: 1.2em;
+		color: rgba(0, 0, 0, 1);
+		font-size: 16.5px;
+		font-weight: 500;
+		vertical-align: middle;
+	}
+	.popover-content {
+		padding: 1.2em;
+	}
+}
+

@@ -9,7 +9,6 @@ import * as feedActions from '../../redux/modules/feeds';
 
 @connect(
 	state => ({
-
 	}),
 	dispatch => ({
 		...bindActionCreators({

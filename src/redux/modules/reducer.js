@@ -6,6 +6,7 @@ import branches from './branches';
 import feeds from './feeds';
 import messages from './messages';
 import misc from './misc';
+import user from './user';
 
 // Keep in alphabetical order
 export default combineReducers({
@@ -14,5 +15,6 @@ export default combineReducers({
   branches,
   feeds,
   messages,
-  misc
+  misc,
+  user
 });

@@ -18,9 +18,7 @@ export default class ChatHeader extends Component {
 						feed={feed}
 						branch={branch}
 					/>
-					<UserInfo
-
-					/>
+					<UserInfo/>
 				</div>
 			</div>
 		);
