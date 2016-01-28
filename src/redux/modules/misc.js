@@ -1,4 +1,3 @@
-
 const OPEN_MODAL = 'BranchApp/misc/OPEN_MODAL';
 const CLOSE_MODAL = 'BranchApp/misc/CLOSE_MODAL';
 

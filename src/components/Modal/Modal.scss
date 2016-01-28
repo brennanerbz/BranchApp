@@ -1,3 +1,22 @@
+// Modal overwrites for settings modal
+.settings_dialog {
+	width: 650px;
+	height: 480px;
+	.modal-content {
+		height: 480px;
+	}
+}
+.settings_body {
+	padding: 0!important;
+	margin: 0!important;
+	background: #fff;
+	height: 455px;
+}
+#settings_content {
+	height: 100%;
+}
+
+// Close link
 a {
 	&.close {
 		font-size: 16.5px;
@@ -9,6 +28,64 @@ a {
 	}
 }
 
+#settings_list {
+	width: 170px;
+	background: #fff;
+	border-right: 1px solid rgba(0, 0, 0, .10);
+	border-bottom-left-radius: 4px!important;
+	ul {
+		margin: 0;
+		padding: 0;
+		list-style-type: none;
+		li {
+			display: block;
+			float: none;
+			&.active_setting {
+				background: #2A86FF;
+				a {
+					font-weight: 500;
+					color: #fff;
+				}
+			}
+			a {
+				clear: both;
+				display: block;
+				position: relative;
+				font-size: 14px;
+				font-weight: 400;
+				line-height: 21px;
+				padding: 10px 20px;
+				white-space: nowrap;
+				text-decoration: none;
+			}	
+		}
+	}
+}
+
+#active_setting_content {
+	padding: 0.5em 1.55em 0.5em;
+	height: 100%;
+	width: 60%;
+	button {
+		
+	}
+	input {
+		min-width: 240px;
+		height: 34px;
+		font-size: 14px;
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+	p {
+		margin: 7px 6px 7px;
+		font-size: 12.5px;
+		color: #66757f;
+		font-weight: 500;
+	}
+}	
+
+
+// Form items in settings list
 .form {
 	margin: 15px 0;
 	.label_wrapper {
@@ -23,3 +100,5 @@ a {
 		margin: 0;
 	}
 }
+
+

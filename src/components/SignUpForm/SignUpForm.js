@@ -118,6 +118,7 @@ export default class SignUpForm extends Component {
 					<a>Terms of Service</a> and <a>Data Policy</a>
 				</p>
 				<button 
+					style={{width: '100%'}}
 					className="button primary"
 			    	onClick={::this.handleSubmitSignUp}>
 					Sign up
