@@ -6,11 +6,13 @@ import { logout } from '../../redux/modules/auth';
 
 import Avatar from '../Avatar/Avatar';
 import Dropdown from '../Dropdown/Dropdown';
+import * as miscActions from '../../redux/modules/misc';
 
 @connect(
   state => ({user: state.auth.user}),
   dispatch => ({
     ...bindActionCreators({
+      ...miscActions,
       logout,
       pushState
     }, dispatch)
@@ -64,7 +66,7 @@ export default class UserInfo extends Component {
 						options={dropdownOptions}
 						hideDropdown={() => this.setState({isUserDropdownOpen: false})}
 						handleOpenSettingsModal={() => {
-							// this.props.openModal()
+							this.props.openModal('settings')
 						}}
 						handleLogOut={() => {
 							this.props.logout()

@@ -8,18 +8,17 @@ import { pushState } from 'redux-router';
 import connectData from 'helpers/connectData';
 import config from '../../config';
 
+import Modal from '../../components/Modal/Modal';
+
 function fetchData(getState, dispatch) {
-  // const promises = [];
-  // if (!isAuthLoaded(getState())) {
-  //   promises.push(dispatch(loadAuthCookie()));
-  // }
-  // return Promise.all(promises);
   bindActionCreators({loadAuthCookie}, dispatch).loadAuthCookie();
 }
 
 @connectData(fetchData)
 @connect(
-  state => ({user: state.auth.user}),
+  state => ({
+    user: state.auth.user
+  }),
   dispatch => ({
     ...bindActionCreators({
       loadAuth,
@@ -75,20 +74,21 @@ export default class App extends Component {
   }
 
   render() {
-    const { user } = this.props,
-    { height, width } = this.state,
-    appChildrenWithProps = React.Children.map(this.props.children, (child) => {
+    const { user, modalOpen, modalType, closeModal } = this.props;
+    const { height, width } = this.state;
+    const appChildrenWithProps = React.Children.map(this.props.children, (child) => {
       return React.cloneElement(child, {
         appHeight: height,
         appWidth: width,
         user: user
       })
-    }),
-    styles = require('./App.scss');
+    });
+    const styles = require('./App.scss');
     return (
       <div id={styles.app} ref="app">
         <Helmet {...config.app.head}/>
           {appChildrenWithProps}
+          <Modal/>
       </div>
     );
   }

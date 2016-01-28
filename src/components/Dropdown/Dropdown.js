@@ -7,9 +7,10 @@ export default class Dropdown extends Component {
 	}
 
 	state = {
-		top: 0, 
-		left: 0,
-		width: 0
+		top: '', 
+		right: '',
+		left: '',
+		width: ''
 	}
 
 	componentDidMount() {
@@ -29,7 +30,7 @@ export default class Dropdown extends Component {
 		if(rightAlign) {
 			this.setState({
 				top: targetDimensions.height + 'px',
-				left: 15 + 'px',
+				right: 15 + 'px',
 				width: targetDimensions.width + 'px'
 			});
 		}
@@ -47,11 +48,11 @@ export default class Dropdown extends Component {
 
 	render() {
 		const { options, rightAlign } = this.props;
-		const { top, left, width } = this.state;
+		const { top, right, left, width } = this.state;
 		const style = require('./Dropdown.scss');
 		return (
 			<div ref="dropdown"
-				 style={{ top: top, left: left, width: width}}
+				 style={{ top: top, right: right, left: left, width: '165px'}}
 				 className={'inline_block ' + style.dropdown}>
 				 <div className={style.dropdown_caret + ' ' + (rightAlign ? style.right_align : '')}>
 				 	<span className={style.caret_outer}></span>
@@ -61,7 +62,7 @@ export default class Dropdown extends Component {
 				 	{
 				 		options.map(option => {
 				 			return ( 
-				 				<li onClick={this.props[`${option.command}`]}
+				 				<li key={option.text} onClick={this.props[`${option.command}`]}
 				 					className={'relative' + ' ' + style.dropdown_item}>
 				 					<a>{option.text}</a>
 				 				</li>

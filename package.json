@@ -76,7 +76,7 @@
     "query-string": "^3.0.0",
     "react": "^0.14.2",
     "react-addons-css-transition-group": "^0.14.6",
-    "react-bootstrap": "^0.28.1",
+    "react-bootstrap": "^0.28.2",
     "react-cookie": "^0.4.3",
     "react-dom": "^0.14.1",
     "react-helmet": "^2.2.0",

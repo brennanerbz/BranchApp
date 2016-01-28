@@ -1,0 +1,25 @@
+a {
+	&.close {
+		font-size: 16.5px;
+		font-weight: 500;
+		color: #0084ff;
+		cursor: pointer;
+		text-decoration: none;
+		vertical-align: middle;
+	}
+}
+
+.form {
+	margin: 15px 0;
+	.label_wrapper {
+		margin: 0 0 6px;
+		label {
+			font-size: 13px;
+		    font-weight: bold;
+		    position: relative;
+		}
+	}
+	.form_input {
+		margin: 0;
+	}
+}
