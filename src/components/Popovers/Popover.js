@@ -52,7 +52,12 @@ export default class BranchPopover extends Component {
 							</p>
 						</div>
 						<div className={'clearfix ' + style.onboard_footer}>
-							<span style={{lineHeight: '33px'}} className="float_left"><a>Skip the tour</a></span>
+							<span 
+							onClick={() => {
+								this.props.closeOnboarding()
+							}}
+							style={{lineHeight: '33px'}} 
+							className="float_left"><a>Skip the tour</a></span>
 		           			<button 
 		           				onClick={() => {
 		           					if(index < popovers.length - 1) {

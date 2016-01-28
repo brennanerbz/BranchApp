@@ -1,13 +1,11 @@
-import Avatar from '../Avatar/Avatar';
-
 import React, { Component, PropTypes } from 'react';
+import Avatar from '../Avatar/Avatar';
 
 export default class UpdateProfile extends Component {
 	static propTypes = {
 	}
 
 	state = {
-		name: '',
 		username: '',
 		email: ''
 	}
@@ -15,10 +13,19 @@ export default class UpdateProfile extends Component {
 	componentDidMount() {
 		const { user } = this.props;
 		this.setState({
-			name: '',
 			username: user.username,
 			email: user.email
 		});
+	}
+
+	updateUser() {
+		const { user } = this.props;
+		const { username, email } = this.state;
+		socket.emit('edit user', {
+			user_id: user.id,
+			username: username,
+			email: email
+		})
 	}
 
 	render() {
@@ -38,22 +45,6 @@ export default class UpdateProfile extends Component {
 		          			<button className="button">Upload new picture</button>
 		          		</span>
 		          		<p>Profile pictures help other users find you</p>
-		      		</div>
-		      	</div>
-		      	<div className={style.form}>
-		      		<div className={style.label_wrapper}>
-		      			<label>Name</label>
-		      		</div>
-		      		<div className={style.form_input}>
-		      			<input  
-		      			type="text" 
-		      			value={name}
-		      			onChange={(e) => {
-		      				this.setState({
-		      					name: e.target.value
-		      				});
-		      			}}
-		      			/>
 		      		</div>
 		      	</div>
 		      	<div className={style.form}>
@@ -88,8 +79,31 @@ export default class UpdateProfile extends Component {
 		      			/>
 		      		</div>
 		      	</div>
-		      	<button className="button primary">Save changes</button>
+		      	<button 
+		      		onClick={::this.updateUser}
+		      		className="button primary">
+		      		Save changes
+		      	</button>
 	      	</div>
 		);
 	}
 }
+
+/* USER'S FULL NAME 
+<div className={style.form}>
+	<div className={style.label_wrapper}>
+		<label>Name</label>
+	</div>
+	<div className={style.form_input}>
+		<input  
+		type="text" 
+		value={name}
+		onChange={(e) => {
+			this.setState({
+				name: e.target.value
+			});
+		}}
+		/>
+	</div>
+</div>
+*/

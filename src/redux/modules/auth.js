@@ -6,14 +6,14 @@ const LOAD_SUCCESS = 'BranchApp/auth/LOAD_SUCCESS';
 const LOAD_FAIL = 'BranchApp/auth/LOAD_FAIL';
 // LogIn
 const LOGIN = 'BranchApp/auth/LOGIN';
-const LOGIN_SUCCESS = 'BranchApp/auth/LOGIN_SUCCESS';
+export const LOGIN_SUCCESS = 'BranchApp/auth/LOGIN_SUCCESS';
 const LOGIN_FAIL = 'BranchApp/auth/LOGIN_FAIL';
 const LOGOUT = 'BranchApp/auth/LOGOUT';
 const LOGOUT_SUCCESS = 'BranchApp/auth/LOGOUT_SUCCESS';
 const LOGOUT_FAIL = 'BranchApp/auth/LOGOUT_FAIL';
 // SignUp
 const SIGNUP = 'BranchApp/auth/SIGNUP';
-const SIGNUP_SUCCESS = 'BranchApp/auth/SIGNUP_SUCCESS';
+export const SIGNUP_SUCCESS = 'BranchApp/auth/SIGNUP_SUCCESS';
 const SIGNUP_FAILURE = 'BranchApp/auth/SIGNUP_FAILURE';
 
 const LOAD_AUTH_COOKIE = 'BranchApp/auth/LOAD_AUTH_COOKIE';
@@ -50,11 +50,11 @@ export default function reducer(state = initialState, action = {}) {
         errorOnLogIn: false
       };
     case LOGIN_SUCCESS:
-      cookie.save('loginResult', action.result);
+      cookie.save('loginResult', action.user);
       return {
         ...state,
         loggingIn: false,
-        user: action.result
+        user: action.user
       };
     case LOAD_AUTH_COOKIE:
       const loginResult = cookie.load('loginResult');
@@ -97,11 +97,11 @@ export default function reducer(state = initialState, action = {}) {
         signUpError: null
       }
     case SIGNUP_SUCCESS:
-      cookie.save('loginResult', action.result)
+      cookie.save('loginResult', action.user)
       return {
         ...state,
         loggingIn: false,
-        user: action.result
+        user: action.user
       }
     case SIGNUP_FAILURE:
       return {
@@ -130,11 +130,11 @@ export function loadAuthCookie() {
     type: LOAD_AUTH_COOKIE
   }
 }
-export function login(loginInfo, replaceState) {
-  replaceState(null, '/')
+export function login(user, pushState) {
+  pushState(null, '/')
   return {
-    types: [LOGIN, LOGIN_SUCCESS, LOGIN_FAIL],
-    promise: (client) => client.post('/login', loginInfo)
+    type: LOGIN_SUCCESS,
+    user
   };
 }
 export function logout() {
@@ -145,8 +145,8 @@ export function logout() {
 }
 export function signup(user) {
   return {
-    types: [SIGNUP, SIGNUP_SUCCESS, SIGNUP_FAILURE],
-    promise: (client) => client.post('/signup', user)
+    type: SIGNUP_SUCCESS,
+    user
   }
 }
 

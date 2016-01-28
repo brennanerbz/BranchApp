@@ -1,7 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 import { pushState } from 'redux-router';
-import io from 'socket.io-client';
 import { bindActionCreators } from 'redux';
 
 /* Config */
@@ -48,45 +47,9 @@ export default class Chat extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.user)
-    global.socket = this.initSocket()
-    socket.on('connect', (res) => {
-      console.log('connect:', res)
-    })
-    socket.on('my response', (res) => {
-      console.log('response:', res)
-    })
-    socket.on('connected', (res) => {
-      console.log('connected: ', res)
-    })
-    socket.on('disconnected', (res) => {
-      console.log('disconnected:', res)
-    })
-    socket.emit('request connect', {
-      user_id: this.props.user
-    })
   }
 
   componentWillReceiveProps(nextProps) {
-  }
-
-
-  componentWillUnmount() {
-    console.log('unmounting')
-    if (socket) {
-      // socket.emit('request disconnect')
-    }
-  }
-
-  initSocket() {
-    let socketAddress;
-    if(__HEROKUSERVER__) {
-      socketAddress = config.herokuApi + '/chat'
-    } else {
-      socketAddress = config.apiHost + ':' + config.apiPort + '/chat'
-    }
-    const socket = io(socketAddress);
-    return socket;
   }
 
   render() {

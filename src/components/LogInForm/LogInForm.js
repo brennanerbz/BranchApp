@@ -33,7 +33,7 @@ export default class LogInForm extends Component {
 				email: email,
 				password: password
 			}
-			login(user, replaceState)
+			socket.emit('login', user)
 			this.setState({
 				email: '',
 				password: ''

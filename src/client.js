@@ -9,7 +9,8 @@ import useScroll from 'scroll-behavior/lib/useStandardScroll';
 // import storeEnhancer from 'redux-history-transitions';
 import createStore from './redux/create';
 import ApiClient from './helpers/ApiClient';
-// import io from 'socket.io-client';
+import io from 'socket.io-client';
+import config from './config';
 import {Provider} from 'react-redux';
 import {reduxReactRouter, ReduxRouter} from 'redux-router';
 
@@ -22,28 +23,22 @@ const client = new ApiClient();
 // Documented here: https://github.com/rackt/scroll-behavior
 const scrollableHistory = useScroll(createHistory);
 
-// const history = storeEnhancer(createHistory)
-
 const dest = document.getElementById('content');
 const store = createStore(reduxReactRouter, makeRouteHooksSafe(getRoutes), scrollableHistory, client, window.__data);
 
-/*
-function initSocket() {
-  const socket = io('', {path: '/ws'});
-  socket.on('news', (data) => {
-    console.log(data);
-    socket.emit('my other event', { my: 'data from client' });
-  });
-  socket.on('msg', (data) => {
-    console.log(data);
-  });
 
+function initSocket() {
+  let socketAddress;
+  if(__HEROKUSERVER__) {
+    socketAddress = config.herokuApi + '/chat'
+  } else {
+    socketAddress = config.apiHost + ':' + config.apiPort + '/chat'
+  }
+  const socket = io(socketAddress);
   return socket;
 }
 
 global.socket = initSocket();
-
-*/
 
 const component = (
   <ReduxRouter routes={getRoutes(store)} />

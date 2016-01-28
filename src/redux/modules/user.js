@@ -3,12 +3,19 @@ import {
 	SIGNUP_SUCCESS
 } from './auth';
 
+// Onboarding
 export const SHOW_ONBOARDING = 'BranchApp/user/SHOW_ONBOARDING';
 export const NEXT_ONBOARDING_POPOVER = 'BranchApp/user/NEXT_ONBOARDING_POPOVER';
 export const CLOSE_ONBOARDING = 'BranchApp/user/CLOSE_ONBOARDING';
 
+// Updating user
+export const UPDATE_USER_SUCCESS = 'BranchApp/user/UPDATE_USER_SUCCESS';
+export const UPDATE_USER_FAILURE = 'BranchApp/user/UPDATE_USER_FAILURE';
+
+
 const initialState = {
-	onboarded: false,
+	user: null,
+	onboarded: true,
 	onboardingPopoverIndex: 0,
 	popovers: [
 		{
@@ -46,6 +53,7 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
 	switch(action.type) {
+		// Onboarding
 		case SHOW_ONBOARDING:
 			return {
 				...state,
@@ -62,11 +70,30 @@ export default function reducer(state = initialState, action) {
 				onboarded: true,
 				onboardingPopoverIndex: 0
 			}
+		// Auth
+		case LOGIN_SUCCESS:
+			return {
+				...state,
+				user: action.user
+			}
+		case SIGNUP_SUCCESS:
+			return {
+				...state,
+				onboarded: false,
+				user: action.user
+			}
+		// Update user
+		case UPDATE_USER_SUCCESS:
+			return {
+				...state,
+				user: action.user
+			}
 		default:
 			return state;			
 	}
 }
 
+// Onboarding
 export function showOnboarding() {
 	return {
 		type: SHOW_ONBOARDING
@@ -84,3 +111,12 @@ export function closeOnboarding() {
 		type: CLOSE_ONBOARDING
 	}
 }
+
+// Update user
+export function updateUser(user) {
+	return {
+		type: UPDATE_USER_SUCCESS,
+		user
+	}
+}
+

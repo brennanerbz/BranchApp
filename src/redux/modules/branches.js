@@ -5,46 +5,32 @@ const LEAVE_BRANCH = 'BranchApp/branches/LEAVE_BRANCH';
 const CHANGE_ACTIVE_BRANCH = 'BranchApp/branches/CHANGE_ACTIVE_BRANCH';
 
 const initialState = {
-  loaded: false,
-  branches: [
-    {
-      id: 1,
-      parent_id: null,
-      title: 'Facebook',
-      passcode: null,
-      deleted: false,
-      creation: Date.now()
-    },
-    {
-      id: 2,
-      parent_id: null,
-      title: 'Twitter',
-      passcode: null,
-      deleted: false,
-      creation: Date.now()
-    }
-  ],
-  activeBranch: 1
+  branchMemberships: [],
+  branches: [],
+  activeBranch: null
 };
-
 
 export default function reducer(state = initialState, action) {
   { /* Variables to be used for multiple cases */}
-  let loaded = state.loaded,
-      branches = state.branches;
+  let branchMemberships = state.branchMemberships;
+  let branches = state.branches;
 
   switch (action.type) {
     case NEW_BRANCH:
-      branches.push(action.branch)
       return {
         ...state,
-        branches: branches
+        branchMemberships: [...state.branchMemberships, action.branch],
+        branches: [...state.branches, action.branch.feed]
       }
     case RECEIVE_BRANCHES:
+      let b = [];
+      action.branches.forEach(branch => {
+        b.push(branch.feed)
+      })
       return {
         ...state,
-        branches: action.branches,
-        loaded: true
+        branchMemberships: [...state.branchMemberships, ...action.branches],
+        branches: [...state.branches, ...b]
       }
     case CHANGE_ACTIVE_BRANCH:
       return {
@@ -52,9 +38,11 @@ export default function reducer(state = initialState, action) {
         activeBranch: action.branch_id
       }
     case LEAVE_BRANCH:
+      branchMemberships = branchMemberships.filter(membership => membership.feed_id !== action.branch.id)
       branches = branches.filter(branch => branch.id !== action.branch.id)
       return {
         ...state,
+        branchMemberships: branchMemberships,
         branches: branches
       }
     default:
@@ -74,7 +62,7 @@ export function changeActiveBranch(branch_id) {
 export function newBranch(branch) {
   return {
     type: NEW_BRANCH,
-    branch: branch
+    branch
   };
 }
 
@@ -82,7 +70,7 @@ export function newBranch(branch) {
 export function receiveBranches(branches) {
   return {
     type: RECEIVE_BRANCHES,
-    branches: branches
+    branches
   }
 }
 
@@ -90,7 +78,7 @@ export function receiveBranches(branches) {
 export function leaveBranch(branch) {
   return {
     type: LEAVE_BRANCH,
-    branch: branch
+    branch
   }
 }
 
