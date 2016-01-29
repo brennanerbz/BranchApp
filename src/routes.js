@@ -7,6 +7,8 @@ import {
     Chat,
     Landing,
     Index,
+    Login,
+    Signup,
     NotFound
   } from 'containers';
 
@@ -29,10 +31,13 @@ export default (store) => {
 
   /*
   Please keep routes in alphabetical order
+  Reserved Routes: 'signup', 'login'
   */
   return (
     <Route path="/" component={App}>
       <IndexRoute component={Index}/>
+      <Route path="login" component={Login}/>
+      <Route path="signup" component={Signup}/>
       <Route path=":branch_name" component={Chat}>
         <Route path=":feed_name" component={Chat}/>
       </Route>

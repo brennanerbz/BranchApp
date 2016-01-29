@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import {connect} from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { pushState } from 'redux-router';
 
 import { isEmpty, validateEmail } from '../../utils/validation';
 import * as signupActions from '../../redux/modules/auth';
@@ -11,7 +12,8 @@ import * as signupActions from '../../redux/modules/auth';
 	}),
 	dispatch => ({
 		...bindActionCreators({
-			...signupActions
+			...signupActions,
+			pushState
 		}, dispatch)
 	})
 )
@@ -68,6 +70,7 @@ export default class SignUpForm extends Component {
 	render() {
 		const style = require('./SignUpForm.scss');
 		const { showUsernameError, showEmailError, showPasswordError } = this.state;
+		const { pushState, landing } = this.props;
 		return (
 			<form 
 				className={style.sign_up_form}

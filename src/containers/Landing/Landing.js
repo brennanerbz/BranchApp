@@ -42,6 +42,7 @@ export default class Landing extends Component {
     				</div>
     				<div id={style.app_register_form}>
     					<SignUpForm 
+                            landing={true}
     					/>
     				</div>
         		</div>

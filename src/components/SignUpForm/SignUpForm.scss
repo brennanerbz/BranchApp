@@ -1,4 +1,4 @@
-.sign_up_form {
+.sign_up_form, .log_in_form {
 	-webkit-box-sizing: border-box; /* Safari, other WebKit */
     -moz-box-sizing: border-box;    /* Firefox, other Gecko */
     box-sizing: border-box;         /* Opera/IE 8+ */
@@ -41,7 +41,7 @@
 	    font-size: 17px;
 	    font-weight: 500;
 	    height: 44px!important;
-	    margin-bottom: 24px;
+	    margin-bottom: 10px;
 	    padding: 0;
 	}
 	.sign_up_txt {

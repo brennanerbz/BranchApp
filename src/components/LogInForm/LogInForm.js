@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import {connect} from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { replaceState } from 'redux-router';
+import { pushState } from 'redux-router';
 import { isEmpty, validateEmail } from '../../utils/validation';
 import * as loginActions from '../../redux/modules/auth';
 
@@ -12,7 +12,7 @@ import * as loginActions from '../../redux/modules/auth';
 	dispatch => ({
 		...bindActionCreators({
 			...loginActions,
-			replaceState
+			pushState
 		}, dispatch)
 	})
 )
@@ -22,12 +22,14 @@ export default class LogInForm extends Component {
 
 	state = {
 		email: '',
-		password: ''
+		showEmailError: false,
+		showPasswordError: false
 	}
 
 	handleSubmitLogIn() {
-		const { login, replaceState } = this.props;
-		const { email, password } = this.state;
+		const { login, pushState } = this.props;
+		const { email } = this.state;
+		const password = this.refs.password.value;
 		if(!isEmpty(email) && !isEmpty(password)) {
 			const user = {
 				email: email,
@@ -65,10 +67,9 @@ export default class LogInForm extends Component {
 				<li className={style.password}>
 					<label>Password</label>
 					<input 
+						ref="password"
 						type="password" 
 						tabIndex={2}
-						value={this.state.password}
-						onChange={(e) => this.setState({password: e.target.value})}
 						onKeyDown={(e) => {
 							if(e.keyCode == 13) { 
 								e.preventDefault()
@@ -87,16 +88,73 @@ export default class LogInForm extends Component {
 		)
 	}
 
+	renderLogInForm() {
+		const style = require('../SignUpForm/SignUpForm.scss');
+		const { email, showEmailError, showPasswordError } = this.state;
+		const { pushState } = this.props;
+		return (
+			<form 
+				className={style.log_in_form}
+				onSubmit={(e) => {
+				  	e.preventDefault()
+				  	this.handleSubmitLogIn()
+				}}>
+				<input 
+					placeholder="Email"
+					type="text"
+					value={email}
+					className={showEmailError ? 'error' : ''}
+					onChange={(e) => {
+						this.setState({
+							showEmailError: false,
+							email: e.target.value
+						})
+					}}/>
+				<input 
+					ref="password"
+					type="password" 
+					placeholder="Password"
+					className={showPasswordError ? 'error' : ''}
+					onChange={(e) => {
+						this.setState({
+							showPasswordError: false
+						})
+					}}
+					onKeyDown={(e) => {
+						if(e.which == 13) {
+							e.preventDefault()
+							this.handleSubmitLogIn()
+						}
+					}}
+					/>
+				<button 
+					style={{width: '100%'}}
+					className="button primary"
+			    	onClick={::this.handleSubmitLogIn}>
+					Log In
+				</button>
+				{
+					showEmailError
+					&&
+					<p className={style.error}>
+						Oh no. Looks like the wrong email.
+					</p>
+				}
+				{
+					showPasswordError
+					&&
+					<p className={style.error}>
+						Whoa! Wrong password. Try again?
+					</p>
+				}
+			</form>
+		)
+	}
+
 	render() {
 		const { inline } = this.props,
 		style = require('./LogInForm.scss')
-		return (
-			<div>
-				{
-					inline &&
-					::this.renderInlineLogInForm()
-				}
-			</div>
-		);
+		if(inline) return (::this.renderInlineLogInForm())
+		else return (::this.renderLogInForm())
 	}
 }

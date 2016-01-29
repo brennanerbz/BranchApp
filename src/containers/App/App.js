@@ -73,6 +73,9 @@ export default class App extends Component {
     window.addEventListener('resize', ::this.updateAppSize)
     this.initSocketListeners()
     this.initSocketEmitters()
+    const { params, pushState } = this.props;
+    if(params.branch_name == 'signup') pushState(null, '/signup')
+    if(params.branch_name == 'login') pushState(null, '/login')
   }
 
   componentWillReceiveProps(nextProps) {
