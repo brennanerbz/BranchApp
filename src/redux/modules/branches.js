@@ -58,7 +58,7 @@ export function changeActiveBranch(branch_id) {
   }
 }
 
-// socket.on('receive parent')
+// socket.on('receive parent membership')
 export function newBranch(branch) {
   return {
     type: NEW_BRANCH,

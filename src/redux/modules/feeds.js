@@ -10,81 +10,15 @@ const USER_LEFT_FEED = 'BranchApp/feeds/USER_LEFT_FEED';
 const CHANGE_ACTIVE_FEED = 'BranchApp/feeds/CHANGE_ACTIVE_FEED';
 
 const initialState = {
-  loaded: false,
-  memberships: [
-    {
-      id: Math.floor(Math.random() * 10000),
-      user_id: 1,
-      feed_id: 1,
-      alias: '',
-      open: true,
-      deleted: false,
-      creation: Date.now(),
-      modified: null
-    },
-    {
-      id: Math.floor(Math.random() * 10000),
-      user_id: 1,
-      feed_id: 2,
-      alias: '',
-      open: true,
-      deleted: false,
-      creation: Date.now(),
-      modified: null
-    },
-    {
-      id: Math.floor(Math.random() * 10000),
-      user_id: 1,
-      feed_id: 3,
-      alias: '',
-      open: true,
-      deleted: false,
-      creation: Date.now(),
-      modified: null
-    }
-  ],
-  feeds: [
-    {
-      id: 1,
-      parent_id: 1,
-      title: 'marketing',
-      passcode: null,
-      deleted: false,
-      creation: Date.now()
-    },
-    {
-      id: 2,
-      parent_id: 1,
-      title: 'business',
-      passcode: null,
-      deleted: false,
-      creation: Date.now()
-    },
-    {
-      id: 3,
-      parent_id: 1,
-      title: 'product',
-      passcode: null,
-      deleted: false,
-      creation: Date.now()
-    },
-    {
-      id: 4,
-      parent_id: 2,
-      title: 'annoucements',
-      passcode: null,
-      deleted: false,
-      creation: Date.now()
-    }
-  ],
-  activeFeed: 1
+  memberships: [],
+  feeds: [],
+  activeFeed: null
 };
 
 export default function reducer(state = initialState, action) {
   { /* Variables to be used for multiple cases */}
-  let loaded = state.loaded,
-      memberships = state.memberships,
-      feeds = state.feeds;
+  let memberships = state.memberships;
+  let feeds = state.feeds;
 
   switch (action.type) {
     case RECEIVE_MEMBERSHIPS:
@@ -92,28 +26,24 @@ export default function reducer(state = initialState, action) {
       action.memberships.forEach(membership => f.push(membership.feed))
       return {
         ...state,
-        memberships: action.memberships,
-        feeds: f
+        memberships: [...state.memberships, ...action.memberships],
+        feeds: [...state.feeds, ...f]
       }
     case RECEIVE_ALL_FEEDS:
       return {
         ...state,
-        feeds: [...state.feeds, action.feeds],
-        loaded: true
+        feeds: [...state.feeds, action.feeds]
       }
     case NEW_FEED:
-      feeds.push(action.feed)
       return {
         ...state,
-        feeds: feeds
+        feeds: [...state.feeds, action.feed]
       }
     case RECEIVE_FEED:
-      memberships.push(action.membership)
-      feeds.push(action.membership.feed)
       return {
         ...state,
-        memberships: memberships,
-        feeds: feeds
+        memberships: [...state.memberships, action.membership],
+        feeds: [...state.feeds, action.membership.feed]
       }
     case CHANGE_ACTIVE_FEED:
       return {
@@ -121,8 +51,8 @@ export default function reducer(state = initialState, action) {
         activeFeed: action.feed_id,
       }
     case LEAVE_FEED:
-      memberships = memberships.filter(membership => membership.feed.id !== action.id)
-      feeds = feeds.filter(feed => feed.id !== action.id)
+      memberships = memberships.filter(membership => membership.feed_id !== action.feed_id)
+      feeds = feeds.filter(feed => feed.id !== action.feed_id)
       return {
         ...state,
         memberships: memberships,
@@ -159,10 +89,10 @@ export function receiveAllFeeds(feeds) {
 }
 
 // socket.on('new feed')
-export function newFeed(membership) {
+export function newFeed(feed) {
   return {
     type: NEW_FEED,
-    feed: membership.feed
+    feed
   };
 }
 

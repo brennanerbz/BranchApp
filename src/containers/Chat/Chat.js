@@ -25,6 +25,7 @@ import Feed from '../Feed/Feed';
 @connect(
   state => ({
     user: state.auth.user,
+    branchMemberships: state.branches.branchMemberships,
     branches: state.branches.branches,
     memberships: state.feeds.memberships,
     feeds: state.feeds.feeds,
@@ -44,6 +45,13 @@ export default class Chat extends Component {
 
   state = {
 
+  }
+
+  componentWillMount() {
+    const { user } = this.props;
+    socket.emit('get parent memberships', {
+      user_id: user.id
+    })
   }
 
   componentDidMount() {

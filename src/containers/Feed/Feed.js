@@ -31,10 +31,12 @@ export default class Feed extends Component {
 	}
 
 	componentDidMount() {
-		const { appHeight, appWidth, activeFeed } = this.props;
+		const { appHeight, appWidth, activeFeed, feed } = this.props;
 		this.updateFeedHeight(appHeight)
 		this.updateFeedWidth(appWidth)
-		// socket.emit('get messages', { feed_id: activeFeed })
+		socket.emit('get messages', { 
+			feed_id: feed.id
+		})
 		var node = this.refs.wrapper;
 		node.scrollTop = node.scrollHeight
 		this.shouldScrollToBottom = true
@@ -46,7 +48,9 @@ export default class Feed extends Component {
 		if(appWidth !== nextProps.appWidth) this.updateFeedWidth(nextProps.appWidth)
 
 		if(this.props.activeFeed !== nextProps.activeFeed) {
-			// socket.emit('get messages', { feed_id: activeFeed })
+			socket.emit('get messages', { 
+				feed_id: nextProps.activeFeed 
+			})
 		} 
 	}
 

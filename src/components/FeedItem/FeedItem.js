@@ -4,13 +4,17 @@ export default class FeedItem extends Component {
 	static propTypes = {
 	}
 
+	joinFeed() {
+
+	}
+
 	render() {
-		const { index, feed, active, changeActiveFeed} = this.props,
+		const { index, feed, membership, active, changeActiveFeed} = this.props,
 		style = require('./FeedItem.scss');
 		return (
 			<li 
 			onClick={() => {
-				if(!active) changeActiveFeed(feed)
+				if(!active) changeActiveFeed(feed, membership)
 			}}
 			className={'feed' + 
 			index + ' ' + 

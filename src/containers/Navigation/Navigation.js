@@ -44,19 +44,28 @@ export default class Navigation extends Component {
 		}
 	}
 
-	handleChangeActiveFeed(feed){
+	handleChangeActiveFeed(feed, membership) {
 		const { 
 			activeBranch, 
 			activeFeed, 
 			changeActiveBranch, 
 			changeActiveFeed } = this.props;
 		if(feed.parent_id !== activeBranch) changeActiveBranch(feed.parent_id)
-		if(feed.id !== activeFeed) changeActiveFeed(feed.id)
+		if(feed.id !== activeFeed) {
+			changeActiveFeed(feed.id) 
+			if(membership == null || membership == undefined) {
+				socket.emit('join child', {
+					user_id: user.id,
+					parent_id: feed.parent_id,
+					title: feed.title
+				})
+			}
+		}
 	}
 
 	render() {
 		let { navHeight } = this.state,
-		{ branches, feeds, appHeight, activeFeed, activeBranch } = this.props,
+		{ branches, feeds, memberships, appHeight, activeFeed, activeBranch } = this.props,
 		style = require('./Navigation.scss');
 		return (
 			<div 
@@ -74,6 +83,7 @@ export default class Navigation extends Component {
 								activeFeed={activeFeed}
 								onChangeActiveFeed={::this.handleChangeActiveFeed}
 								feeds={feeds.filter(feed => feed.parent_id == branch.id)}
+								memberships={memberships.filter(membership => membership.feed.parent_id == branch.id)}
 							/>
 						)
 					})}

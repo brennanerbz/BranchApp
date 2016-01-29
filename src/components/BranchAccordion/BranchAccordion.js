@@ -30,7 +30,6 @@ export default class BranchAccordion extends Component {
 	}
 
 	createNewFeed() {
-		console.log('new feed')
 		setTimeout(() => {
 			this.setState({
 				showInlineFeedCreation: false
@@ -39,7 +38,7 @@ export default class BranchAccordion extends Component {
 	}
 
 	render() {
-		const { index, branch, active, activeFeed, feeds } = this.props,
+		const { index, branch, active, activeFeed, feeds, memberships } = this.props,
 		{ collapsed, isMouseOverBranch, showInlineFeedCreation } = this.state,
 		style = require('./BranchAccordion.scss');
 		return (
@@ -76,6 +75,7 @@ export default class BranchAccordion extends Component {
 						 id={style.accordion}
 						 className={collapsed ? style.collapsed : style.expanded}>
 							<FeedList
+								memberships={memberships}
 								feeds={feeds}
 								activeFeed={activeFeed}
 								onChangeActiveFeed={this.props.onChangeActiveFeed}

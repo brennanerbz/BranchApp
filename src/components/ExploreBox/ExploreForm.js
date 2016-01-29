@@ -10,7 +10,7 @@ export default class ExploreForm extends Component {
 
 	handleOpenBranch = () => {
 		const { text } = this.state;
-		// socket.emit('go to parent', text)
+		socket.emit('go to parent', text)
 	}
 
 	render() {
@@ -39,7 +39,10 @@ export default class ExploreForm extends Component {
 						}}
 						/>
 					</div>
-					<span id={style.explore_icon} className="fa fa-arrow-right"></span>
+					<span 
+					onClick={::this.handleOpenBranch}
+					id={style.explore_icon} 
+					className="fa fa-arrow-right"></span>
 				</form>
 			</span>
 		);

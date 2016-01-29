@@ -33,7 +33,7 @@ export default class FeedList extends Component {
 	}
 
 	render() {
-		const { feeds, activeFeed, onChangeActiveFeed, showInlineFeedCreation } = this.props,
+		const { feeds, memberships, activeFeed, onChangeActiveFeed, showInlineFeedCreation } = this.props,
 		{ newFeedName } = this.state,
 		style = require('./FeedList.scss');
 		return (
@@ -45,6 +45,7 @@ export default class FeedList extends Component {
 							key={feed.id + i} 
 							index={i}
 							feed={feed}
+							membership={memberships.filter(membership => membership.feed_id === feed.id)}
 							active={feed.id == activeFeed}
 							changeActiveFeed={onChangeActiveFeed}/>
 						)
