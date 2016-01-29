@@ -7,7 +7,8 @@ import * as messageActions from '../../redux/modules/messages';
 import MessageComposer from './MessageComposer'
 
 @connect(state => ({
-		user: state.auth.user
+		user: state.auth.user,
+		typers: state.messages.typers
 	}),
 	dispatch => ({
 		...bindActionCreators({
@@ -21,7 +22,7 @@ export default class ChatFooter extends Component {
 	}
 
 	render() {
-		const { user } = this.props;
+		const { typers, user } = this.props;
 	    const style = require('./ChatFooter.scss');
 		return (
 			<div id={style.chat_footer}>
@@ -33,6 +34,17 @@ export default class ChatFooter extends Component {
 					<div id={style.chat_footer_call_to_action}>
 					</div>
 				}
+				<div id={style.notification_bar}>
+					{
+						typers.filter(typer => typer.username !== user.username).map(typer => {
+							return (
+								<p>
+									{typer.username}
+								</p>
+							);
+						})
+					}
+				</div>
 			</div>
 		);
 	}

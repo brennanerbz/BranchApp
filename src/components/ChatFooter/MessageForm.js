@@ -18,12 +18,14 @@ export default class MessageForm extends Component {
 	}
 
 	handleTyping() {
-		const { user, membership, feed } = this.props;
-		var userTyping = {
-			user_id: user.id,
-			feed_id: feed.id
+		const { user, membership, feed, typers } = this.props;
+		if(typers.filter(typer => typer.username !== user.username).length === 0) {
+			var userTyping = {
+				user_id: user.id,
+				feed_id: feed.id
+			}
+			socket.emit('user typing', userTyping)
 		}
-		socket.emit('user typing', userTyping)
 	}
 
 	handleSubmitMessage() {
