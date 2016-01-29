@@ -17,3 +17,25 @@
 		position: relative;
 	}
 }
+
+
+#onboard_message {
+	font-family: 'Open Sans';
+	text-align: center;
+	> * {
+		margin-bottom: 20px;
+	}
+	h2 {
+		font-size: 30px;
+		font-weight: 300;
+		color: #969696;
+	}
+	p {
+		font-size: 17px;
+		line-height: 20px;
+		font-weight: 400;
+		color: #969696;
+		width: 80%;
+		margin: 0 auto 20px;
+	}
+}

@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import {connect} from 'react-redux';
 import { pushState } from 'redux-router';
 import { bindActionCreators } from 'redux';
-import $ from 'jquery';
+import { isEmpty } from '../../utils/validation';
 
 import FeedPadder from '../../components/FeedPadder/FeedPadder';
 import MessageList from '../../components/MessageList/MessageList';
@@ -34,9 +34,11 @@ export default class Feed extends Component {
 		const { appHeight, appWidth, activeFeed, feed } = this.props;
 		this.updateFeedHeight(appHeight)
 		this.updateFeedWidth(appWidth)
-		socket.emit('get messages', { 
-			feed_id: feed.id
-		})
+		if(!isEmpty(feed)) {
+			socket.emit('get messages', { 
+				feed_id: feed.id
+			})
+		}
 		var node = this.refs.wrapper;
 		node.scrollTop = node.scrollHeight
 		this.shouldScrollToBottom = true
@@ -48,9 +50,11 @@ export default class Feed extends Component {
 		if(appWidth !== nextProps.appWidth) this.updateFeedWidth(nextProps.appWidth)
 
 		if(this.props.activeFeed !== nextProps.activeFeed) {
-			socket.emit('get messages', { 
-				feed_id: nextProps.activeFeed 
-			})
+			if(!isEmpty(nextProps.activeFeed)) {
+				socket.emit('get messages', { 
+					feed_id: nextProps.activeFeed 
+				})
+			}
 		} 
 	}
 
@@ -96,27 +100,40 @@ export default class Feed extends Component {
 					<div 
 					ref="wrapper" 
 					className={style.scrollable_area_wrapper}>
-						<div 
-						ref="body" 
-						className={style.scrollable_area_body}>
-							<FeedPadder
-								feedHeight={feedHeight}
-								feedWidth={feedWidth}
-								// messagesDivHeight={messagesDivHeight}
-								feed={feed}
-								branch={branch}
-								key={'feedPadder'}
-							/>
-							<MessageList
-								user={user}
-								feed={feed}
-								branch={branch}
-								membership={membership}
-								key={'messageList'}
-								messages={messages}
-								// handleUpdateHeight={(height) => this.setState({messagesDivHeight: height})}
-							/>
-						</div>
+						{
+							!isEmpty(feed)
+							&&
+							<div 
+							ref="body" 
+							className={style.scrollable_area_body}>
+								<FeedPadder
+									feedHeight={feedHeight}
+									feedWidth={feedWidth}
+									feed={feed}
+									branch={branch}
+									key={'feedPadder'}
+								/>
+								<MessageList
+									user={user}
+									feed={feed}
+									branch={branch}
+									membership={membership}
+									key={'messageList'}
+									messages={messages}
+								/>
+							</div>
+						}
+						{
+							isEmpty(feed)
+							&&
+							<div style={{height: '100%', width: '100%'}} className="display_flex flex_center">
+								<div className="flex_align_center" id={style.onboard_message}>
+									<h2>Empty Feed</h2>
+									<p>Once you start chatting, all your messages will be here</p>
+									<button className="button outline">New Branch</button>
+								</div>
+							</div>
+						}
 					</div>
 				</div>
 			</div>
