@@ -13,6 +13,11 @@
 	border-radius: 4px;
 	box-shadow: 0 1px 5px rgba(0,0,0,0.27);
 	background-clip: padding-box;
+    // New
+    border: 1px solid rgba(0, 0, 0, 0.11);
+    border-radius: 5px;
+    -webkit-box-shadow: 0 2px 7px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 2px 7px rgba(0, 0, 0, 0.15);
 	ul {
     	margin: 0;
     	list-style: none;

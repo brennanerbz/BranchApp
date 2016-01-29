@@ -47,29 +47,35 @@ export default class MessageForm extends Component {
 	}
 
 	render() {
-		const { text } = this.state,
-		style = require('./ChatFooter.scss')
+		const { feed, emptyFeed } = this.props;
+		const { text } = this.state;
+		const style = require('./ChatFooter.scss');
 		return (
-			<form key="messageForm" onSubmit={(e) => e.preventDefault()} id={style.message_form}>
+			<form 
+				key="messageForm" 
+				onSubmit={(e) => e.preventDefault()} 
+				id={style.message_form}>
 				<textarea 
-				id={style.message_input}
-				ref="message_input"
-				tabIndex={1}
-				autofocus={true}
-				placeholder="Type a message..."
-				value={text}
-				onChange={(e) => {
-					this.setState({
-						text: e.target.value
-					});
-					this.handleTyping()
-				}}
-				onKeyDown={(e) => {
-					if(e.which == 13) {
-						e.preventDefault()
-						this.handleSubmitMessage()
-					}
-				}}
+					className={emptyFeed ? style.disabled : ''}
+					id={style.message_input}
+					disabled={emptyFeed}
+					ref="message_input"
+					tabIndex={1}
+					autofocus={true}
+					placeholder={emptyFeed ? 'To send a message open a new branch': 'Type a message...'}
+					value={text}
+					onChange={(e) => {
+						this.setState({
+							text: e.target.value
+						});
+						this.handleTyping()
+					}}
+					onKeyDown={(e) => {
+						if(e.which == 13) {
+							e.preventDefault()
+							this.handleSubmitMessage()
+						}
+					}}
 				/>
 			</form>
 		);
