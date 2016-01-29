@@ -21,7 +21,7 @@ export default class Signup extends Component {
 		const style = require('./Signup.scss');
 		return (
 			<div style={{height: '100%', width: '100%', background: '#fafafa'}} className="display_flex flex_center">
-				<div style={{width: '375px'}} className="flex_align_center">
+				<div style={{width: '355px', minWidth: '350px'}} className="flex_align_center">
 					<div className="form_card" id={style.sign_up_wrapper}>
 						<h2 className='form_header'>Sign Up</h2>
 						<SignUpForm landing={false}/>

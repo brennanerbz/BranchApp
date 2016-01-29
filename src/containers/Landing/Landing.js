@@ -37,7 +37,7 @@ export default class Landing extends Component {
         			</div>
     				<div id={style.app_intro_txt}>
     					<h1>A messaging app to discover the world around you.</h1>
-    					<h2>Open, discover and organize real time conversations into things that interest with you with friends, family and people in your community.
+    					<h2>Open, discover and organize real time conversations about things that interest with you with friends, family and people in your community.
     					</h2>
     				</div>
     				<div id={style.app_register_form}>
