@@ -33,6 +33,9 @@ export default (store) => {
   return (
     <Route path="/" component={App}>
       <IndexRoute component={Index}/>
+      <Route path=":branch_name" component={Chat}>
+        <Route path=":feed_name" component={Chat}/>
+      </Route>
       <Route path="*" component={NotFound} status={404} />
     </Route>
   )

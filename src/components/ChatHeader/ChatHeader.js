@@ -8,7 +8,7 @@ export default class ChatHeader extends Component {
 	}
 
 	render() {
-		const { feed, branch } = this.props,
+		const { user, feed, branch } = this.props,
 		styles = require('./ChatHeader.scss');
 		return (
 			<div id={styles.chat_header}>
@@ -18,7 +18,16 @@ export default class ChatHeader extends Component {
 						feed={feed}
 						branch={branch}
 					/>
-					<UserInfo/>
+					{
+						user
+						?
+						<UserInfo/>
+						:
+						<div style={{paddingRight: '1em', paddingTop: '0.75em'}} className="float_right">
+							<button style={{marginRight: '5px'}} className="button outline">Log In</button>
+							<button className="button primary">Sign Up</button>
+						</div>
+					}
 				</div>
 			</div>
 		);

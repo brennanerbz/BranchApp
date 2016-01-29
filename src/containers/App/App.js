@@ -7,6 +7,7 @@ import { isLoaded as isAuthLoaded, loadAuthCookie, loadAuth } from 'redux/module
 import { pushState } from 'redux-router';
 import connectData from 'helpers/connectData';
 import config from '../../config';
+import { isEmpty } from '../../utils/validation';
 
 // Global reducer actions to be used with socket =>
 import * as authActions from '../../redux/modules/auth';
@@ -182,8 +183,9 @@ export default class App extends Component {
   }
 
   initSocketEmitters() {
+    const { user } = this.props;
     socket.emit('request connect', {
-      user_id: this.props.user
+      user_id: isEmpty(user) ? null : user.id
     })
   }
 

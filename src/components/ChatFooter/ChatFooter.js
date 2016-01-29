@@ -25,13 +25,14 @@ export default class ChatFooter extends Component {
 		const { typers, user, feed } = this.props;
 	    const style = require('./ChatFooter.scss');
 		return (
-			<div id={style.chat_footer}>
+			<div className={user ? '' : style.prompt_footer} id={style.chat_footer}>
 				{
 					user
 					? 
 					<MessageComposer {...this.props}/>
 					:
-					<div id={style.chat_footer_call_to_action}>
+					<div style={{padding: '1.35em 1em 1em', textAlign: 'center'}} id={style.chat_footer_call_to_action}>
+						<p>To join the conversation, either <a>Log In</a> or <a>Sign Up</a></p>
 					</div>
 				}
 				<div id={style.notification_bar}>

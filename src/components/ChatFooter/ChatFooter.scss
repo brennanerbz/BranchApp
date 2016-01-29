@@ -1,9 +1,6 @@
 #chat_footer {
 	position: fixed;
     background: #fff;
-    // background: #f6f7f8;
-    // border-top: 1px solid #EDF0F6;
-    // border-top: 1px solid #E1E1E1;
     bottom: 0;
     left: 255px;
     right: 0rem;
@@ -11,6 +8,10 @@
     z-index: 52;
     font-family: "Helvetica Neue", "Segoe UI", Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
+    &.prompt_footer {
+    	background: #f6f7f8;
+    	border-top: 1px solid #EDF0F6;
+    }
 }
 
 #message_composer {

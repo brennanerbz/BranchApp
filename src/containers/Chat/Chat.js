@@ -51,11 +51,14 @@ export default class Chat extends Component {
   }
 
   componentDidMount() {
+    console.log(this.props.params)
     const { user } = this.props;
     // Initial call to get branches, which has series of cascading listeners that calls to get rest of data in App.js
-    socket.emit('get parent memberships', {
-      user_id: user.id
-    })
+    if(user) {
+      socket.emit('get parent memberships', {
+        user_id: user.id
+      })
+    }
   }
 
   componentWillReceiveProps(nextProps) {

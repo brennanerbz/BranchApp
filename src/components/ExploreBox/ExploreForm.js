@@ -11,6 +11,9 @@ export default class ExploreForm extends Component {
 	handleOpenBranch = () => {
 		const { text } = this.state;
 		socket.emit('go to parent', text)
+		this.setState({
+			text: ''
+		});
 	}
 
 	render() {
