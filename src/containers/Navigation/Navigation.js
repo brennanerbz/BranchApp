@@ -53,6 +53,12 @@ export default class Navigation extends Component {
 		if(feed.parent_id !== activeBranch) changeActiveBranch(feed.parent_id)
 		if(feed.id !== activeFeed) {
 			changeActiveFeed(feed.id) 
+			if(feed.unread) {
+				this.props.markFeedRead(feed.id)
+				if(feed.parent_id !== activeBranch) {
+					this.props.markBranchRead(feed.parent_id)
+				}
+			}
 			if(membership == null || membership == undefined) {
 				socket.emit('join child', {
 					user_id: user.id,

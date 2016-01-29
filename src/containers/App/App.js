@@ -8,7 +8,7 @@ import { pushState } from 'redux-router';
 import connectData from 'helpers/connectData';
 import config from '../../config';
 
-// Global actions to be used => with socket
+// Global reducer actions to be used with socket =>
 import * as authActions from '../../redux/modules/auth';
 import * as branchActions from '../../redux/modules/branches';
 import * as feedActions from '../../redux/modules/feeds';
@@ -27,7 +27,9 @@ function fetchData(getState, dispatch) {
 @connectData(fetchData)
 @connect(
   state => ({
-    user: state.auth.user
+    user: state.auth.user,
+    activeFeed: state.feeds.activeFeed,
+    activeBranch: state.branches.activeBranch
   }),
   dispatch => ({
     ...bindActionCreators({
@@ -93,7 +95,7 @@ export default class App extends Component {
   }
 
   initSocketListeners() {
-    const { user, pushState } = this.props;
+    const { user, activeBranch, activeFeed, pushState } = this.props;
     socket.on('connect', (res) => {
       socket.on('connected', (res) => {
         console.log('hello: ', res)
@@ -159,6 +161,12 @@ export default class App extends Component {
       })
       socket.on('receive message', (res) => {
         this.props.receiveMessage(res)
+        if(mes.parent_id !== activeBranch) {
+          this.props.markBranchUnread(mes.parent_id)
+        }
+        if(mes.feed_id !== activeFeed) {
+          this.props.markFeedUnread(mes.feed_id)
+        }
       })
       socket.on('receive vote', (res) => {
         this.props.receiveVote(res)

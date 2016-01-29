@@ -14,7 +14,7 @@
 	box-shadow: 0 1px 5px rgba(0,0,0,0.27);
 	background-clip: padding-box;
     // New
-    border: 1px solid rgba(0, 0, 0, 0.11);
+    border: 1px solid rgba(0, 0, 0, 0.13);
     border-radius: 5px;
     -webkit-box-shadow: 0 2px 7px rgba(0, 0, 0, 0.15);
     box-shadow: 0 2px 7px rgba(0, 0, 0, 0.15);
@@ -28,8 +28,8 @@
     		line-height: inherit; 
     		a {
     			clear: both;
-    			// color: #66757f;
-    			color: #969696;
+    			color: #66757f;
+    			// color: #969696;
     			cursor: pointer;
     			display: block;
     			font-size: 13.5px;

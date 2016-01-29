@@ -3,6 +3,8 @@ const NEW_BRANCH = 'BranchApp/branches/NEW_BRANCH';
 const RECEIVE_BRANCHES = 'BranchApp/branches/RECEIVE_BRANCHES';
 const LEAVE_BRANCH = 'BranchApp/branches/LEAVE_BRANCH';
 const CHANGE_ACTIVE_BRANCH = 'BranchApp/branches/CHANGE_ACTIVE_BRANCH';
+const MARK_BRANCH_UNREAD = 'BranchApp/branches/MARK_BRANCH_UNREAD';
+const MARK_BRANCH_READ = 'BranchApp/branches/MARK_BRANCH_READ';
 
 const initialState = {
   branchMemberships: [],
@@ -45,6 +47,24 @@ export default function reducer(state = initialState, action) {
         branchMemberships: branchMemberships,
         branches: branches
       }
+    case MARK_BRANCH_UNREAD:
+      return {
+        ...state,
+        branches: branches.map(branch => {
+          if(branch.id == action.branch_id) {
+            branch.unread = true
+          }
+        })
+      }
+    case MARK_BRANCH_READ:
+      return {
+        ...state,
+        branches: branches.map(branch => {
+          if(branch.id == action.branch_id) {
+            branch.unread = false
+          }
+        })
+      }
     default:
       return state;
   }
@@ -80,5 +100,19 @@ export function leaveBranch(branch) {
     type: LEAVE_BRANCH,
     branch
   }
+}
+
+// Unread && Read branches
+export function markBranchUnread(branch_id) {
+  return {
+    type: MARK_BRANCH_UNREAD,
+    branch_id
+  };
+}
+export function markBranchRead(branch_id) {
+  return {
+    type: MARK_BRANCH_READ,
+    branch_id
+  };
 }
 

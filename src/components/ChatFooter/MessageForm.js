@@ -62,7 +62,7 @@ export default class MessageForm extends Component {
 					ref="message_input"
 					tabIndex={1}
 					autofocus={true}
-					placeholder={emptyFeed ? 'To send a message open a new branch': 'Type a message...'}
+					placeholder={emptyFeed ? 'To send a message, open a new branch': 'Type a message...'}
 					value={text}
 					onChange={(e) => {
 						this.setState({

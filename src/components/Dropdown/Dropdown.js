@@ -52,7 +52,7 @@ export default class Dropdown extends Component {
 		const style = require('./Dropdown.scss');
 		return (
 			<div ref="dropdown"
-				 style={{ top: top, right: right, left: left, width: '165px'}}
+				 style={{ top: top, right: right, left: left, width: '185px'}}
 				 className={'inline_block ' + style.dropdown}>
 				 <div className={style.dropdown_caret + ' ' + (rightAlign ? style.right_align : '')}>
 				 	<span className={style.caret_outer}></span>
