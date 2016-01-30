@@ -28,6 +28,7 @@ function fetchData(getState, dispatch) {
 @connectData(fetchData)
 @connect(
   state => ({
+    onboarded: state.user.onboarded,
     user: state.auth.user,
     activeFeed: state.feeds.activeFeed,
     activeBranch: state.branches.activeBranch
@@ -73,16 +74,17 @@ export default class App extends Component {
     window.addEventListener('resize', ::this.updateAppSize)
     this.initSocketListeners()
     this.initSocketEmitters()
-    const { params, pushState } = this.props;
-    if(params.branch_name == 'signup') pushState(null, '/signup')
-    if(params.branch_name == 'login') pushState(null, '/login')
   }
 
   componentWillReceiveProps(nextProps) {
     if (!this.props.user && nextProps.user) {
-      this.props.pushState(null, '/')
       this.updateAppSize()
+      if(this.props.onboarded && !nextProps.onboarded) {
+        return;
+      }
+      this.props.pushState(null, '/')
     } else if (this.props.user && !nextProps.user) {
+      this.props.pushState(null, '/')
     }
   }
 
@@ -109,7 +111,7 @@ export default class App extends Component {
         this.props.login(res, pushState)
       })
       socket.on('signup', (res) => {
-        this.props.signup(res)
+        this.props.signup(res, pushState)
       })
       // Branches
       socket.on('receive parent memberships', (res) => {

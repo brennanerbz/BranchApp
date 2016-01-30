@@ -24,7 +24,7 @@ export default class Signup extends Component {
 				<div style={{width: '355px', minWidth: '350px'}} className="flex_align_center">
 					<div className="form_card" id={style.sign_up_wrapper}>
 						<h2 className='form_header'>Sign Up</h2>
-						<SignUpForm landing={false}/>
+						<SignUpForm shouldFocus={true} landing={false}/>
 					</div>
 					<p className="form_note">Already have an account?<a onClick={() => pushState(null, '/login')}> Log In </a></p>
 				</div>

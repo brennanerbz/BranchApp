@@ -143,7 +143,8 @@ export function logout() {
     type: LOGOUT_SUCCESS
   };
 }
-export function signup(user) {
+export function signup(user, pushState) {
+  pushState(null, '/teambranch/welcome');
   return {
     type: SIGNUP_SUCCESS,
     user

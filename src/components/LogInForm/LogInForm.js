@@ -101,6 +101,7 @@ export default class LogInForm extends Component {
 				}}>
 				<input 
 					placeholder="Email"
+					autoFocus={true}
 					type="text"
 					value={email}
 					className={showEmailError ? 'error' : ''}

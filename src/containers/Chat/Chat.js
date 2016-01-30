@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 import { pushState } from 'redux-router';
 import { bindActionCreators } from 'redux';
+import { isEmpty } from '../../utils/validation';
 
 /* Config */
 import config from '../../config';
@@ -14,6 +15,10 @@ import Footer from '../../components/ChatFooter/ChatFooter';
 import Navigation from '../Navigation/Navigation';
 import Feed from '../Feed/Feed';
 
+// Reducer actions
+import * as branchActions from '../../redux/modules/branches';
+import * as feedActions from '../../redux/modules/feeds';
+
 // when the chat container is mounted, we want to set up listeners for the events that will take place. each of the listeners will have corresponding redux function and state.
 
 // function fetchData(getState, dispatch) {
@@ -24,6 +29,7 @@ import Feed from '../Feed/Feed';
 
 @connect(
   state => ({
+    onboarded: state.user.onboarded,
     user: state.auth.user,
     branchMemberships: state.branches.branchMemberships,
     branches: state.branches.branches,
@@ -34,6 +40,8 @@ import Feed from '../Feed/Feed';
   }),
   dispatch => ({
     ...bindActionCreators({
+      ...branchActions,
+      ...feedActions,
       pushState
     }, dispatch)
   })
@@ -51,16 +59,50 @@ export default class Chat extends Component {
   }
 
   componentDidMount() {
-    const { user } = this.props;
-    // Initial call to get branches, which has series of cascading listeners that calls to get rest of data in App.js
+    const { user, onboarded } = this.props;
+    if(!onboarded) { return; }
+
     if(user) {
       socket.emit('get parent memberships', {
         user_id: user.id
       })
     }
+
+    const { changeActiveFeed, changeActiveBranch, params, pushState } = this.props;
+    if(params.branch_name == 'signup' || params.branch_name == 'login') {
+
+      if(params.branch_name == 'signup') pushState(null, '/signup')
+      if(params.branch_name == 'login') pushState(null, '/login')
+
+    } else {
+
+      changeActiveBranch(params.branch_name)
+
+      if(isEmpty(params.feed_name)) {
+        if(!isEmpty(params.branch_name)) {
+          pushState(null, `${params.branch_name}/general`)
+        } else {
+          pushState(null, '/')
+        }
+        changeActiveFeed('general')
+      } else {
+        changeActiveFeed(params.feed_name)
+      }
+
+    }    
   }
 
   componentWillReceiveProps(nextProps) {
+    const { changeActiveFeed, changeActiveBranch } = this.props;
+    const { feeds, activeFeed, params } = nextProps;
+    if(feeds.length > 0) {
+      const feedName = feeds.filter(feed => feed.id === activeFeed)[0].title
+      if(!isEmpty(params.feed_name)) {
+        if(feedName !== params.feed_name) {
+          console.log('need to update the active / current feed')
+        }
+      }
+    }
   }
 
   render() {

@@ -37,7 +37,7 @@ export default class UserInfo extends Component {
 	};
 
 	render() {
-		const { user } = this.props;
+		const { user, pushState } = this.props;
 		const { isUserDropdownOpen, dropdownOptions } = this.state;
 		const style = require('./UserInfo.scss');
 		return (
@@ -69,7 +69,7 @@ export default class UserInfo extends Component {
 							this.props.openModal('settings')
 						}}
 						handleLogOut={() => {
-							this.props.logout()
+							this.props.logout(pushState)
 						}}
 					/>
 				}

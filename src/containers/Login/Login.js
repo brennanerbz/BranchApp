@@ -24,7 +24,7 @@ export default class Login extends Component {
 				<div style={{width: '355px', minWidth: '350px'}} className="flex_align_center">
 					<div className="form_card" id={style.log_in_wrapper}>
 						<h2 className='form_header'>Log In</h2>
-						<LogInForm inline={false}/>
+						<LogInForm shouldFocus={true} inline={false}/>
 					</div>
 					<p className="form_note">Don't have an account?<a onClick={() => pushState(null, '/signup')}> Sign Up </a></p>
 				</div>

@@ -42,7 +42,7 @@ export default class SignUpForm extends Component {
 	}
 
 	handleSubmitSignUp() {
-		const { signup } = this.props;
+		const { signup, pushState } = this.props;
 		const { username, email, password } = this.state;
 		if(!isEmpty(username) && !isEmpty(email) && !isEmpty(password)) {
 			const validatedEmail = validateEmail(email)
@@ -52,8 +52,8 @@ export default class SignUpForm extends Component {
 					email: email,
 					password: password
 				}
-				socket.emit('signup', newUser)
-				// signup(newUser)
+				// socket.emit('signup', newUser)
+				signup(newUser, pushState)
 				this.setState({
 					username: '',
 					email: '',
@@ -80,6 +80,7 @@ export default class SignUpForm extends Component {
 				}}>
 				<input 
 					placeholder="Pick a username"
+					autoFocus={this.props.shouldFocus}
 					value={this.state.username}
 					className={showUsernameError ? 'error' : ''}
 					onChange={(e) => {
