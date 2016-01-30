@@ -1,17 +1,45 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { pushState } from 'redux-router';
 import Helmet from 'react-helmet';
 
 import LogInForm from '../../components/LogInForm/LogInForm';
 import SignUpForm from '../../components/SignUpForm/SignUpForm';
 
-
+@connect(
+    state => ({}),
+    dispatch => ({
+        ...bindActionCreators({
+            pushState
+        }, dispatch)
+    })
+)
 export default class Landing extends Component {
+  state = {
+    height: 0,
+    width: 0
+  }
+  componentDidMount() {
+    this.updateLandingSize()
+    window.addEventListener('resize', ::this.updateLandingSize)
+  }
+  componentWillUnmount() {
+    window.removeEventListener('resize', ::this.updateLandingSize)
+  }
+  updateLandingSize() {
+    this.setState({
+        height: this.refs.landing_page.clientHeight,
+        width: this.refs.landing_page.clientWidth
+    });
+  }
   render() {
-    const style = require('./Landing.scss'),
-    brandLogo = require('../../components/ExploreBox/messengerLogo.png')
+    const { height, width } = this.state;
+    const { pushState } = this.props;
+    const style = require('./Landing.scss');
+    const brandLogo = require('../../components/ExploreBox/messengerLogo.png');
     return (
-      <div id={style.landing_page}>
+      <div ref="landing_page" id={style.landing_page}>
         <Helmet title="Home"/>
         <div id={style.landing_page_wrapper}>
         	<div id={style.landing_header}>
@@ -27,7 +55,13 @@ export default class Landing extends Component {
 	        			</a>
 	        		</div>
 	        		<div id={style.log_in_wrapper} className="float_right">
-	        			<LogInForm inline={true}/>
+                        {
+                            width > 695
+	        			    ? 
+                            <LogInForm inline={true}/>
+                            : 
+                            <button style={{marginTop: '20px'}} onClick={() => pushState(null, '/login')} className="button primary">Log In</button>
+                        }
 	        		</div>
         		</div>
         	</div>
