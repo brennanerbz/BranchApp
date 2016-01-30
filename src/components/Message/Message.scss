@@ -28,6 +28,13 @@
 		transition: opacity 35ms ease-in;
 		-webkit-transition: opacity 35ms ease-in;
 	}
+	&.first {
+		.message_conent {
+			.message_body {
+				margin-top: -3px;
+			}
+		}
+	}
 	&:hover {
 		background: #fafafa;
 	}
