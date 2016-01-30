@@ -37,10 +37,6 @@ body {
 	margin: 0!important;
 	overflow-y: hidden;
 	overflow-x: hidden;
-	// -webkit-user-select: none;
-	// -moz-user-select: none;
-	// -ms-user-select: none;
-	// user-select: none;
 }
 h1, h2, h3, h4 {
 	margin-top: 0!important;
@@ -208,6 +204,7 @@ button {
 // Popover 
 .popover {
 	min-width: 350px;
+	z-index: 201!important;
 	padding: 0!important;
     border: 1px solid rgba(0, 0, 0, 0.11);
     border-radius: 5px;

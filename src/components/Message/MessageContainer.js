@@ -25,23 +25,28 @@ export default class MessageContainer extends Component {
 	}
 
 	render() {
-		const { message, feed, membership } = this.props,
-		{ isMouseOverMessage, messageRendered } = this.state,
-		style = require('./Message.scss');
+		const { firstMessage, user, message, feed, membership } = this.props;
+		const { isMouseOverMessage, messageRendered } = this.state;
+		const style = require('./Message.scss');
 		return (
-			<div 
-				onMouseOver={() => this.setState({isMouseOverMessage: true})}
+			<div onMouseOver={() => this.setState({isMouseOverMessage: true})} 
 				onMouseLeave={() => this.setState({isMouseOverMessage: false})}
-				className={style.message_wrapper + ' ' + (messageRendered ? style.message_rendered : '')}>
+				className={
+					style.message_wrapper + ' ' 
+					+ (messageRendered ? style.message_rendered : '') + ' '
+					+ (firstMessage ? 'first' : '')
+				}>
 				<MessageGutter
 					message={message}
+					firstMessage={firstMessage}
+					isMouseOver={isMouseOverMessage}
 				/>
 				<MessageContent
 					message={message}
-					key={'messageContent' + message.id}
+					firstMessage={firstMessage}
 				/>
 				<MessageFeedback
-					// user={{id: 1}}
+					user={user}
 					membership={membership}
 					feed={feed}
 					message={message}

@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import Message from '../Message/MessageContainer';
 import {connect} from 'react-redux';
+import moment from 'moment';
 
 export default class MessageList extends Component {
 	static propTypes = {
@@ -22,25 +23,62 @@ export default class MessageList extends Component {
 	}
 
 	render() {
-		let { feed, branch, membership, messages } = this.props,
-		style = require('./MessageList.scss');
+		const { feed, branch, membership, messages } = this.props;
+		const style = require('./MessageList.scss');
+		let messagesList = [];
 		let filteredMessages = messages.filter(message => {
 			return message.feed_id === feed.id
 		})
+		var newUser = true, currentUserId = '', oldUserId = '',
+		showSeparator = false, currentDay, previousDay;
+		filteredMessages.map((message, i) => {
+
+			// First message anchor logic
+			currentUserId = message.user_id
+			if(i == 0) newUser = true
+			else if(currentUserId !== oldUserId) newUser = true
+			else if(currentUserId == oldUserId) newUser = false
+			oldUserId = currentUserId
+
+			// Day divider logic
+			currentDay = message.creation
+			if(i == 0) showSeparator = true
+			else if(currentDay !== previousDay) showSeparator = true
+			else if(currentDay == previousDay) showSeparator = false
+			previousDay = currentDay
+
+			if(showSeparator) {
+				messagesList.push(
+					<div key={'divider' + message.creation} className={style.day_divider}>
+						<hr className="separator"/>
+						<div className={style.day_divider_label}>
+							{moment.utc(message.creation).local().calender(null, {
+								sameDay: '[Today]',
+								nextDay: '[Tomorrow]',
+								nextWeek: '[dddd]',
+								lastDay: '[Yesterday]',
+								lastWeek: '[Last] dddd',
+								sameElse: 'DD/MM/YYYY'
+							})}
+						</div>
+					</div>
+				)
+			}
+
+			messagesList.push(
+				<Message
+					key={'message' + message.id + i}
+					firstMessage={newUser}
+					message={message}
+					feed={feed}
+					membership={membership}
+					user={user}
+				/>
+			)
+		})
 		return (
 			<div id={style.message_list}>
-				{filteredMessages.map((message, i) => {
-					return (
-						<Message 
-							key={'message' + message.id + i}
-							message={message}
-							feed={feed}
-							membership={membership}
-							// membership={membership}
-							// user={user}
-						/>
-					)
-				})}
+				{messagesList}
 			</div>
 		);
 	}
