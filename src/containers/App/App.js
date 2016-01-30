@@ -78,12 +78,13 @@ export default class App extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (!this.props.user && nextProps.user) {
-      this.updateAppSize()
       if(this.props.onboarded && !nextProps.onboarded) {
+        this.props.pushState(null, '/teambranch/welcome');
         return;
       }
       this.props.pushState(null, '/')
     } else if (this.props.user && !nextProps.user) {
+      this.props.closeOnboarding()
       this.props.pushState(null, '/')
     }
   }
@@ -108,7 +109,7 @@ export default class App extends Component {
       })
       // Auth
       socket.on('login', (res) => {
-        this.props.login(res, pushState)
+        this.props.login(res)
       })
       socket.on('signup', (res) => {
         this.props.signup(res, pushState)

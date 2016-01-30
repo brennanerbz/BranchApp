@@ -130,8 +130,7 @@ export function loadAuthCookie() {
     type: LOAD_AUTH_COOKIE
   }
 }
-export function login(user, pushState) {
-  pushState(null, '/')
+export function login(user) {
   return {
     type: LOGIN_SUCCESS,
     user
@@ -143,8 +142,7 @@ export function logout() {
     type: LOGOUT_SUCCESS
   };
 }
-export function signup(user, pushState) {
-  pushState(null, '/teambranch/welcome');
+export function signup(user) {
   return {
     type: SIGNUP_SUCCESS,
     user

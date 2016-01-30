@@ -53,7 +53,7 @@ export default class SignUpForm extends Component {
 					password: password
 				}
 				// socket.emit('signup', newUser)
-				signup(newUser, pushState)
+				signup(newUser)
 				this.setState({
 					username: '',
 					email: '',
