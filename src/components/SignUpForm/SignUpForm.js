@@ -76,7 +76,6 @@ export default class SignUpForm extends Component {
 				className={style.sign_up_form}
 				onSubmit={(e) => {
 				  	e.preventDefault()
-				  	this.handleSubmitSignUp()
 				}}>
 				<input 
 					placeholder="Pick a username"

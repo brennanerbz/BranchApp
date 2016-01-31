@@ -11,6 +11,7 @@ import createStore from './redux/create';
 import ApiClient from './helpers/ApiClient';
 import io from 'socket.io-client';
 import config from './config';
+import { isEmpty } from './utils/validation';
 import {Provider} from 'react-redux';
 import {reduxReactRouter, ReduxRouter} from 'redux-router';
 
@@ -38,7 +39,9 @@ function initSocket() {
   return socket;
 }
 
-global.socket = initSocket();
+if(isEmpty(global.socket)) {
+  global.socket = initSocket();
+}
 
 const component = (
   <ReduxRouter routes={getRoutes(store)} />

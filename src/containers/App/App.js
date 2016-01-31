@@ -28,6 +28,7 @@ function fetchData(getState, dispatch) {
 @connectData(fetchData)
 @connect(
   state => ({
+    mounted: state.misc.appMounted,
     onboarded: state.user.onboarded,
     user: state.auth.user,
     activeFeed: state.feeds.activeFeed,
@@ -71,9 +72,13 @@ export default class App extends Component {
       height: this.refs.app.clientHeight,
       width: this.refs.app.clientWidth
     });
-    window.addEventListener('resize', ::this.updateAppSize)
-    this.initSocketListeners()
-    this.initSocketEmitters()
+    const { mounted, appMounted } = this.props;
+    if(!mounted) {
+      appMounted()
+      window.addEventListener('resize', ::this.updateAppSize)
+      window.addEventListener('beforeunload', ::this.removeSocketListeners)
+      this.initSocketListeners()
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -90,8 +95,7 @@ export default class App extends Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', ::this.updateAppSize)
-    socket.emit('disconnect')
+    const { mounted } = this.props;
   }
 
   updateAppSize() {
@@ -104,31 +108,23 @@ export default class App extends Component {
   initSocketListeners() {
     const { user, activeBranch, activeFeed, pushState } = this.props;
     socket.on('connect', (res) => {
+      console.log('first connect')
       socket.on('connected', (res) => {
-        console.log('hello: ', res)
+        console.log('second connect')
       })
-      // Auth
+      // <---- Auth
       socket.on('login', (res) => {
         this.props.login(res)
       })
       socket.on('signup', (res) => {
         this.props.signup(res, pushState)
       })
-      // Branches
+      socket.on('authenticate', (res) => {
+        console.log('authenticate: ', res)
+      })
+      // <---- Branches
       socket.on('receive parent memberships', (res) => {
         this.props.receiveBranches(res.memberships)
-        if(Array.isArray(res.memberships) && res.memberships.length > 0) {
-          res.memberships.forEach(branch => {
-            socket.emit('get child memberships', {
-              user_id: user.id,
-              parent_id: branch.id
-            })
-            socket.emit('get nonmembership feeds', {
-              user_id: user.id,
-              parent_id: branch.id
-            })
-          })
-        }
       })
       socket.on('receive parent membership', (res) => {
         this.props.newBranch(res)
@@ -136,11 +132,13 @@ export default class App extends Component {
       socket.on('left parent', (res) => {
         this.props.leaveBranch(res.mem)
       })
-      // Feeds
+      // <---- Feeds
       socket.on('receive child memberships', (res) => {
+        console.log('child mems: ', res)
         this.props.receiveMemberships(res.memberships)
       })
       socket.on('receive nonmembership feeds', (res) => {
+        console.log('all feeds: ', res)
         this.props.receiveAllFeeds(res.feeds)
       })
       socket.on('new feed', (res) => {
@@ -148,10 +146,6 @@ export default class App extends Component {
       })
       socket.on('receive child membership', (res) => {
         this.props.receiveFeed(res)
-        socket.emit('get messages', {
-          user_id: user.id,
-          feed_id: res.feed_id
-        })
       })
       socket.on('user joined', (res) => {
         this.props.userJoinedFeed(res)
@@ -162,18 +156,12 @@ export default class App extends Component {
       socket.on('user left child', (res) => {
         this.props.userLeftFeed(res)
       })
-      // Messages
+      // <---- Messages
       socket.on('receive messages', (res) => {
         this.props.receiveMessages(res.messages)
       })
       socket.on('receive message', (res) => {
         this.props.receiveMessage(res)
-        if(mes.parent_id !== activeBranch) {
-          this.props.markBranchUnread(mes.parent_id)
-        }
-        if(mes.feed_id !== activeFeed) {
-          this.props.markFeedUnread(mes.feed_id)
-        }
       })
       socket.on('receive vote', (res) => {
         this.props.receiveVote(res)
@@ -181,18 +169,21 @@ export default class App extends Component {
       socket.on('user typing', (res) => {
         this.props.userTyping(res)
       })
-      // User
+      // <---- User
       socket.on('update user', (res) => {
         this.props.updateUser(res)
+      })
+      // <---- Error
+      socket.on('error', (res) => {
+        console.log('error: ', res)
       })
     })
   }
 
-  initSocketEmitters() {
-    const { user } = this.props;
-    socket.emit('request connect', {
-      user_id: isEmpty(user) ? null : user.id
-    })
+  removeSocketListeners() {
+    window.removeEventListener('resize', ::this.updateAppSize)
+    window.removeEventListener('beforeunload', ::this.removeSocketListeners)
+    socket.emit('disconnect')
   }
 
   render() {

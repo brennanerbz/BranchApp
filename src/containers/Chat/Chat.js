@@ -61,35 +61,11 @@ export default class Chat extends Component {
   componentDidMount() {
     const { user, onboarded } = this.props;
     if(!onboarded) { return; }
-
     if(user) {
       socket.emit('get parent memberships', {
         user_id: user.id
       })
     }
-
-    const { changeActiveFeed, changeActiveBranch, params, pushState } = this.props;
-    if(params.branch_name == 'signup' || params.branch_name == 'login') {
-
-      if(params.branch_name == 'signup') pushState(null, '/signup')
-      if(params.branch_name == 'login') pushState(null, '/login')
-
-    } else {
-
-      changeActiveBranch(params.branch_name)
-
-      if(isEmpty(params.feed_name)) {
-        if(!isEmpty(params.branch_name)) {
-          pushState(null, `${params.branch_name}/general`)
-        } else {
-          pushState(null, '/')
-        }
-        changeActiveFeed('general')
-      } else {
-        changeActiveFeed(params.feed_name)
-      }
-
-    }    
   }
 
   componentWillReceiveProps(nextProps) {
@@ -142,6 +118,7 @@ export default class Chat extends Component {
               appHeight={appHeight}
               appWidth={appWidth}
               branches={branches}
+              memberships={memberships}
               feeds={feeds}
               activeBranch={activeBranch}
               activeFeed={activeFeed}

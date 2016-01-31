@@ -50,15 +50,14 @@ export default function reducer(state = initialState, action = {}) {
         errorOnLogIn: false
       };
     case LOGIN_SUCCESS:
-      cookie.save('loginResult', action.user);
+      cookie.save('_user', action.user);
       return {
         ...state,
         loggingIn: false,
         user: action.user
       };
     case LOAD_AUTH_COOKIE:
-      const loginResult = cookie.load('loginResult');
-      const user = loginResult ? loginResult : null
+      const user = action.user;
       return {
         ...state,
         loaded: user === null ? false : true,
@@ -97,7 +96,7 @@ export default function reducer(state = initialState, action = {}) {
         signUpError: null
       }
     case SIGNUP_SUCCESS:
-      cookie.save('loginResult', action.user)
+      cookie.save('_user', action.user)
       return {
         ...state,
         loggingIn: false,
@@ -126,8 +125,11 @@ export function loadAuth() {
   }
 }
 export function loadAuthCookie() {
+  const user = cookie.load('_user');
+  // socket.emit('authenticate', {token: auth_token})
   return {
-    type: LOAD_AUTH_COOKIE
+    type: LOAD_AUTH_COOKIE,
+    user
   }
 }
 export function login(user) {
@@ -137,7 +139,7 @@ export function login(user) {
   };
 }
 export function logout() {
-  cookie.remove('loginResult');
+  cookie.remove('_user');
   return {
     type: LOGOUT_SUCCESS
   };

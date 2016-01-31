@@ -88,9 +88,25 @@ export function newBranch(branch) {
 
 //socket.on('receive parent memberships')
 export function receiveBranches(branches) {
-  return {
-    type: RECEIVE_BRANCHES,
-    branches
+  return (dispatch, getState) => {
+    dispatch({type: RECEIVE_BRANCHES, branches})
+    if(Array.isArray(branches) && branches.length > 0) {
+      const user = getState().auth.user
+      socket.emit('get child memberships', {
+          user_id: user.id,
+          parent_id: branches[0].feed_id
+      })
+      branches.forEach(branch => {
+        socket.emit('get child memberships', {
+          user_id: user.id,
+          parent_id: branch.feed_id
+        })
+        socket.emit('get nonmembership feeds', {
+          user_id: user.id,
+          parent_id: branch.feed_id
+        })
+      })
+    }
   }
 }
 

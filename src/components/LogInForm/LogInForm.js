@@ -97,7 +97,6 @@ export default class LogInForm extends Component {
 				className={style.log_in_form}
 				onSubmit={(e) => {
 				  	e.preventDefault()
-				  	this.handleSubmitLogIn()
 				}}>
 				<input 
 					placeholder="Email"

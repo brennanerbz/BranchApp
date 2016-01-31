@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import {connect} from 'react-redux';
 import { pushState } from 'redux-router';
 import { bindActionCreators } from 'redux';
+import { isEmpty } from '../../utils/validation';
 import BranchAccordion from '../../components/BranchAccordion/BranchAccordion';
 
 import * as branchActions from '../../redux/modules/branches';
@@ -70,9 +71,9 @@ export default class Navigation extends Component {
 	}
 
 	render() {
-		let { navHeight } = this.state,
-		{ branches, feeds, memberships, appHeight, activeFeed, activeBranch } = this.props,
-		style = require('./Navigation.scss');
+		const { navHeight } = this.state;
+		const { branches, feeds, memberships, appHeight, activeFeed, activeBranch } = this.props;
+		const style = require('./Navigation.scss');
 		return (
 			<div 
 				style={{ height: navHeight}}
@@ -82,7 +83,7 @@ export default class Navigation extends Component {
 					{branches.map((branch, i) => {
 						return (
 							<BranchAccordion 
-								key={branch.id + i} 
+								key={'branch' + branch.title + branch.id + i} 
 								index={i}
 								branch={branch}
 								active={activeBranch == branch.id}
@@ -93,6 +94,14 @@ export default class Navigation extends Component {
 							/>
 						)
 					})}
+					{(isEmpty(branches) || branches.length === 0) &&
+						<div className="display_flex flex_center">
+							<div className="flex_align_center">
+								<h2>No Branches</h2>
+								<p>Your branches will live here</p>
+							</div>
+						</div>
+					}
 				</div>
 			</div>
 		);

@@ -119,10 +119,14 @@ export function newFeed(feed) {
 
 // socket.on('receive child membership')
 export function receiveFeed(membership) {
-  return {
-    type: RECEIVE_FEED,
-    membership
-  };
+  return (dispatch, getState) => {
+    dispatch({type: RECEIVE_FEED, membership})
+    const user = getState().auth.user
+    socket.emit('get messages', {
+      user_id: user.id,
+      feed_id: membership.feed_id
+    })
+  }
 }
 
 // socket.on('user joined')
