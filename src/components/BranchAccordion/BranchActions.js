@@ -5,14 +5,24 @@ export default class BranchActions extends Component {
 	static propTypes = {
 	}
 
+	state = {
+
+	}
+
 	tooltip(text) {
 		return (
 			<Tooltip id={'branch' + text}><b>{text}</b></Tooltip>
 		)
 	}
 
+	openSharePopover() {
+		const { branch, openPopover } = this.props;
+		const node = this.refs[`share_${branch.id}`]
+		openPopover('share', node)
+	}
+
 	render() {
-		const { collapsed, isMouseOverBranch } = this.props;
+		const { branch, collapsed, isMouseOverBranch } = this.props;
 		const style = require('./BranchAccordion.scss');
 		return(
 			<div className={style.branch_actions}>
@@ -31,14 +41,13 @@ export default class BranchActions extends Component {
 						}} 
 						className="fa fa-times"></i>
 					</OverlayTrigger>
-
 				}
 				{ /* Actions for an expanded branch */}
 				{
 					!collapsed
 					&&
 					<OverlayTrigger delayShow={350} delayHide={50} placement="bottom" overlay={::this.tooltip('Invite people')}>
-						<button style={{lineHeight: '26px'}} className="outline circle">
+						<button ref={`share_${branch.id}`} onClick={() => this.openSharePopover()} style={{lineHeight: '26px'}} className="outline circle">
 							<i className="fa fa-user-plus"></i>
 						</button>
 					</OverlayTrigger>
@@ -47,7 +56,6 @@ export default class BranchActions extends Component {
 					!collapsed
 					&&
 					<OverlayTrigger delayShow={350} delayHide={50} placement="bottom" overlay={::this.tooltip('Add feed')}>
-
 						<button onClick={() => this.props.openNewFeed()} className="outline circle">
 							<i className="fa fa-plus"></i>
 						</button>

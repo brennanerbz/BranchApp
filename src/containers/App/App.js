@@ -19,7 +19,9 @@ import * as userActions from '../../redux/modules/user';
 
 // Global components 
 import Modal from '../../components/Modal/Modal';
-import Popover from '../../components/Popovers/Popover';
+import OnboardPopover from '../../components/Popovers/OnboardPopover';
+import DefaultPopover from '../../components/Popovers/DefaultPopover';
+
 
 function fetchData(getState, dispatch) {
   bindActionCreators({loadAuthCookie}, dispatch).loadAuthCookie();
@@ -209,7 +211,10 @@ export default class App extends Component {
         <Helmet {...config.app.head}/>
           {appChildrenWithProps}
           <Modal/>
-          <Popover/>
+          <div id={styles.popovers}>
+            <OnboardPopover/>
+            <DefaultPopover/>
+          </div>
       </div>
     );
   }

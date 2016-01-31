@@ -7,6 +7,7 @@ import BranchAccordion from '../../components/BranchAccordion/BranchAccordion';
 
 import * as branchActions from '../../redux/modules/branches';
 import * as feedActions from '../../redux/modules/feeds';
+import * as modalActions from '../../redux/modules/misc';
 
 @connect(
 	state => ({
@@ -15,6 +16,7 @@ import * as feedActions from '../../redux/modules/feeds';
 		...bindActionCreators({
 			...branchActions,
 			...feedActions,
+			...modalActions,
 			pushState
 		}, dispatch)
 	})
@@ -91,6 +93,8 @@ export default class Navigation extends Component {
 								onChangeActiveFeed={::this.handleChangeActiveFeed}
 								feeds={feeds.filter(feed => feed.parent_id == branch.id)}
 								memberships={memberships.filter(membership => membership.feed.parent_id == branch.id)}
+								openPopover={this.props.openPopover}
+								closePopver={this.props.closePopover}
 							/>
 						)
 					})}

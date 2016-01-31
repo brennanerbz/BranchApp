@@ -70,6 +70,8 @@ export default class BranchAccordion extends Component {
 							isMouseOverBranch={isMouseOverBranch}
 							branch={branch}
 							openNewFeed={::this.handleOpenNewFeed}
+							openPopover={this.props.openPopover}
+							closePopover={this.props.closePopover}
 						/>
 						<div 
 						 id={style.accordion}

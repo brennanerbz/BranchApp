@@ -20,7 +20,7 @@ import * as onBoardingActions from '../../redux/modules/user';
     }, dispatch)
   })
 )
-export default class BranchPopover extends Component {
+export default class OnboardPopover extends Component {
 	static propTypes = {
 	}
 
