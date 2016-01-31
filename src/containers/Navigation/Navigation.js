@@ -95,10 +95,15 @@ export default class Navigation extends Component {
 						)
 					})}
 					{(isEmpty(branches) || branches.length === 0) &&
-						<div className="display_flex flex_center">
-							<div className="flex_align_center">
+						<div className="display_flex flex_center" id={style.branch_onboard_message}>
+							<div style={{maxWidth: '80%'}} className="flex_align_center">
 								<h2>No Branches</h2>
-								<p>Your branches will live here</p>
+								<p>To chat, create your first branch</p>
+								<button 
+								onClick={() => {
+									document.getElementById('branch_explore_input').focus()
+								}}
+								className="button outline">New Branch</button>
 							</div>
 						</div>
 					}

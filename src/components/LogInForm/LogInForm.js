@@ -37,9 +37,9 @@ export default class LogInForm extends Component {
 			}
 			socket.emit('login', user)
 			this.setState({
-				email: '',
-				password: ''
+				email: ''
 			});
+			this.refs.password.value = '';
 		}
 	}
 
