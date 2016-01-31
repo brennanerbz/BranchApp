@@ -92,10 +92,6 @@ export function receiveBranches(branches) {
     dispatch({type: RECEIVE_BRANCHES, branches})
     if(Array.isArray(branches) && branches.length > 0) {
       const user = getState().auth.user
-      socket.emit('get child memberships', {
-          user_id: user.id,
-          parent_id: branches[0].feed_id
-      })
       branches.forEach(branch => {
         socket.emit('get child memberships', {
           user_id: user.id,

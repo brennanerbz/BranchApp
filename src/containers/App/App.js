@@ -64,7 +64,10 @@ export default class App extends Component {
   }
 
   componentWillMount() {
-    this.props.loadAuth()
+    const { mounted } = this.props;
+    if(!mounted) {
+      this.props.loadAuth()
+    }
   }
 
   componentDidMount() {
@@ -109,8 +112,12 @@ export default class App extends Component {
     const { user, activeBranch, activeFeed, pushState } = this.props;
     socket.on('connect', (res) => {
       console.log('first connect')
+      // <--- Hello
       socket.on('connected', (res) => {
         console.log('second connect')
+      })
+      socket.on('disconnected', (res) => {
+        console.log('disconnected')
       })
       // <---- Auth
       socket.on('login', (res) => {

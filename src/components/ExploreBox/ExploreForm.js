@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 
 export default class ExploreForm extends Component {
 	static propTypes = {
@@ -8,12 +9,21 @@ export default class ExploreForm extends Component {
 		text: ''
 	}
 
-	handleOpenBranch = () => {
+	handleOpenBranch() {
 		const { text } = this.state;
-		socket.emit('go to parent', text)
+		socket.emit('go to parent', {
+			user_id: null,
+			title: text
+		})
 		this.setState({
 			text: ''
 		});
+	}
+
+	tooltip(text) {
+		return (
+			<Tooltip id={'branch' + text}><b>{text}</b></Tooltip>
+		)
 	}
 
 	render() {
@@ -24,6 +34,7 @@ export default class ExploreForm extends Component {
 				<form id={style.explore_form}>
 					<div className="explore_input_wrapper">
 						<input 
+						ref="explore_input"
 						type="text" 
 						id={style.explore_branches}
 						className={style.explore_input}
@@ -42,10 +53,18 @@ export default class ExploreForm extends Component {
 						}}
 						/>
 					</div>
-					<span 
-					onClick={::this.handleOpenBranch}
-					id={style.explore_icon} 
-					className="fa fa-arrow-right"></span>
+					<OverlayTrigger delayShow={350} delayHide={50} placement="bottom" overlay={::this.tooltip('Click to open branch')}>
+						<span 
+						onClick={() => {
+							if(text.length > 0) {
+								this.handleOpenBranch()
+							} else {
+								this.refs.explore_input.focus()
+							}
+						}}
+						id={style.explore_icon} 
+						className="fa fa-arrow-right"></span>
+					</OverlayTrigger>
 				</form>
 			</span>
 		);
