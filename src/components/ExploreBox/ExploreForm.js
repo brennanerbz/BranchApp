@@ -36,7 +36,7 @@ export default class ExploreForm extends Component {
 						<input 
 						ref="explore_input"
 						type="text" 
-						id={style.explore_branches}
+						id={'branch_explore_input'}
 						className={style.explore_input}
 						value={text}
 						placeholder="Open Branch"

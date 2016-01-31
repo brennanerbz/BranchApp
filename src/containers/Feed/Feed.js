@@ -130,7 +130,11 @@ export default class Feed extends Component {
 								<div className="flex_align_center" id={style.onboard_message}>
 									<h2>Empty Feed</h2>
 									<p>Once you start chatting, all your messages will be here</p>
-									<button className="button outline">New Branch</button>
+									<button 
+									onClick={() => {
+										document.getElementById('branch_explore_input').focus()
+									}}
+									className="button outline">New Branch</button>
 								</div>
 							</div>
 						}
