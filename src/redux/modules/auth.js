@@ -25,10 +25,13 @@ const initialState = {
 };
 
 export default function reducer(state = initialState, action = {}) {
-  // let errorData;
-  // if(action.error && action.error.req) {
-  //   errorData = action.error.req._data
-  // }
+  let errorData;
+  if(action.error && action.error.req) {
+    errorData = action.error.req._data
+    if(errorData.password) {
+      delete errorData.password
+    }
+  }
 
   switch (action.type) {
     case LOAD_AUTH_SUCCESS:
@@ -37,14 +40,14 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         loaded: true,
         user: user,
-        // errorData: null
+        errorData: null
       };
     case LOGIN:
       return {
         ...state,
         loggingIn: true,
         errorOnLogIn: false,
-        // errorData: null
+        errorData: null
       };
     case LOGIN_SUCCESS:
       cookie.save('_token', action.result.token);
@@ -56,7 +59,6 @@ export default function reducer(state = initialState, action = {}) {
       };
     case LOGIN_FAILURE:
       cookie.remove('_token')
-      delete errorData.password
       return {
         ...state,
         loaded: false,
@@ -64,7 +66,7 @@ export default function reducer(state = initialState, action = {}) {
         user: null,
         errorOnLogIn: true,
         logInError: action.error.text,
-        // errorData: errorData
+        errorData: errorData
       };
     case LOGOUT:
       return {
@@ -77,7 +79,7 @@ export default function reducer(state = initialState, action = {}) {
         loggingOut: false,
         loaded: false,
         user: null,
-        // errorData: null
+        errorData: null
       };
     case LOGOUT_FAIL:
       return {
@@ -91,7 +93,7 @@ export default function reducer(state = initialState, action = {}) {
         loggingIn: true,
         errorOnSignUp: false,
         signUpError: null,
-        // errorData: null
+        errorData: null
       }
     case SIGNUP_SUCCESS:
       cookie.save('_token', action.result.token)
@@ -103,7 +105,6 @@ export default function reducer(state = initialState, action = {}) {
       }
     case SIGNUP_FAILURE:
       cookie.remove('_token')
-      delete errorData.password
       return {
         ...state,
         loaded: false,
@@ -111,7 +112,7 @@ export default function reducer(state = initialState, action = {}) {
         user: null,
         errorOnSignUp: true,
         signUpError: action.error.text,
-        // errorData: errorData
+        errorData: errorData
       }
     default:
       return state;
