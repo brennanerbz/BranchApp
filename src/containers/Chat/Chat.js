@@ -61,11 +61,6 @@ export default class Chat extends Component {
   componentDidMount() {
     const { user, onboarded } = this.props;
     if(!onboarded) { return; }
-    if(user) {
-      socket.emit('get parent memberships', {
-        user_id: user.id
-      })
-    }
   }
 
   componentWillReceiveProps(nextProps) {

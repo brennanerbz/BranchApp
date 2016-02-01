@@ -10,7 +10,9 @@ export default class ExploreForm extends Component {
 	}
 
 	handleOpenBranch() {
+		const { pushState } = this.props;
 		const { text } = this.state;
+		pushState(null, `/${text}/general`)
 		socket.emit('go to parent', {
 			user_id: null,
 			title: text

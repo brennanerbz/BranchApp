@@ -7,6 +7,9 @@ import { isLoaded as isAuthLoaded, loadAuthCookie, loadAuth } from 'redux/module
 import { pushState } from 'redux-router';
 import connectData from 'helpers/connectData';
 import config from '../../config';
+import io from 'socket.io-client';
+import cookie from 'react-cookie';
+
 import { isEmpty } from '../../utils/validation';
 
 // Global reducer actions to be used with socket =>
@@ -23,8 +26,16 @@ import OnboardPopover from '../../components/Popovers/OnboardPopover';
 import DefaultPopover from '../../components/Popovers/DefaultPopover';
 
 
+// function fetchData(getState, dispatch) {
+//   bindActionCreators({loadAuthCookie}, dispatch).loadAuthCookie();
+// }
+
 function fetchData(getState, dispatch) {
-  bindActionCreators({loadAuthCookie}, dispatch).loadAuthCookie();
+  const promises = [];
+  if (!isAuthLoaded(getState())) {
+    promises.push(dispatch(loadAuthCookie()));
+  }
+  return Promise.all(promises);
 }
 
 @connectData(fetchData)
@@ -68,7 +79,7 @@ export default class App extends Component {
   componentWillMount() {
     const { mounted } = this.props;
     if(!mounted) {
-      this.props.loadAuth()
+      // this.props.loadAuth()
     }
   }
 
@@ -82,20 +93,21 @@ export default class App extends Component {
       appMounted()
       window.addEventListener('resize', ::this.updateAppSize)
       window.addEventListener('beforeunload', ::this.removeSocketListeners)
-      this.initSocketListeners()
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (!this.props.user && nextProps.user) {
+      this.setSocket(nextProps.user)
+      // <--- On signup, go to the welcome route for onboarding
       if(this.props.onboarded && !nextProps.onboarded) {
         this.props.pushState(null, '/teambranch/welcome');
         return;
       }
-      this.props.pushState(null, '/')
     } else if (this.props.user && !nextProps.user) {
       this.props.closeOnboarding()
       this.props.pushState(null, '/')
+      global.socket = ''
     }
   }
 
@@ -110,32 +122,52 @@ export default class App extends Component {
     });
   }
 
+  setSocket(user) {
+    console.log('socket, auth and emit parent')
+    global.socket = this.initSocket();
+
+    this.initSocketListeners()
+
+    socket.emit('authenticate', {
+      token: cookie.load('_token')
+    })
+    socket.emit('get parent memberships', {
+      user_id: user.id
+    })
+  }
+
+  initSocket() {
+    let socketAddress;
+    if(__HEROKUSERVER__) {
+      socketAddress = config.herokuApi + '/chat'
+    } else {
+      socketAddress = config.apiHost + ':' + config.apiPort + '/chat'
+    }
+    const socket = io(socketAddress);
+    return socket;
+  }
+
   initSocketListeners() {
     const { user, activeBranch, activeFeed, pushState } = this.props;
     socket.on('connect', (res) => {
-      console.log('first connect')
+      console.log('socket connect', socket)
       // <--- Hello
       socket.on('connected', (res) => {
-        console.log('second connect')
+        console.log('server connect')
       })
       socket.on('disconnected', (res) => {
-        console.log('disconnected')
-      })
-      // <---- Auth
-      socket.on('login', (res) => {
-        this.props.login(res)
-      })
-      socket.on('signup', (res) => {
-        this.props.signup(res, pushState)
+        console.log('server disconnected')
       })
       socket.on('authenticate', (res) => {
-        console.log('authenticate: ', res)
+        console.log('authenticated')
       })
       // <---- Branches
       socket.on('receive parent memberships', (res) => {
+        console.log('parent memberships', res)
         this.props.receiveBranches(res.memberships)
       })
       socket.on('receive parent membership', (res) => {
+        console.log('receive parent', res)
         this.props.newBranch(res)
       })
       socket.on('left parent', (res) => {
@@ -167,6 +199,7 @@ export default class App extends Component {
       })
       // <---- Messages
       socket.on('receive messages', (res) => {
+        console.log('messages')
         this.props.receiveMessages(res.messages)
       })
       socket.on('receive message', (res) => {
@@ -184,15 +217,21 @@ export default class App extends Component {
       })
       // <---- Error
       socket.on('error', (res) => {
-        console.log('error: ', res)
+        console.log('socket error: ', res)
       })
+    })
+    socket.on('reconnect_attempt', res => {
+      console.log('reconnect', res)
+    })
+    socket.on('disconnect', (res) => {
+      console.log('socket disconnect', res)
     })
   }
 
   removeSocketListeners() {
     window.removeEventListener('resize', ::this.updateAppSize)
     window.removeEventListener('beforeunload', ::this.removeSocketListeners)
-    socket.emit('disconnect')
+    // socket.emit('disconnect')
   }
 
   render() {

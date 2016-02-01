@@ -7,7 +7,9 @@ import * as loginActions from '../../redux/modules/auth';
 
 @connect(
 	state => ({
-		logInError: state.auth.logInError
+		errorOnLogIn: state.auth.errorOnLogIn,
+		logInError: state.auth.logInError,
+		user: state.auth.user
 	}),
 	dispatch => ({
 		...bindActionCreators({
@@ -26,6 +28,18 @@ export default class LogInForm extends Component {
 		showPasswordError: false
 	}
 
+	componentWillReceiveProps(nextProps) {
+		if(!this.props.errorOnLogIn && nextProps.errorOnLogIn) {
+			this.props.pushState(null, '/login')
+		}
+		if(!this.props.user && nextProps.user) {
+			this.setState({
+				email: ''
+			});
+			this.refs.password.value = '';
+		}
+	}
+
 	handleSubmitLogIn() {
 		const { login, pushState } = this.props;
 		const { email } = this.state;
@@ -35,11 +49,7 @@ export default class LogInForm extends Component {
 				email: email,
 				password: password
 			}
-			socket.emit('login', user)
-			this.setState({
-				email: ''
-			});
-			this.refs.password.value = '';
+			login(user)
 		}
 	}
 

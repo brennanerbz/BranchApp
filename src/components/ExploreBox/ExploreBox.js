@@ -30,7 +30,7 @@ export default class ExploreBox extends Component {
 				<span onClick={() => pushState(null, '/')} id="branch_logo_wrapper" className="inline_block">
 					<img id={styles.branch_logo} src={branchLogo}/>
 				</span>
-				<ExploreForm/>
+				<ExploreForm pushState={pushState}/>
 			</div>
 		);
 	}

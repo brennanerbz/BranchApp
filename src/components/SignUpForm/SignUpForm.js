@@ -8,7 +8,9 @@ import * as signupActions from '../../redux/modules/auth';
 
 @connect(
 	state => ({
-		signUpError: state.auth.signUpError
+		errorOnSignup: state.auth.errorOnSignup,
+		signUpError: state.auth.signUpError,
+		user: state.auth.user
 	}),
 	dispatch => ({
 		...bindActionCreators({
@@ -24,10 +26,22 @@ export default class SignUpForm extends Component {
 	state = {
 		username: '',
 		email: '',
-		password: '',
 		showUsernameError: false,
 		showEmailError: false,
 		showPasswordError: false
+	}
+
+	componentWillReceiveProps(nextProps) {
+		if(!this.props.errorOnSignup && nextProps.errorOnSignup) {
+			this.props.pushState(null, '/signup')
+		}
+		if(!this.props.user && nextProps.user) {
+			this.setState({
+				email: '',
+				username: ''
+			});
+			this.refs.signup_password.value = '';
+		}
 	}
 
 	componentDidUpdate() {
@@ -43,7 +57,8 @@ export default class SignUpForm extends Component {
 
 	handleSubmitSignUp() {
 		const { signup, pushState } = this.props;
-		const { username, email, password } = this.state;
+		const { username, email } = this.state;
+		const password = this.refs.signup_password.value;
 		if(!isEmpty(username) && !isEmpty(email) && !isEmpty(password)) {
 			const validatedEmail = validateEmail(email)
 			if(validatedEmail) {
@@ -52,13 +67,7 @@ export default class SignUpForm extends Component {
 					email: email,
 					password: password
 				}
-				// socket.emit('signup', newUser)
 				signup(newUser)
-				this.setState({
-					username: '',
-					email: '',
-					password: ''
-				});
 			} else {
 				this.setState({
 					showEmailError: true
@@ -101,13 +110,12 @@ export default class SignUpForm extends Component {
 					}}/>
 				<input 
 					type="password" 
+					ref="signup_password"
 					placeholder="Create a password"
-					value={this.state.password}
 					className={showPasswordError ? 'error' : ''}
 					onChange={(e) => {
 						this.setState({
-							showPasswordError: false,
-							password: e.target.value
+							showPasswordError: false
 						})
 					}}
 					onKeyDown={(e) => {

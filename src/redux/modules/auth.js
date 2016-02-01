@@ -1,13 +1,10 @@
 import cookie from 'react-cookie';
 import request from 'superagent';
 
-const LOAD = 'BranchApp/auth/LOAD';
-const LOAD_SUCCESS = 'BranchApp/auth/LOAD_SUCCESS';
-const LOAD_FAIL = 'BranchApp/auth/LOAD_FAIL';
-// LogIn
+// LogIn & Out
 const LOGIN = 'BranchApp/auth/LOGIN';
 export const LOGIN_SUCCESS = 'BranchApp/auth/LOGIN_SUCCESS';
-const LOGIN_FAIL = 'BranchApp/auth/LOGIN_FAIL';
+const LOGIN_FAILURE = 'BranchApp/auth/LOGIN_FAILURE';
 const LOGOUT = 'BranchApp/auth/LOGOUT';
 const LOGOUT_SUCCESS = 'BranchApp/auth/LOGOUT_SUCCESS';
 const LOGOUT_FAIL = 'BranchApp/auth/LOGOUT_FAIL';
@@ -15,33 +12,25 @@ const LOGOUT_FAIL = 'BranchApp/auth/LOGOUT_FAIL';
 const SIGNUP = 'BranchApp/auth/SIGNUP';
 export const SIGNUP_SUCCESS = 'BranchApp/auth/SIGNUP_SUCCESS';
 const SIGNUP_FAILURE = 'BranchApp/auth/SIGNUP_FAILURE';
-
-const LOAD_AUTH_COOKIE = 'BranchApp/auth/LOAD_AUTH_COOKIE';
+// Auth
+const LOAD_AUTH = 'BranchApp/auth/LOAD_AUTH';
+const LOAD_AUTH_SUCCESS = 'BranchApp/auth/LOAD_AUTH_SUCCESS';
+const LOAD_AUTH_FAILURE = 'BranchApp/auth/LOAD_AUTH_FAILURE';
 
 const initialState = {
-  loaded: false
+  loaded: false,
+  errorOnLogIn: false,
+  errorOnSignUp: false
 };
 
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
-    case LOAD:
+    case LOAD_AUTH_SUCCESS:
+      const user = action.result;
       return {
         ...state,
-        loading: true
-      };
-    case LOAD_SUCCESS:
-      return {
-        ...state,
-        loading: false,
         loaded: true,
-        user: action.result
-      };
-    case LOAD_FAIL:
-      return {
-        ...state,
-        loading: false,
-        loaded: false,
-        error: action.error
+        user: user
       };
     case LOGIN:
       return {
@@ -50,22 +39,18 @@ export default function reducer(state = initialState, action = {}) {
         errorOnLogIn: false
       };
     case LOGIN_SUCCESS:
-      cookie.save('_user', action.user);
+      cookie.save('_token', action.result.token);
       return {
         ...state,
         loggingIn: false,
-        user: action.user
+        loaded: true,
+        user: action.result
       };
-    case LOAD_AUTH_COOKIE:
-      const user = action.user;
+    case LOGIN_FAILURE:
+      cookie.remove('_token')
       return {
         ...state,
-        loaded: user === null ? false : true,
-        user: user
-      };
-    case LOGIN_FAIL:
-      return {
-        ...state,
+        loaded: false,
         loggingIn: false,
         user: null,
         errorOnLogIn: true,
@@ -80,6 +65,7 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         loggingOut: false,
+        loaded: false,
         user: null
       };
     case LOGOUT_FAIL:
@@ -96,15 +82,18 @@ export default function reducer(state = initialState, action = {}) {
         signUpError: null
       }
     case SIGNUP_SUCCESS:
-      cookie.save('_user', action.user)
+      cookie.save('_token', action.result.token)
       return {
         ...state,
         loggingIn: false,
-        user: action.user
+        loaded: true,
+        user: action.result
       }
     case SIGNUP_FAILURE:
+      cookie.remove('_token')
       return {
         ...state,
+        loaded: false,
         loggingIn: false,
         user: null,
         errorOnSignUp: true,
@@ -125,29 +114,30 @@ export function loadAuth() {
   }
 }
 export function loadAuthCookie() {
-  const user = cookie.load('_user');
-  // socket.emit('authenticate', {token: auth_token})
+  const token = cookie.load('_token');
   return {
-    type: LOAD_AUTH_COOKIE,
-    user
+    types: [LOAD_AUTH, LOAD_AUTH_SUCCESS, LOAD_AUTH_FAILURE],
+    promise: (client) => client.post('/authenticate', {
+      token: token
+    })
   }
 }
 export function login(user) {
   return {
-    type: LOGIN_SUCCESS,
-    user
+    types: [LOGIN, LOGIN_SUCCESS, LOGIN_FAILURE],
+    promise: (client) => client.post('/login', user)
   };
 }
 export function logout() {
-  cookie.remove('_user');
+  cookie.remove('_token');
   return {
     type: LOGOUT_SUCCESS
   };
 }
 export function signup(user) {
   return {
-    type: SIGNUP_SUCCESS,
-    user
-  }
+    types: [SIGNUP, SIGNUP_SUCCESS, SIGNUP_FAILURE],
+    promise: (client) => client.post('/signup', user)
+  };
 }
 

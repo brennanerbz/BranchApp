@@ -9,7 +9,7 @@ import useScroll from 'scroll-behavior/lib/useStandardScroll';
 // import storeEnhancer from 'redux-history-transitions';
 import createStore from './redux/create';
 import ApiClient from './helpers/ApiClient';
-import io from 'socket.io-client';
+// import io from 'socket.io-client';
 import config from './config';
 import { isEmpty } from './utils/validation';
 import {Provider} from 'react-redux';
@@ -27,21 +27,6 @@ const scrollableHistory = useScroll(createHistory);
 const dest = document.getElementById('content');
 const store = createStore(reduxReactRouter, makeRouteHooksSafe(getRoutes), scrollableHistory, client, window.__data);
 
-
-function initSocket() {
-  let socketAddress;
-  if(__HEROKUSERVER__) {
-    socketAddress = config.herokuApi + '/chat'
-  } else {
-    socketAddress = config.apiHost + ':' + config.apiPort + '/chat'
-  }
-  const socket = io(socketAddress);
-  return socket;
-}
-
-if(isEmpty(global.socket)) {
-  global.socket = initSocket();
-}
 
 const component = (
   <ReduxRouter routes={getRoutes(store)} />

@@ -21,8 +21,8 @@ export default function reducer(state = initialState, action) {
     case NEW_BRANCH:
       return {
         ...state,
-        branchMemberships: [...state.branchMemberships, action.branch],
-        branches: [...state.branches, action.branch.feed]
+        branchMemberships: [action.branch, ...state.branchMemberships],
+        branches: [action.branch.feed, ...state.branches]
       }
     case RECEIVE_BRANCHES:
       let b = [];

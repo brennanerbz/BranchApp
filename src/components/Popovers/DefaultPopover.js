@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import $ from 'jquery';
 import { Overlay, Popover } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -24,7 +25,13 @@ export default class DefaultPopover extends Component {
 	static propTypes = {
 	}
 
-	state = {
+	componentDidMount() {
+		const node = this.refs.popover;
+		document.onclick = (e) => {
+			if(node.offsetParent !== null) {
+				// this.props.closePopover()
+			}
+		}
 	}
 
 	render() {
@@ -34,19 +41,15 @@ export default class DefaultPopover extends Component {
 		let node;
 		if(!hiddenTarget) node = target.getBoundingClientRect(); 
 		return (
-			<div className={open ? '' : 'hidden'}>
-				{
-					!hiddenTarget
-					&&
-					<Popover 
-						id={node.top}
-						placement={'right'}
-						title={'Instant invite'}
-						positionLeft={node.left + 30} 
-						positionTop={node.top - 40}>
-						<h1>Instant invite</h1>
-				    </Popover>
-				}
+			<div ref="popover" className={open ? '' : 'hidden'}>
+				{!hiddenTarget && <Popover 
+					placement={'right'}
+					id={!hiddenTarget ? node.top : 'hidden'} 
+					title={'Instant invite'}
+					positionLeft={!hiddenTarget ? node.left + 30 : 0} 
+					positionTop={!hiddenTarget ? node.top - 40 : 0}>
+					<h1>Instant invite</h1>
+			    </Popover>}
 		    </div>
 		);
 	}

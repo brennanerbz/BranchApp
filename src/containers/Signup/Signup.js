@@ -5,7 +5,9 @@ import { pushState } from 'redux-router';
 import SignUpForm from '../../components/SignUpForm/SignUpForm';
 
 @connect(
-	state => ({}),
+	state => ({
+		user: state.auth.user
+	}),
 	dispatch => ({
 		...bindActionCreators({
 			pushState
@@ -14,6 +16,12 @@ import SignUpForm from '../../components/SignUpForm/SignUpForm';
 )
 export default class Signup extends Component {
 	static propTypes = {
+	}
+
+	componentWillReceiveProps(nextProps) {
+		if(!this.props.user && nextProps.user) {
+			this.props.pushState(null, '/')
+		}
 	}
 
 	render() {
