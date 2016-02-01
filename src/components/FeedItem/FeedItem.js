@@ -24,7 +24,7 @@ export default class FeedItem extends Component {
 				<a className={style.feed_name}>
 					<span className="overflow_ellipsis">
 						<span className={style.prefix_icon}>#</span>
-						{ feed.title }
+						{ feed.title.replace("#", "") }
 					</span>
 				</a>
 			</li>
