@@ -159,11 +159,9 @@ export default class App extends Component {
       })
       // <---- Branches
       socket.on('receive parent memberships', (res) => {
-        console.log('parent memberships', res)
         this.props.receiveBranches(res.memberships)
       })
       socket.on('receive parent membership', (res) => {
-        console.log('receive parent', res)
         this.props.newBranch(res)
       })
       socket.on('left parent', (res) => {
@@ -171,11 +169,9 @@ export default class App extends Component {
       })
       // <---- Feeds
       socket.on('receive child memberships', (res) => {
-        console.log('child mems: ', res)
         this.props.receiveMemberships(res.memberships)
       })
       socket.on('receive nonmembership feeds', (res) => {
-        console.log('all feeds: ', res)
         this.props.receiveAllFeeds(res.feeds)
       })
       socket.on('new feed', (res) => {
@@ -195,7 +191,7 @@ export default class App extends Component {
       })
       // <---- Messages
       socket.on('receive messages', (res) => {
-        console.log('messages')
+        console.log('messages', res)
         this.props.receiveMessages(res.messages)
       })
       socket.on('receive message', (res) => {
