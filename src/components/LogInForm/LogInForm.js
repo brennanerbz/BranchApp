@@ -9,6 +9,7 @@ import * as loginActions from '../../redux/modules/auth';
 	state => ({
 		errorOnLogIn: state.auth.errorOnLogIn,
 		logInError: state.auth.logInError,
+		errorData: state.auth.errorData,
 		user: state.auth.user
 	}),
 	dispatch => ({
@@ -25,25 +26,66 @@ export default class LogInForm extends Component {
 	state = {
 		email: '',
 		showEmailError: false,
-		showPasswordError: false
+		emailError: '',
+		showPasswordError: false,
+		passwordError: ''
 	}
+
+	componentDidMount() {
+		const { errorData, logInError } = this.props;
+		this.displayError(errorData, logInError)
+	}
+
 
 	componentWillReceiveProps(nextProps) {
 		if(!this.props.errorOnLogIn && nextProps.errorOnLogIn) {
 			this.props.pushState(null, '/login')
+			this.displayError(nextProps.errorData, nextProps.logInError)
 		}
 		if(!this.props.user && nextProps.user) {
 			this.setState({
 				email: ''
 			});
-			this.refs.password.value = '';
+			this.refs.login_password.value = '';
+		}
+	}
+
+	displayError(errorData, logInError) {
+		if(errorData) {
+			if(errorData.email) this.setState({email: errorData.email})
+			if(logInError) {
+				if(logInError.indexOf('email') !== -1) {
+					this.setState({
+						showEmailError: true,
+						emailError: logInError
+					})
+				}
+				if(logInError.indexOf('password') !== -1) {
+					this.setState({
+						showPasswordError: true,
+						passwordError: logInError
+					});
+				}
+			}
 		}
 	}
 
 	handleSubmitLogIn() {
 		const { login, pushState } = this.props;
 		const { email } = this.state;
-		const password = this.refs.password.value;
+		const password = this.refs.login_password.value;
+		if(isEmpty(email)) {
+			this.setState({
+				showEmailError: true,
+				emailError: 'Please enter your email address'
+			});
+		}
+		if(isEmpty(password)) {
+			this.setState({
+				showPasswordError: true,
+				passwordError: 'Please enter your password'
+			});
+		}
 		if(!isEmpty(email) && !isEmpty(password)) {
 			const user = {
 				email: email,
@@ -77,7 +119,7 @@ export default class LogInForm extends Component {
 				<li className={style.password}>
 					<label>Password</label>
 					<input 
-						ref="password"
+						ref="login_password"
 						type="password" 
 						tabIndex={2}
 						onKeyDown={(e) => {
@@ -100,7 +142,7 @@ export default class LogInForm extends Component {
 
 	renderLogInForm() {
 		const style = require('../SignUpForm/SignUpForm.scss');
-		const { email, showEmailError, showPasswordError } = this.state;
+		const { email, showEmailError, emailError, showPasswordError, passwordError } = this.state;
 		const { pushState } = this.props;
 		return (
 			<form 
@@ -121,7 +163,7 @@ export default class LogInForm extends Component {
 						})
 					}}/>
 				<input 
-					ref="password"
+					ref="login_password"
 					type="password" 
 					placeholder="Password"
 					className={showPasswordError ? 'error' : ''}
@@ -147,14 +189,14 @@ export default class LogInForm extends Component {
 					showEmailError
 					&&
 					<p className={style.error}>
-						Oh no. Looks like the wrong email.
+						Oh no. {emailError}.
 					</p>
 				}
 				{
 					showPasswordError
 					&&
 					<p className={style.error}>
-						Whoa! Wrong password. Try again?
+						Whoa! {passwordError}.
 					</p>
 				}
 			</form>

@@ -10,6 +10,7 @@ import * as signupActions from '../../redux/modules/auth';
 	state => ({
 		errorOnSignup: state.auth.errorOnSignup,
 		signUpError: state.auth.signUpError,
+		errorData: state.auth.errorData,
 		user: state.auth.user
 	}),
 	dispatch => ({
@@ -27,13 +28,22 @@ export default class SignUpForm extends Component {
 		username: '',
 		email: '',
 		showUsernameError: false,
+		usernameError: '',
 		showEmailError: false,
-		showPasswordError: false
+		emailError: '',
+		showPasswordError: false,
+		passwordError: ''
+	}
+
+	componentDidMount() {
+		const { errorData, signUpError } = this.props;
+		this.displayError(errorData, signUpError)
 	}
 
 	componentWillReceiveProps(nextProps) {
 		if(!this.props.errorOnSignup && nextProps.errorOnSignup) {
 			this.props.pushState(null, '/signup')
+			this.displayError(nextProps.errorData, nextProps.signUpError)
 		}
 		if(!this.props.user && nextProps.user) {
 			this.setState({
@@ -55,10 +65,55 @@ export default class SignUpForm extends Component {
 		}
 	}
 
+	displayError(errorData, signUpError) {
+		if(errorData) {
+			if(errorData.email) this.setState({email: errorData.email});
+			if(errorData.username) this.setState({username: errorData.username});
+			if(signUpError) {
+				if(signUpError.indexOf('email') !== -1) {
+					this.setState({
+						showEmailError: true,
+						emailError: signUpError
+					})
+				}
+				if(signUpError.indexOf('username') !== -1) {
+					this.setState({
+						showEmailError: true,
+						emailError: signUpError
+					})
+				}
+				if(signUpError.indexOf('password') !== -1) {
+					this.setState({
+						showPasswordError: true,
+						passwordError: signUpError
+					});
+				}
+			}
+		}
+	}
+
 	handleSubmitSignUp() {
 		const { signup, pushState } = this.props;
 		const { username, email } = this.state;
 		const password = this.refs.signup_password.value;
+		if(isEmpty(email)) {
+			this.setState({
+				showEmailError: true,
+				emailError: 'Please enter your email address'
+			});
+		}
+		if(isEmpty(username)) {
+			this.setState({
+				showUsernameError: true,
+				usernameError: 'Please enter a username'
+			});
+		}
+		if(isEmpty(password)) {
+			this.setState({
+				showPasswordError: true,
+				passwordError: 'Please enter a password'
+			});
+		}
 		if(!isEmpty(username) && !isEmpty(email) && !isEmpty(password)) {
 			const validatedEmail = validateEmail(email)
 			if(validatedEmail) {
@@ -70,7 +125,8 @@ export default class SignUpForm extends Component {
 				signup(newUser)
 			} else {
 				this.setState({
-					showEmailError: true
+					showEmailError: true,
+					emailError: 'Try a valid email address'
 				});
 			}
 		}
@@ -78,7 +134,7 @@ export default class SignUpForm extends Component {
 
 	render() {
 		const style = require('./SignUpForm.scss');
-		const { showUsernameError, showEmailError, showPasswordError } = this.state;
+		const { showUsernameError, usernameError, showEmailError, emailError, showPasswordError, passwordError } = this.state;
 		const { pushState, landing } = this.props;
 		return (
 			<form 
@@ -139,21 +195,21 @@ export default class SignUpForm extends Component {
 					showUsernameError
 					&&
 					<p className={style.error}>
-						Oh no! That username is already taken!
+						Oh no! {usernameError}.
 					</p>
 				}
 				{
 					showEmailError
 					&&
 					<p className={style.error}>
-						Oops! Please enter a valid email.
+						Oops! {emailError}.
 					</p>
 				}
 				{
 					showPasswordError
 					&&
 					<p className={style.error}>
-						Whoa! You'll need a password to chat.
+						Whoa! {passwordError}.
 					</p>
 				}
 			</form>
