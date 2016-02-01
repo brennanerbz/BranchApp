@@ -66,14 +66,6 @@ export default class Chat extends Component {
   componentWillReceiveProps(nextProps) {
     const { changeActiveFeed, changeActiveBranch } = this.props;
     const { feeds, activeFeed, params } = nextProps;
-    if(feeds.length > 0) {
-      const feedName = feeds.filter(feed => feed.id === activeFeed)[0].title
-      if(!isEmpty(params.feed_name)) {
-        if(feedName !== params.feed_name) {
-          console.log('need to update the active / current feed')
-        }
-      }
-    }
   }
 
   render() {

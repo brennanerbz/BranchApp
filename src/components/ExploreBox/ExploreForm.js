@@ -14,7 +14,6 @@ export default class ExploreForm extends Component {
 		const { text } = this.state;
 		pushState(null, `/${text}/general`)
 		socket.emit('go to parent', {
-			user_id: null,
 			title: text
 		})
 		this.setState({

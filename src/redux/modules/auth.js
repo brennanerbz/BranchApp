@@ -2,20 +2,20 @@ import cookie from 'react-cookie';
 import request from 'superagent';
 
 // LogIn & Out
-const LOGIN = 'BranchApp/auth/LOGIN';
+export const LOGIN = 'BranchApp/auth/LOGIN';
 export const LOGIN_SUCCESS = 'BranchApp/auth/LOGIN_SUCCESS';
-const LOGIN_FAILURE = 'BranchApp/auth/LOGIN_FAILURE';
-const LOGOUT = 'BranchApp/auth/LOGOUT';
-const LOGOUT_SUCCESS = 'BranchApp/auth/LOGOUT_SUCCESS';
-const LOGOUT_FAIL = 'BranchApp/auth/LOGOUT_FAIL';
+export const LOGIN_FAILURE = 'BranchApp/auth/LOGIN_FAILURE';
+export const LOGOUT = 'BranchApp/auth/LOGOUT';
+export const LOGOUT_SUCCESS = 'BranchApp/auth/LOGOUT_SUCCESS';
+export const LOGOUT_FAIL = 'BranchApp/auth/LOGOUT_FAIL';
 // SignUp
-const SIGNUP = 'BranchApp/auth/SIGNUP';
+export const SIGNUP = 'BranchApp/auth/SIGNUP';
 export const SIGNUP_SUCCESS = 'BranchApp/auth/SIGNUP_SUCCESS';
-const SIGNUP_FAILURE = 'BranchApp/auth/SIGNUP_FAILURE';
+export const SIGNUP_FAILURE = 'BranchApp/auth/SIGNUP_FAILURE';
 // Auth
-const LOAD_AUTH = 'BranchApp/auth/LOAD_AUTH';
-const LOAD_AUTH_SUCCESS = 'BranchApp/auth/LOAD_AUTH_SUCCESS';
-const LOAD_AUTH_FAILURE = 'BranchApp/auth/LOAD_AUTH_FAILURE';
+export const LOAD_AUTH = 'BranchApp/auth/LOAD_AUTH';
+export const LOAD_AUTH_SUCCESS = 'BranchApp/auth/LOAD_AUTH_SUCCESS';
+export const LOAD_AUTH_FAILURE = 'BranchApp/auth/LOAD_AUTH_FAILURE';
 
 const initialState = {
   loaded: false,
@@ -24,8 +24,8 @@ const initialState = {
   errorData: null
 };
 
-export default function reducer(state = initialState, action = {}) {
-  let errorData;
+export default function reducer(state = initialState, action) {
+  var errorData = null;
   if(action.error && action.error.req) {
     errorData = action.error.req._data
     if(errorData.password) {
@@ -34,6 +34,10 @@ export default function reducer(state = initialState, action = {}) {
   }
 
   switch (action.type) {
+    case LOAD_AUTH:
+      return {
+        ...state
+      }
     case LOAD_AUTH_SUCCESS:
       const user = action.result;
       return {
@@ -42,6 +46,10 @@ export default function reducer(state = initialState, action = {}) {
         user: user,
         errorData: null
       };
+    case LOAD_AUTH_FAILURE:
+      return {
+        ...state
+      }
     case LOGIN:
       return {
         ...state,
@@ -65,7 +73,7 @@ export default function reducer(state = initialState, action = {}) {
         loggingIn: false,
         user: null,
         errorOnLogIn: true,
-        logInError: action.error.text,
+        logInError: action.error ? action.error.text : null,
         errorData: errorData
       };
     case LOGOUT:
@@ -111,7 +119,7 @@ export default function reducer(state = initialState, action = {}) {
         loggingIn: false,
         user: null,
         errorOnSignUp: true,
-        signUpError: action.error.text,
+        signUpError: action.error ? action.error.text : null,
         errorData: errorData
       }
     default:
@@ -124,7 +132,7 @@ export function isLoaded(globalState) {
   return globalState.auth && globalState.auth.loaded
 }
 export function loadAuth() {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     dispatch(loadAuthCookie());
   }
 }

@@ -95,11 +95,11 @@ export function receiveBranches(branches) {
       branches.forEach(branch => {
         socket.emit('get child memberships', {
           user_id: user.id,
-          parent_id: branch.feed_id
+          feed_id: branch.feed_id
         })
         socket.emit('get nonmembership feeds', {
           user_id: user.id,
-          parent_id: branch.feed_id
+          feed_id: branch.feed_id
         })
       })
     }

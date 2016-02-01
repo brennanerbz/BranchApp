@@ -79,7 +79,7 @@ export default class App extends Component {
   componentWillMount() {
     const { mounted } = this.props;
     if(!mounted) {
-      // this.props.loadAuth()
+      this.props.loadAuth()
     }
   }
 
@@ -109,10 +109,6 @@ export default class App extends Component {
       this.props.pushState(null, '/')
       global.socket = ''
     }
-  }
-
-  componentWillUnmount() {
-    const { mounted } = this.props;
   }
 
   updateAppSize() {

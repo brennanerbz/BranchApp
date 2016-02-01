@@ -18,10 +18,6 @@ export default class Login extends Component {
 	static propTypes = {
 	}
 
-	componentDidMount() {
-
-	}
-
 	componentWillReceiveProps(nextProps) {
 		if(!this.props.user && nextProps.user) {
 			this.props.pushState(null, '/')

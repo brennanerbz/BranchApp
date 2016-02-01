@@ -35,7 +35,7 @@ export default function reducer(state = initialState, action) {
     case RECEIVE_ALL_FEEDS:
       return {
         ...state,
-        feeds: [...state.feeds, action.feeds]
+        feeds: [...state.feeds, ...action.feeds]
       }
     case NEW_FEED:
       return {
@@ -105,7 +105,7 @@ export function receiveMemberships(memberships) {
 export function receiveAllFeeds(feeds) {
   return {
     type: RECEIVE_ALL_FEEDS,
-    feeds: feeds
+    feeds
   }
 }
 

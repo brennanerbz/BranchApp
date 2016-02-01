@@ -62,7 +62,7 @@ module.exports = {
       __SERVER__: false,
       __DEVELOPMENT__: false,
       __DEVTOOLS__: false,
-      __HEROKUSERVER__: true
+      __HEROKUSERVER__: false // <---- ENABLE production API Server here
     }),
 
     // ignore dev config
