@@ -20,33 +20,59 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
   { /* Variables to be used for multiple cases */}
-  let memberships = state.memberships;
-  let feeds = state.feeds;
+  let { memberships } = state;
+  let { feeds } = state;
+  var isNewFeedInState;
 
   switch (action.type) {
     case RECEIVE_MEMBERSHIPS:
-      let f = []
-      action.memberships.forEach(membership => f.push(membership.feed))
+      let receivedFeedMemberships = action.memberships;
+      let receivedFeeds = [];
+
+      receivedFeedMemberships = receivedFeedMemberships.filter(membership => {
+        return memberships.indexOf(membership) == -1;
+      })
+
+      receivedFeedMemberships.forEach(membership => {
+        receivedFeeds.push(membership.feed)
+      })
+
+      receivedFeeds = receivedFeeds.filter(feed => {
+        return feeds.indexOf(feed) == -1;
+      })
+
       return {
         ...state,
-        memberships: [...state.memberships, ...action.memberships],
-        feeds: [...state.feeds, ...f]
+        memberships: [...memberships, ...receivedFeedMemberships],
+        feeds: [...feeds, ...receivedFeeds]
       }
     case RECEIVE_ALL_FEEDS:
+      let allFeeds = action.feeds.filter(feed => {
+        return feeds.indexOf(feed) == -1;
+      })
       return {
         ...state,
-        feeds: [...state.feeds, ...action.feeds]
+        feeds: [...feeds, ...action.feeds]
       }
     case NEW_FEED:
+      isNewFeedInState = feeds.filter(feed => {
+        return feed.id === action.feed.id
+      })[0]
       return {
         ...state,
-        feeds: [...state.feeds, action.feed]
+        feeds: !isNewFeedInState ? [...state.feeds, action.feed] : feeds
       }
     case RECEIVE_FEED:
+      let isNewMembershipInState = memberships.filter(membership => {
+        return membership.id === action.membership.feed_id
+      })[0]
+      isNewFeedInState = feeds.filter(feed => {
+        return feed.id === action.membership.feed_id
+      })[0]
       return {
         ...state,
-        memberships: [...state.memberships, action.membership],
-        feeds: [...state.feeds, action.membership.feed]
+        memberships: !isNewMembershipInState ? [...state.memberships, action.membership]: memberships,
+        feeds: !isNewFeedInState ? [...state.feeds, action.membership.feed] : feeds
       }
     case CHANGE_ACTIVE_FEED:
       return {

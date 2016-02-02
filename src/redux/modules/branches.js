@@ -14,25 +14,42 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
   { /* Variables to be used for multiple cases */}
-  let branchMemberships = state.branchMemberships;
-  let branches = state.branches;
+  var { branchMemberships } = state;
+  var { branches } = state;
 
   switch (action.type) {
     case NEW_BRANCH:
+      let isNewBranchMembershipInState = branchMemberships.filter(membership => {
+        return membership.id === action.branch.id
+      })[0]
+      let isNewBranchInState = branches.filter(branch => {
+        return branch.id === action.branch.feed_id
+      })[0]
       return {
-        ...state,
-        branchMemberships: [action.branch, ...state.branchMemberships],
-        branches: [action.branch.feed, ...state.branches]
+        ...state, 
+        branchMemberships: !isNewBranchMembershipInState ? [action.branch, ...state.branchMemberships] : branchMemberships,
+        branches: !isNewBranchInState ? [action.branch.feed, ...state.branches] : branches
       }
     case RECEIVE_BRANCHES:
-      let b = [];
-      action.branches.forEach(branch => {
-        b.push(branch.feed)
+      let receivedBranchMemberships = action.branches;
+      let receivedBranches = [];
+
+      receivedBranchMemberships = receivedBranchMemberships.filter(branch => {
+        return branchMemberships.indexOf(branch) == -1;
       })
+
+      receivedBranchMemberships.forEach(branch => {
+        receivedBranches.push(branch.feed)
+      })
+
+      receivedBranches = receivedBranches.filter(branch => {
+        return branches.indexOf(branch) == -1;
+      })
+
       return {
         ...state,
-        branchMemberships: [...state.branchMemberships, ...action.branches],
-        branches: [...state.branches, ...b]
+        branchMemberships: [...branchMemberships, ...receivedBranchMemberships],
+        branches: [...branches, ...receivedBranches]
       }
     case CHANGE_ACTIVE_BRANCH:
       return {

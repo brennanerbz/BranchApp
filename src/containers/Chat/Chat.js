@@ -103,7 +103,9 @@ export default class Chat extends Component {
 
     if(updateFeed) {
       const nextFeed = params.feed_name;
-      const isFeedInState = feeds.filter(feed => feed.title.replace("#", "") == nextFeed)[0];
+      const isFeedInState = feeds.filter(feed => {
+        return feed.title.replace("#", "") == nextFeed && feed.parent_id === activeBranch.id
+      })[0];
       let isFeedMembership;
       if(isFeedInState) {
         isFeedMembership = memberships.filter(mem => mem.feed_id == isFeedInState.id)[0];

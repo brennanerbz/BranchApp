@@ -15,14 +15,18 @@ export default function reducer(state = initialState, action) {
 
 	switch(action.type) {
 		case RECEIVE_MESSAGES:
+			let receivedMessages = action.messages.filter(message => {
+				return messages.indexOf(message) == -1
+			})
 			return {
 				...state,
-				messages: [...messages, ...action.messages]
+				messages: [...messages, ...receivedMessages]
 			}
 		case RECEIVE_MESSAGE:
+			let isMessageInState = messages.filter(message => message.id == action.message.id)[0]
 			return {
 				...state,
-				messages: [...state.messages, action.message]
+				messages: !isMessageInState ? [...state.messages, action.message] : messages
 			}
 		case RECEIVE_VOTE:
 			messages = messages.map(message => {

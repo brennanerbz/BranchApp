@@ -101,7 +101,7 @@ export default class App extends Component {
       this.setSocket(nextProps.user)
       // <--- On signup, go to the welcome route for onboarding
       if(this.props.onboarded && !nextProps.onboarded) {
-        this.props.pushState(null, '/teambranch/welcome');
+        this.props.pushState(null, '/teambranch/general');
         return;
       }
     } else if (this.props.user && !nextProps.user) {
