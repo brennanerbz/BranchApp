@@ -8,7 +8,7 @@ import * as signupActions from '../../redux/modules/auth';
 
 @connect(
 	state => ({
-		errorOnSignup: state.auth.errorOnSignup,
+		errorOnSignUp: state.auth.errorOnSignUp,
 		signUpError: state.auth.signUpError,
 		errorData: state.auth.errorData,
 		user: state.auth.user
@@ -41,7 +41,8 @@ export default class SignUpForm extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if(!this.props.errorOnSignup && nextProps.errorOnSignup) {
+		if(!this.props.errorOnSignUp && nextProps.errorOnSignUp) {
+			console.log('reroute')
 			this.props.pushState(null, '/signup')
 			this.displayError(nextProps.errorData, nextProps.signUpError)
 		}

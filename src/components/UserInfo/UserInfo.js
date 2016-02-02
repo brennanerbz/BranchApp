@@ -78,7 +78,7 @@ export default class UserInfo extends Component {
 								this.props.openModal('settings')
 							}}
 							handleLogOut={() => {
-								this.props.logout(pushState)
+								this.props.logout()
 							}}
 						/>
 					}

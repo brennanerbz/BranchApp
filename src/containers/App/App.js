@@ -106,8 +106,8 @@ export default class App extends Component {
       }
     } else if (this.props.user && !nextProps.user) {
       this.props.closeOnboarding()
-      this.props.pushState(null, '/')
       global.socket = ''
+      this.props.pushState(null, '/')
     }
   }
 
