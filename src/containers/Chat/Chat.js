@@ -75,55 +75,21 @@ export default class Chat extends Component {
     const branchRouteChanged = this.props.params.branch_name !== nextProps.params.branch_name;
     const feedRouteChanged = this.props.params.feed_name !== nextProps.params.feed_name;
 
-    if(feedRouteChanged && branchRouteChanged) {
+    if(feedRouteChanged || branchRouteChanged) {
       this.handleActiveChat(branches, branchMemberships, feeds, memberships, params, true, true)
-    } else if(branchRouteChanged) {
-      this.handleActiveChat(branches, branchMemberships, feeds, memberships, params, true, false)
-    } else if(feedRouteChanged) {
-      this.handleActiveChat(branches, branchMemberships, feeds, memberships, params, false, true)
     }
   }
 
   handleActiveChat(branches, branchMemberships, feeds, memberships, params, updateBranch, updateFeed) {
     const { changeActiveBranch, changeActiveFeed } = this.props;
-    const _socket = global.socket;
-
-    const activeBranch = branches.filter(branch => branch.title === params.branch_name)[0]
     if(updateBranch) {
-      const nextBranch = params.branch_name;
-      const isBranchInState = activeBranch;
-      // <---- Update the activeBranch here
-      if(!isBranchInState) {
-        if(_socket) {
-          socket.emit('go to parent', { title: nextBranch })
-        } else {
-          this.props.waitToJoinBranch()
-        }
-      }
-      changeActiveBranch(nextBranch)
+      this.props.waitToJoinBranch()
+      changeActiveBranch(params.branch_name)
     }
 
     if(updateFeed) {
-      const nextFeed = params.feed_name;
-      const isFeedInState = feeds.filter(feed => {
-        return feed.title.replace("#", "") == nextFeed && feed.parent_id === activeBranch.id
-      })[0];
-      let isFeedMembership;
-      if(isFeedInState) {
-        isFeedMembership = memberships.filter(mem => mem.feed_id == isFeedInState.id)[0];
-      }
-      // <---- Update the activeFeed here
-      if(!isFeedInState || !isFeedMembership) {
-        if(_socket && activeBranch) {
-          socket.emit('join child', {
-            parent_id: activeBranch.id,
-            title: "#" + nextFeed
-          })
-        } else {
-          this.props.waitToJoinFeed()
-        }
-      }
-      changeActiveFeed(nextFeed)
+      this.props.waitToJoinFeed()
+      changeActiveFeed(params.feed_name)
     }   
   }
  

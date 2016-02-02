@@ -153,17 +153,21 @@ export function waitToJoinBranch() {
     const { params } = getState().router;
     const { branches } = getState().branches;
 
-    const activeBranch = branches.filter(branch => branch.feed.title === params.branch_name)[0]
+    const activeBranch = branches.filter(branch => branch.title === params.branch_name)[0]
 
     if(isEmpty(_socket)) {
       setTimeout(() => {
         dispatch(waitToJoinBranch())
       }, 500)
     } else {
-      if(isEmpty(activeBranch)) {
+      if(isEmpty(activeBranch) && !isEmpty(branches)) {
         socket.emit('go to parent', {
           title: params.branch_name
         })
+      } else {
+        setTimeout(() => {
+          dispatch(waitToJoinBranch())
+        }, 500)
       }
     }
   }

@@ -211,25 +211,30 @@ export function waitToJoinFeed() {
   return (dispatch, getState) => {
     const _socket = global.socket;
     const { branches } = getState().branches;
-    const { feeds } = getState().feeds;
+    const { feeds, memberships } = getState().feeds;
 
     const { params } = getState().router;
 
     const isBranchInState = branches.filter(branch => branch.title === params.branch_name)[0]
-    const isFeedInState = feeds.filter(feed => {
-      return feed.title.replace("#", "") === params.feed_name && feed.parent_id === isBranchInState.id
-    })[0];
-
     if(isEmpty(isBranchInState) || isEmpty(_socket)) {
       setTimeout(() => {
         dispatch(waitToJoinFeed())
       }, 500)
-    } else if(isEmpty(isFeedInState)) {
-      socket.emit('join child', {
-        parent_id: isBranchInState.id,
-        title: "#" + params.feed_name
-      })
-      return;
+    } else {
+      const isFeedInState = feeds.filter(feed => {
+        return feed.title.replace("#", "") === params.feed_name && feed.parent_id === isBranchInState.id
+      })[0];
+
+      let isMembershipForFeed;
+      if(isFeedInState) {
+        isMembershipForFeed = memberships.filter(membership => membership.feed_id == isFeedInState.id)[0];
+      }
+      if(isEmpty(isFeedInState) || isEmpty(isMembershipForFeed)) {
+        socket.emit('join child', {
+          parent_id: isBranchInState.id,
+          title: "#" + params.feed_name
+        })
+      }
     }
   }
 } 

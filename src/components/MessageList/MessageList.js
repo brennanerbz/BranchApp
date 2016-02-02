@@ -27,7 +27,7 @@ export default class MessageList extends Component {
 		const style = require('./MessageList.scss');
 		let messagesList = [];
 		let filteredMessages = messages.filter(message => {
-			return message.feed_id === feed.id
+			return message.feed_id === feed.id && feed.parent_id === branch.id
 		})
 		var newUser = true, currentUserId = '', oldUserId = '',
 		showSeparator = false, currentDay, previousDay;
