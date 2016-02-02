@@ -74,12 +74,12 @@ export function receiveMessage(message) {
 		// Mark unread state
 		const activeBranch = getState().branches.activeBranch;
 		const activeFeed = getState().feeds.activeFeed;
-		if(message.parent_id !== activeBranch) {
-			dispatch(markBranchUnread(message.parent_id))
-		}
-		if(message.feed_id !== activeFeed) {
-			dispatch(markFeedUnread(message.feed_id))
-		}
+		// if(message.parent_id !== activeBranch) {
+		// 	dispatch(markBranchUnread(message.parent_id))
+		// }
+		// if(message.feed_id !== activeFeed) {
+		// 	dispatch(markFeedUnread(message.feed_id))
+		// }
 	}
 }
 

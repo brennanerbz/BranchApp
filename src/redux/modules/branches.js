@@ -98,10 +98,14 @@ export function changeActiveBranch(branch_id) {
 
 // socket.on('receive parent membership')
 export function newBranch(branch) {
-  return {
-    type: NEW_BRANCH,
-    branch
-  };
+  return (dispatch, getState) => {
+    dispatch({type: NEW_BRANCH, branch})
+    const user = getState().auth.user
+    socket.emit('get nonmembership feeds', {
+      user_id: user.id,
+      feed_id: branch.feed_id
+    })
+  }
 }
 
 //socket.on('receive parent memberships')

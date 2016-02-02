@@ -134,14 +134,14 @@ export default class Chat extends Component {
       activeBranch, 
       activeFeed } = this.props,
     style = require('./Chat.scss');
-    let membership = memberships.filter(membership => {
-      return membership.feed.title.replace("#", "") === activeFeed
-    })[0]
-    let feed = feeds.filter(feed => {
-      return feed.title.replace("#", "") === activeFeed
-    })[0]
     let branch = branches.filter(branch => {
       return branch.title === activeBranch
+    })[0]
+    let feed = feeds.filter(feed => {
+      return (feed.title.replace("#", "") === activeFeed) && (feed.parent_id === branch.id)
+    })[0]
+    let membership = memberships.filter(membership => {
+      return (membership.feed.title.replace("#", "") === activeFeed) && (membership.feed.parent_id === branch.id)
     })[0]
     return (
       <div id={style.chat}>
