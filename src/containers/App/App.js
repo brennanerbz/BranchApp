@@ -119,7 +119,6 @@ export default class App extends Component {
   }
 
   setSocket(user) {
-    console.log('socket, auth and emit parent')
     global.socket = this.initSocket();
 
     this.initSocketListeners()

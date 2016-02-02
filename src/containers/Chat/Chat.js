@@ -59,13 +59,97 @@ export default class Chat extends Component {
   }
 
   componentDidMount() {
-    const { user, onboarded } = this.props;
-    if(!onboarded) { return; }
+    const { user, onboarded, branches, branchMemberships, feeds, memberships, changeActiveFeed, changeActiveBranch, params, pushState } = this.props;
+    this.handleRouting(branches, feeds, changeActiveBranch, changeActiveFeed, params)
+    this.handleActiveChat(branches, branchMemberships, feeds, memberships, params, true, true)
   }
 
   componentWillReceiveProps(nextProps) {
     const { changeActiveFeed, changeActiveBranch } = this.props;
-    const { feeds, activeFeed, params } = nextProps;
+    const { branches, branchMemberships, activeBranch, feeds, memberships, activeFeed, params } = nextProps;
+    if((!this.props.user && nextProps.user) || (this.props.user && !nextProps.user)) {
+    } else {
+      this.handleRouting(branches, feeds, params)
+    }
+
+    const branchRouteChanged = this.props.params.branch_name !== nextProps.params.branch_name;
+    const feedRouteChanged = this.props.params.feed_name !== nextProps.params.feed_name;
+
+    if(feedRouteChanged && branchRouteChanged) {
+      this.handleActiveChat(branches, branchMemberships, feeds, memberships, params, true, true)
+    } else if(branchRouteChanged) {
+      this.handleActiveChat(branches, branchMemberships, feeds, memberships, params, true, false)
+    } else if(feedRouteChanged) {
+      this.handleActiveChat(branches, branchMemberships, feeds, memberships, params, false, true)
+    }
+  }
+
+  handleActiveChat(branches, branchMemberships, feeds, memberships, params, updateBranch, updateFeed) {
+    const { changeActiveBranch, changeActiveFeed } = this.props;
+    const _socket = global.socket;
+
+    const activeBranch = branches.filter(branch => branch.title === params.branch_name)[0]
+    if(updateBranch) {
+      const nextBranch = params.branch_name;
+      const isBranchInState = activeBranch;
+      // <---- Update the activeBranch here
+      if(!isBranchInState) {
+        if(_socket) {
+          socket.emit('go to parent', { title: nextBranch })
+        }
+      }
+      changeActiveBranch(nextBranch)
+    }
+
+    if(updateFeed) {
+      const nextFeed = params.feed_name;
+      const isFeedInState = feeds.filter(feed => feed.title === nextFeed)[0];
+      let isFeedMembership;
+      if(isFeedInState) {
+        isFeedMembership = memberships.filter(mem => mem.feed_id === isFeedInState.id)[0];
+      }
+      // <---- Update the activeFeed here
+      if(!isFeedInState || !isFeedMembership) {
+        if(_socket && activeBranch) {
+          console.log('new feed')
+          socket.emit('join child', {
+            parent_id: activeBranch.id,
+            title: nextFeed
+          })
+        }
+      }
+      changeActiveFeed(nextFeed)
+    }   
+  }
+ 
+  handleRouting(branches, feeds, params) {
+    const { pushState } = this.props;
+    if(Object.keys(params).length === 0 || isEmpty(params)) {
+      let nextBranch;
+      let nextFeed;
+      let nextFeeds;
+      if(branches.length > 0) {
+        nextBranch = branches[0];
+        nextFeeds = feeds.filter(feed => feed.parent_id === nextBranch.id)
+        if(nextFeeds.length > 0) {
+          nextFeed = nextFeeds[0];
+          if(nextFeed) {
+            pushState(null, `/${nextBranch.title}/${nextFeed.title.replace("#", "")}`)
+          } else {
+            pushState(null, `/${nextBranch.title}/general`)
+          }
+        } 
+        else {
+            pushState(null, `/${nextBranch.title}/general`)
+        }
+      }
+    } else {
+      if(params.branch_name) {
+        if(!params.feed_name) {
+          pushState(null, `/${params.branch_name}/general`)
+        }
+      } 
+    }
   }
 
   render() {
@@ -80,13 +164,13 @@ export default class Chat extends Component {
       activeFeed } = this.props,
     style = require('./Chat.scss');
     let membership = memberships.filter(membership => {
-      return membership.feed_id == activeFeed
+      return membership.feed.title.replace("#", "") === activeFeed
     })[0]
     let feed = feeds.filter(feed => {
-      return feed.id == activeFeed
+      return feed.title.replace("#", "") === activeFeed
     })[0]
     let branch = branches.filter(branch => {
-      return branch.id == activeBranch
+      return branch.title === activeBranch
     })[0]
     return (
       <div id={style.chat}>

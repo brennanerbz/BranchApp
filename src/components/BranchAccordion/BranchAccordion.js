@@ -29,7 +29,9 @@ export default class BranchAccordion extends Component {
 		});
 	}
 
-	createNewFeed() {
+	createNewFeed(feedTitle) {
+		const { pushState, branch } = this.props;
+		pushState(null, `/${branch.title}/${feedTitle}`)
 		setTimeout(() => {
 			this.setState({
 				showInlineFeedCreation: false
@@ -76,15 +78,21 @@ export default class BranchAccordion extends Component {
 						<div 
 						 id={style.accordion}
 						 className={collapsed ? style.collapsed : style.expanded}>
-							<FeedList
-								memberships={memberships}
-								feeds={feeds}
-								activeFeed={activeFeed}
-								onChangeActiveFeed={this.props.onChangeActiveFeed}
-								showInlineFeedCreation={showInlineFeedCreation}
-								createNewFeed={() => ::this.createNewFeed()}
-								closeNewFeed={() => this.setState({showInlineFeedCreation: false})}
-							/>
+						 	{ 
+						 		// feeds.length > 0
+						 		true
+						 		&&
+						 		<FeedList
+						 			memberships={memberships}
+						 			activeBranch={active}
+						 			feeds={feeds}
+						 			activeFeed={activeFeed}
+						 			onChangeActiveFeed={this.props.onChangeActiveFeed}
+						 			showInlineFeedCreation={showInlineFeedCreation}
+						 			createNewFeed={(title) => ::this.createNewFeed(title)}
+						 			closeNewFeed={() => this.setState({showInlineFeedCreation: false})}
+						 		/>
+						 	}
 						</div>
 					</div>
 				</div>

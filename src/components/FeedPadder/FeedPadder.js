@@ -39,6 +39,17 @@ export default class FeedPadder extends Component {
 		// else height = 0
 		if(feedWidth > 850) height = feedHeight - 185
 		else height = feedHeight - 205
+
+		const wordsinbranch = branch.title.indexOf(' ') !== -1 ? branch.title.split(' ') : branch.title
+		const firstletters = [];
+		let initials;
+		if(Array.isArray(wordsinbranch)) {
+			wordsinbranch.forEach(word => firstletters.push(word.charAt(0)))
+			initials = firstletters.reduce((a, b) => {return a + b})
+		} else {
+			initials = wordsinbranch.charAt(0)
+		}
+
 		return (
 			<div style={{height: ''}} id={style.feed_padder_wrapper}>
 				<div id={style.feed_padder_div} className="relative">
@@ -49,7 +60,7 @@ export default class FeedPadder extends Component {
 								<span 
 									id={style.feed_icon_circle} 
 									className="circle">
-									FB
+									{initials.toUpperCase()}
 								</span>
 							</span>
 							<span id={style.feed_meta}>

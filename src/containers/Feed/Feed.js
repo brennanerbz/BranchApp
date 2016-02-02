@@ -34,7 +34,7 @@ export default class Feed extends Component {
 		const { appHeight, appWidth, activeFeed, feed } = this.props;
 		this.updateFeedHeight(appHeight)
 		this.updateFeedWidth(appWidth)
-		if(!isEmpty(feed)) {
+		if(!isEmpty(feed) && global.socket) {
 			socket.emit('get messages', { 
 				feed_id: feed.id
 			})
@@ -50,7 +50,7 @@ export default class Feed extends Component {
 		if(appWidth !== nextProps.appWidth) this.updateFeedWidth(nextProps.appWidth)
 
 		if(this.props.activeFeed !== nextProps.activeFeed) {
-			if(!isEmpty(nextProps.activeFeed)) {
+			if(!isEmpty(nextProps.activeFeed) && global.socket) {
 				socket.emit('get messages', { 
 					feed_id: nextProps.activeFeed 
 				})

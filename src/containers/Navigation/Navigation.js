@@ -49,26 +49,21 @@ export default class Navigation extends Component {
 
 	handleChangeActiveFeed(feed, membership) {
 		const { 
+			branches,
 			activeBranch, 
+			feeds,
 			activeFeed, 
 			changeActiveBranch, 
-			changeActiveFeed } = this.props;
-		if(feed.parent_id !== activeBranch) changeActiveBranch(feed.parent_id)
-		if(feed.id !== activeFeed) {
-			changeActiveFeed(feed.id) 
-			if(feed.unread) {
-				this.props.markFeedRead(feed.id)
-				if(feed.parent_id !== activeBranch) {
-					this.props.markBranchRead(feed.parent_id)
-				}
+			changeActiveFeed,
+			pushState } = this.props;
+		const nextBranch = branches.filter(branch => branch.id === feed.parent_id)[0]
+		const nextFeed = feed // feeds.filter(_feed => _feed.id === feed.id)[0]
+		if(nextBranch.title !== activeBranch) {
+			if(feed.title !== activeFeed) {
+				pushState(null, `/${nextBranch.title}/${nextFeed.title.replace("#", "")}`)
 			}
-			if(membership == null || membership == undefined) {
-				socket.emit('join child', {
-					user_id: user.id,
-					parent_id: feed.parent_id,
-					title: feed.title
-				})
-			}
+		} else {
+			pushState(null, `/${activeBranch}/${nextFeed.title.replace("#", "")}`)
 		}
 	}
 
@@ -88,13 +83,15 @@ export default class Navigation extends Component {
 								key={'branch' + branch.title + branch.id + i} 
 								index={i}
 								branch={branch}
-								active={activeBranch == branch.id}
+								active={activeBranch === branch.title}
 								activeFeed={activeFeed}
 								onChangeActiveFeed={::this.handleChangeActiveFeed}
 								feeds={feeds.filter(feed => feed.parent_id == branch.id)}
 								memberships={memberships.filter(membership => membership.feed.parent_id == branch.id)}
 								openPopover={this.props.openPopover}
 								closePopver={this.props.closePopover}
+								pushState={this.props.pushState}
+								params={this.props.params}
 							/>
 						)
 					})}

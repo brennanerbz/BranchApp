@@ -21,7 +21,7 @@ export default class FeedList extends Component {
 	handleCreateNewFeed() {
 		const { newFeedName } = this.state;
 		if(newFeedName !== 'New Feed' && newFeedName.length > 0) {
-			this.props.createNewFeed()
+			this.props.createNewFeed(newFeedName)
 		} else {
 			this.props.closeNewFeed()
 		}
@@ -33,7 +33,7 @@ export default class FeedList extends Component {
 	}
 
 	render() {
-		const { feeds, memberships, activeFeed, onChangeActiveFeed, showInlineFeedCreation } = this.props;
+		const { feeds, memberships, activeBranch, activeFeed, onChangeActiveFeed, showInlineFeedCreation } = this.props;
 		const { newFeedName } = this.state;
 		const style = require('./FeedList.scss');
 		const alphabetical = (a, b) => {
@@ -54,7 +54,7 @@ export default class FeedList extends Component {
 							index={i}
 							feed={feed}
 							membership={memberships.filter(membership => membership.feed_id === feed.id)}
-							active={feed.id == activeFeed}
+							active={activeBranch && feed.title.replace("#", "") === activeFeed}
 							changeActiveFeed={onChangeActiveFeed}/>
 						)
 					})
