@@ -96,6 +96,8 @@ export default class Chat extends Component {
       if(!isBranchInState) {
         if(_socket) {
           socket.emit('go to parent', { title: nextBranch })
+        } else {
+          this.props.waitToJoinBranch()
         }
       }
       changeActiveBranch(nextBranch)
@@ -118,7 +120,7 @@ export default class Chat extends Component {
             title: "#" + nextFeed
           })
         } else {
-          this.props.waitToJoinChild()
+          this.props.waitToJoinFeed()
         }
       }
       changeActiveFeed(nextFeed)

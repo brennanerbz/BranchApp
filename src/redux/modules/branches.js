@@ -1,3 +1,4 @@
+import { isEmpty } from '../../utils/validation';
 
 const NEW_BRANCH = 'BranchApp/branches/NEW_BRANCH';
 const RECEIVE_BRANCHES = 'BranchApp/branches/RECEIVE_BRANCHES';
@@ -145,3 +146,25 @@ export function markBranchRead(branch_id) {
   };
 }
 
+// Loop to join branch on route load/change
+export function waitToJoinBranch() {
+  return (dispatch, getState) => {
+    const _socket = global.socket;
+    const { params } = getState().router;
+    const { branches } = getState().branches;
+
+    const activeBranch = branches.filter(branch => branch.feed.title === params.branch_name)[0]
+
+    if(isEmpty(_socket)) {
+      setTimeout(() => {
+        dispatch(waitToJoinBranch())
+      }, 500)
+    } else {
+      if(isEmpty(activeBranch)) {
+        socket.emit('go to parent', {
+          title: params.branch_name
+        })
+      }
+    }
+  }
+}
