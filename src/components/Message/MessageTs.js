@@ -8,7 +8,7 @@ export default class MessageTs extends Component {
 	render() {
 		const { timestamp } = this.props,
 		style = require('./Message.scss'),
-		ts = moment(timestamp).local().format('h:mm a');
+		ts = moment.utc(timestamp).local().format('h:mm a');
 		return (
 			<a className={style.message_ts}>
 				{ts}

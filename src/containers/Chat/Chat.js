@@ -111,7 +111,6 @@ export default class Chat extends Component {
       // <---- Update the activeFeed here
       if(!isFeedInState || !isFeedMembership) {
         if(_socket && activeBranch) {
-          console.log('new feed')
           socket.emit('join child', {
             parent_id: activeBranch.id,
             title: nextFeed

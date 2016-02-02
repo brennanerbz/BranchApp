@@ -34,11 +34,6 @@ export default class Feed extends Component {
 		const { appHeight, appWidth, activeFeed, feed } = this.props;
 		this.updateFeedHeight(appHeight)
 		this.updateFeedWidth(appWidth)
-		if(!isEmpty(feed) && global.socket) {
-			socket.emit('get messages', { 
-				feed_id: feed.id
-			})
-		}
 		var node = this.refs.wrapper;
 		node.scrollTop = node.scrollHeight
 		this.shouldScrollToBottom = true
@@ -50,11 +45,7 @@ export default class Feed extends Component {
 		if(appWidth !== nextProps.appWidth) this.updateFeedWidth(nextProps.appWidth)
 
 		if(this.props.activeFeed !== nextProps.activeFeed) {
-			if(!isEmpty(nextProps.activeFeed) && global.socket) {
-				socket.emit('get messages', { 
-					feed_id: nextProps.activeFeed 
-				})
-			}
+			
 		} 
 	}
 
@@ -88,9 +79,9 @@ export default class Feed extends Component {
 	}
 
 	render() {
-		const { feed, branch, membership, messages, user } = this.props,
-		{ feedWidth, feedHeight, messagesDivHeight } = this.state,
-		style = require('./Feed.scss');
+		const { feed, branch, membership, messages, user } = this.props;
+		const { feedWidth, feedHeight, messagesDivHeight } = this.state;
+		const style = require('./Feed.scss');
 		return (
 			<div 
 			style={{height: feedHeight}}

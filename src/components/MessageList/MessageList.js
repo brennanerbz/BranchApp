@@ -23,7 +23,7 @@ export default class MessageList extends Component {
 	}
 
 	render() {
-		const { feed, branch, membership, messages } = this.props;
+		const { user, feed, branch, membership, messages } = this.props;
 		const style = require('./MessageList.scss');
 		let messagesList = [];
 		let filteredMessages = messages.filter(message => {
@@ -41,10 +41,10 @@ export default class MessageList extends Component {
 			oldUserId = currentUserId
 
 			// Day divider logic
-			currentDay = message.creation
+			currentDay = moment.utc(message.creation)
 			if(i == 0) showSeparator = true
-			else if(currentDay !== previousDay) showSeparator = true
-			else if(currentDay == previousDay) showSeparator = false
+			else if(currentDay.isSame(previousDay, 'day')) showSeparator = false
+			else showSeparator = true
 			previousDay = currentDay
 
 			if(showSeparator) {
@@ -52,13 +52,13 @@ export default class MessageList extends Component {
 					<div key={'divider' + message.creation} className={style.day_divider}>
 						<hr className="separator"/>
 						<div className={style.day_divider_label}>
-							{moment.utc(message.creation).local().calender(null, {
+							{moment.utc(message.creation).local().calendar(null, {
 								sameDay: '[Today]',
-								nextDay: '[Tomorrow]',
-								nextWeek: '[dddd]',
-								lastDay: '[Yesterday]',
-								lastWeek: '[Last] dddd',
-								sameElse: 'DD/MM/YYYY'
+							    nextDay: '[Tomorrow]',
+							    nextWeek: 'dddd',
+							    lastDay: '[Yesterday]',
+							    lastWeek: '[Last] dddd',
+							    sameElse: 'DD/MM/YYYY'
 							})}
 						</div>
 					</div>

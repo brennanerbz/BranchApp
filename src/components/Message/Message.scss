@@ -57,19 +57,19 @@
 			display: inline;
 			margin-right: 0.25rem;
 		}
-		.message_ts {
-			margin-right: 0.25rem;
-			opacity: 1;
-			display: inline;
-			line-height: 18px;
-			color: #9e93a6;
-			font-size: 9pt;
-		}
 		.message_body {
 			display: block;
 			cursor: text;
 			margin-top: -2px;
 		}
+	}
+	.message_ts {
+		margin-right: 0.25rem;
+		opacity: 1;
+		display: inline;
+		line-height: 18px;
+		color: #9e93a6;
+		font-size: 9pt;
 	}
 	.message_feedback {
 		position: absolute;

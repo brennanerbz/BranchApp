@@ -95,17 +95,27 @@ export function changeActiveFeed(feed_id) {
 
 //socket.on('receive child memberships')
 export function receiveMemberships(memberships) {
-  return {
-    type: RECEIVE_MEMBERSHIPS,
-    memberships
+  return (dispatch, getState) => {
+    dispatch({type: RECEIVE_MEMBERSHIPS, memberships})
+    const user = getState().auth.user;
+    memberships.forEach(membership => {
+      socket.emit('get messages', {
+        feed_id: membership.feed_id
+      })
+    })
   }
 }
 
 // socket.on('receive nonmembership feeds')
 export function receiveAllFeeds(feeds) {
-  return {
-    type: RECEIVE_ALL_FEEDS,
-    feeds
+  return (dispatch, getState) => {
+    dispatch({type: RECEIVE_ALL_FEEDS, feeds})
+    const user = getState().auth.user;
+    feeds.forEach(feed => {
+      socket.emit('get messages', {
+        feed_id: feed.id
+      })
+    })
   }
 }
 

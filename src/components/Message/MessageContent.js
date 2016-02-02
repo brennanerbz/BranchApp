@@ -18,6 +18,9 @@ export default class MessageContent extends Component {
 					<MessageSender
 						username={message.user.username}
 					/>
+				}
+				{
+					firstMessage
 					&&
 					<MessageTs
 						timestamp={message.creation}

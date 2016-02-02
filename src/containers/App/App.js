@@ -190,7 +190,6 @@ export default class App extends Component {
       })
       // <---- Messages
       socket.on('receive messages', (res) => {
-        console.log('messages', res)
         this.props.receiveMessages(res.messages)
       })
       socket.on('receive message', (res) => {
