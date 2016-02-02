@@ -18,7 +18,7 @@ export default class FeedHeader extends Component {
 					<h2>
 						<span id={style.name}>
 							<span id={style.prefix_icon}>#</span>
-							{feed.title}
+							{feed.title.replace("#", "")}
 						</span>
 						<span id={style.members}>
 							<span id={style.member_icon}>

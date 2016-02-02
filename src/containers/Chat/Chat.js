@@ -117,6 +117,8 @@ export default class Chat extends Component {
             parent_id: activeBranch.id,
             title: "#" + nextFeed
           })
+        } else {
+          this.props.waitToJoinChild()
         }
       }
       changeActiveFeed(nextFeed)

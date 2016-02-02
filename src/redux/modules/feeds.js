@@ -1,3 +1,4 @@
+import { isEmpty } from '../../utils/validation';
 
 const RECEIVE_MEMBERSHIPS = 'BranchApp/feeds/RECEIVE_MEMBERSHIPS';
 const RECEIVE_ALL_FEEDS = 'BranchApp/feeds/RECEIVE_ALL_FEEDS';
@@ -205,6 +206,35 @@ export function markFeedRead(feed_id) {
 }
 
 
+// Loop to join feed on route change / load
+export function waitToJoinChild() {
+  return (dispatch, getState) => {
+    const _socket = global.socket;
+    const { branches } = getState().branches;
+    const { feeds } = getState().feeds;
+
+    const { params } = getState().router;
+    console.log('waiting to join', params.branch_name, params.feed_name)
+
+    const isBranchInState = branches.filter(branch => branch.title === params.branch_name)[0]
+    const isFeedInState = feeds.filter(feed => {
+      return feed.title.replace("#", "") === params.feed_name && feed.parent_id === isBranchInState.id
+    })[0];
+
+    if(isEmpty(isBranchInState) || isEmpty(_socket)) {
+      setTimeout(() => {
+        dispatch(waitToJoinChild())
+      }, 500)
+    } else if(isEmpty(isFeedInState)) {
+      console.log('joining child', params.feed_name)
+      socket.emit('join child', {
+        parent_id: isBranchInState.id,
+        title: "#" + params.feed_name
+      })
+      return;
+    }
+  }
+} 
 
 
 
