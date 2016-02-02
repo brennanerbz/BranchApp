@@ -105,7 +105,13 @@ export default class App extends Component {
         return;
       }
     } else if (this.props.user && !nextProps.user) {
+      cookie.remove('_token')
+      this.props.clearBranches()
+      this.props.clearFeeds()
+      this.props.clearMessages()
       this.props.closeOnboarding()
+      socket.emit('request disconnect')
+      socket.emit('disconnect')
       global.socket = ''
       this.props.pushState(null, '/')
     }
@@ -120,9 +126,7 @@ export default class App extends Component {
 
   setSocket(user) {
     global.socket = this.initSocket();
-
     this.initSocketListeners()
-
     socket.emit('authenticate', {
       token: cookie.load('_token')
     })

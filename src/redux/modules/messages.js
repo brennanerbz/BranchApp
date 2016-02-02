@@ -1,13 +1,18 @@
+import _ from 'lodash';
+
 export const RECEIVE_MESSAGES = 'BranchApp/messages/RECEIVE_MESSAGES';
 export const RECEIVE_MESSAGE = 'BranchApp/messages/RECEIVE_MESSAGE';
 export const RECEIVE_VOTE = 'BranchApp/messages/RECEIVE_VOTE';
 export const USER_TYPING = 'BranchApp/messages/USER_TYPING';
 export const USER_STOP_TYPING = 'BranchApp/messages/USER_STOP_TYPING';
 
+const CLEAR_MESSAGES = 'BranchApp/feeds/CLEAR_MESSAGES';
+
 const initialState = {
 	loaded: false,
 	messages: [],
-	typers: []
+	typers: [],
+	loaded: false // <---- the initialState of messages have been loaded
 }
 
 export default function reducer(state = initialState, action) {
@@ -15,18 +20,14 @@ export default function reducer(state = initialState, action) {
 
 	switch(action.type) {
 		case RECEIVE_MESSAGES:
-			let receivedMessages = action.messages.filter(message => {
-				return messages.indexOf(message) == -1
-			})
 			return {
 				...state,
-				messages: [...messages, ...receivedMessages]
+				messages: _.uniqWith([...messages, ...action.messages], _.isEqual)
 			}
 		case RECEIVE_MESSAGE:
-			let isMessageInState = messages.filter(message => message.id == action.message.id)[0]
 			return {
 				...state,
-				messages: !isMessageInState ? [...state.messages, action.message] : messages
+				messages: _.uniqWith([...state.messages, action.message], _.isEqual)
 			}
 		case RECEIVE_VOTE:
 			messages = messages.map(message => {
@@ -49,9 +50,15 @@ export default function reducer(state = initialState, action) {
 			}
 		case USER_STOP_TYPING:
 			return {
-				state,
+				...state,
 				typers: state.typers.filter(typer => typer.username !== action.typer.username)
 			}
+		case CLEAR_MESSAGES:
+		  return {
+		    ...state = initialState,
+		    messages: [],
+		    typers: []
+		  }
 		default:
 			return state;
 	}
@@ -106,3 +113,11 @@ export function userStopTyping(typer) {
 		typer
 	}
 }
+
+
+export function clearMessages() {
+  return {
+    type: CLEAR_MESSAGES
+  };
+}
+

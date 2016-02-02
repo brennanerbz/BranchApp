@@ -1,4 +1,5 @@
 import { isEmpty } from '../../utils/validation';
+import _ from 'lodash';
 
 const NEW_BRANCH = 'BranchApp/branches/NEW_BRANCH';
 const RECEIVE_BRANCHES = 'BranchApp/branches/RECEIVE_BRANCHES';
@@ -6,11 +7,13 @@ const LEAVE_BRANCH = 'BranchApp/branches/LEAVE_BRANCH';
 const CHANGE_ACTIVE_BRANCH = 'BranchApp/branches/CHANGE_ACTIVE_BRANCH';
 const MARK_BRANCH_UNREAD = 'BranchApp/branches/MARK_BRANCH_UNREAD';
 const MARK_BRANCH_READ = 'BranchApp/branches/MARK_BRANCH_READ';
+const CLEAR_BRANCHES = 'BranchApp/branches/CLEAR_BRANCHES';
 
 const initialState = {
   branchMemberships: [],
   branches: [],
-  activeBranch: null
+  activeBranch: null,
+  loaded: false // <---- the initialState of branches have been loaded
 };
 
 export default function reducer(state = initialState, action) {
@@ -20,37 +23,23 @@ export default function reducer(state = initialState, action) {
 
   switch (action.type) {
     case NEW_BRANCH:
-      let isNewBranchMembershipInState = branchMemberships.filter(membership => {
-        return membership.id === action.branch.id
-      })[0]
-      let isNewBranchInState = branches.filter(branch => {
-        return branch.id === action.branch.feed_id
-      })[0]
       return {
         ...state, 
-        branchMemberships: !isNewBranchMembershipInState ? [action.branch, ...state.branchMemberships] : branchMemberships,
-        branches: !isNewBranchInState ? [action.branch.feed, ...state.branches] : branches
+        branchMemberships: _.uniqWith([action.branch, ...state.branchMemberships], _.isEqual),
+        branches: _.uniqWith([action.branch.feed, ...state.branches], _.isEqual)
       }
     case RECEIVE_BRANCHES:
-      let receivedBranchMemberships = action.branches;
+      let receivedBranchMemberships = _.uniqWith([...branchMemberships, ...action.branches], _.isEqual)
       let receivedBranches = [];
-
-      receivedBranchMemberships = receivedBranchMemberships.filter(branch => {
-        return branchMemberships.indexOf(branch) == -1;
-      })
-
       receivedBranchMemberships.forEach(branch => {
         receivedBranches.push(branch.feed)
       })
-
-      receivedBranches = receivedBranches.filter(branch => {
-        return branches.indexOf(branch) == -1;
-      })
-
+      receivedBranches = _.uniqWith([...branches, ...receivedBranches], _.isEqual)
       return {
         ...state,
-        branchMemberships: [...branchMemberships, ...receivedBranchMemberships],
-        branches: [...branches, ...receivedBranches]
+        branchMemberships: receivedBranchMemberships,
+        branches: receivedBranches,
+        loaded: true
       }
     case CHANGE_ACTIVE_BRANCH:
       return {
@@ -83,6 +72,13 @@ export default function reducer(state = initialState, action) {
           }
         })
       }
+    case CLEAR_BRANCHES:
+      return {
+        ...state = initialState,
+        branchMemberships: [],
+        branches: [],
+        activeBranch: null
+      }
     default:
       return state;
   }
@@ -108,13 +104,15 @@ export function newBranch(branch) {
   }
 }
 
+import { allFeedsLoaded } from './feeds';
 //socket.on('receive parent memberships')
 export function receiveBranches(branches) {
   return (dispatch, getState) => {
     dispatch({type: RECEIVE_BRANCHES, branches})
     if(Array.isArray(branches) && branches.length > 0) {
       const user = getState().auth.user
-      branches.forEach(branch => {
+      for(var b = 0; b < branches.length; b++) {
+        const branch = branches[b];
         socket.emit('get child memberships', {
           user_id: user.id,
           feed_id: branch.feed_id
@@ -123,7 +121,12 @@ export function receiveBranches(branches) {
           user_id: user.id,
           feed_id: branch.feed_id
         })
-      })
+        if(b === branches.length - 1) {
+          setTimeout(() => {
+            dispatch(allFeedsLoaded())
+          }, 1000)
+        }
+      }
     }
   }
 }
@@ -159,7 +162,9 @@ export function waitToJoinBranch() {
 
     const activeBranch = branches.filter(branch => branch.title === params.branch_name)[0]
 
-    if(isEmpty(_socket)) {
+    const { loaded } = getState().branches;
+
+    if(isEmpty(_socket) || !loaded) {
       setTimeout(() => {
         dispatch(waitToJoinBranch())
       }, 500)
@@ -175,4 +180,10 @@ export function waitToJoinBranch() {
       }
     }
   }
+}
+
+export function clearBranches() {
+  return {
+    type: CLEAR_BRANCHES
+  };
 }
