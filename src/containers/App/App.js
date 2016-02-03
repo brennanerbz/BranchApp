@@ -168,7 +168,8 @@ export default class App extends Component {
         this.props.newBranch(res)
       })
       socket.on('left parent', (res) => {
-        this.props.leaveBranch(res.mem)
+        console.log('left parent', res)
+        this.props.leaveBranch(res.feed_id)
       })
       // <---- Feeds
       socket.on('receive child memberships', (res) => {
@@ -186,10 +187,12 @@ export default class App extends Component {
       socket.on('user joined', (res) => {
         this.props.userJoinedFeed(res)
       })
-      socket.on('leave child', (res) => {
-        this.props.leaveFeed(res)
+      socket.on('left child', (res) => {
+        console.log('left child', res)
+        this.props.leaveFeed(res.feed_id)
       })
-      socket.on('user left child', (res) => {
+      socket.on('user left', (res) => {
+        console.log('user left', res)
         this.props.userLeftFeed(res)
       })
       // <---- Messages

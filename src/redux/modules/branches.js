@@ -51,8 +51,8 @@ export default function reducer(state = initialState, action) {
         activeBranch: action.branch_id
       }
     case LEAVE_BRANCH:
-      branchMemberships = branchMemberships.filter(membership => membership.feed_id !== action.branch.id)
-      branches = branches.filter(branch => branch.id !== action.branch.id)
+      branchMemberships = branchMemberships.filter(membership => { return membership.feed_id !== action.branch.id })
+      branches = branches.filter(branch => { return branch.id !== action.branch.id })
       return {
         ...state,
         branchMemberships: branchMemberships,

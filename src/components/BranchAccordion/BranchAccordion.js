@@ -39,6 +39,7 @@ export default class BranchAccordion extends Component {
 		}, 50)
 	}
 
+
 	render() {
 		const { index, branch, active, activeFeed, feeds, memberships } = this.props,
 		{ collapsed, isMouseOverBranch, showInlineFeedCreation } = this.state,
