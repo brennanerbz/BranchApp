@@ -93,7 +93,7 @@ export default function reducer(state = initialState, action) {
     case RECEIVE_ALL_FEEDS:
       return {
         ...state,
-        feeds: [...feeds, ...action.feeds].__findUniqueByKey('id').__alphabetizeList()
+        feeds: action.feeds.length > 0 ? [...feeds, ...action.feeds].__findUniqueByKey('id').__alphabetizeList() : feeds
       }
     case FEEDS_LOADED:
       return {
@@ -122,7 +122,7 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         memberships: !isNewMembershipInState ? [...memberships, action.membership] : memberships,
-        feeds: !isNewFeedInState ? [...feeds, action.feed].__alphabetizeList() : feeds
+        feeds: !isNewFeedInState ? [...feeds, action.membership.feed].__alphabetizeList() : feeds
       }
     case CHANGE_ACTIVE_FEED:
       return {
@@ -234,6 +234,7 @@ export function newFeed(feed) {
 export function receiveFeed(membership) {
   return (dispatch, getState) => {
     dispatch({type: RECEIVE_FEED, membership})
+    dispatch(changeActiveFeed(membership.feed.title.replace("#", "")))
     const user = getState().auth.user
     socket.emit('get messages', {
       user_id: user.id,
@@ -313,11 +314,12 @@ export function waitToJoinFeed() {
       if(isEmpty(isFeedInState) || isEmpty(isMembershipForFeed) && !__JOINED__) {
         dispatch({type: CLIENT_JOINED_FEED})
         __JOINED__ = true;
-        console.log('join feed')
         socket.emit('join child', {
           parent_id: isBranchInState.id,
           title: "#" + params.feed_name
         })
+      } else {
+        dispatch(changeActiveFeed(params.feed_name))
       }
     }
   }

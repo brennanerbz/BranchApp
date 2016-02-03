@@ -84,13 +84,10 @@ export default class Chat extends Component {
     const { changeActiveBranch, changeActiveFeed } = this.props;
     if(updateBranch) {
       this.props.waitToJoinBranch()
-      changeActiveBranch(params.branch_name)
-      document.getElementById('')
     }
 
     if(updateFeed) {
-      this.props.waitToJoinFeed()
-      changeActiveFeed(params.feed_name)
+      this.props.waitToJoinFeed()      
     }   
   }
  
@@ -139,10 +136,10 @@ export default class Chat extends Component {
       return branch.title === activeBranch
     })[0]
     let feed = feeds.filter(feed => {
-      return (feed.title.replace("#", "") === activeFeed) && (feed.parent_id === branch.id)
+      return feed.title.replace("#", "") === activeFeed && feed.parent_id === branch.id
     })[0]
     let membership = memberships.filter(membership => {
-      return (membership.feed.title.replace("#", "") === activeFeed) && (membership.feed.parent_id === branch.id)
+      return membership.feed.title.replace("#", "") === activeFeed && membership.feed.parent_id === branch.id
     })[0]
     return (
       <div id={style.chat}>

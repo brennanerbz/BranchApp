@@ -30,7 +30,7 @@ export default function reducer(state = initialState, action) {
       return {
         ...state, 
         branchMemberships: !isNewBranchMembershipInState ? [action.branch, ...branchMemberships] : branchMemberships,
-        branches: isNewBranchInState ? [action.branch.feed, ...branches] : branches
+        branches: !isNewBranchInState ? [action.branch.feed, ...branches] : branches
       }
     case RECEIVE_BRANCHES:
       let receivedBranchMemberships = [...branchMemberships, ...action.branches].__findUniqueByKey('id')
@@ -102,6 +102,7 @@ export function changeActiveBranch(branch_id) {
 export function newBranch(branch) {
   return (dispatch, getState) => {
     dispatch({type: NEW_BRANCH, branch})
+    dispatch(changeActiveBranch(branch.feed.title))
     const user = getState().auth.user
     socket.emit('get nonmembership feeds', {
       user_id: user.id,
@@ -179,10 +180,12 @@ export function waitToJoinBranch() {
         socket.emit('go to parent', {
           title: params.branch_name
         })
-      } else {
+      } else if (isEmpty(branches)) {
         setTimeout(() => {
           dispatch(waitToJoinBranch())
         }, 500)
+      } else {
+        dispatch(changeActiveBranch(params.branch_name))
       }
     }
   }

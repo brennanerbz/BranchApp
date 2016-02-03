@@ -55,12 +55,11 @@ export default class FeedPadder extends Component {
 		const { paddingContentHeight } = this.state;
 		const style = require('./FeedPadder.scss');
 		let height;
-		// if(feedHeight - paddingContentHeight > 0) height = feedHeight - paddingContentHeight
-		// else height = 0
+
 		if(feedWidth > 850) height = feedHeight - 185
 		else height = feedHeight - 205
 
-		const wordsinbranch = branch.title.indexOf(' ') !== -1 ? branch.title.split(' ') : branch.title
+		const wordsinbranch = branch ? (branch.title.indexOf(' ') !== -1 ? branch.title.split(' ') : branch.title) : '...'
 		const firstletters = [];
 		let initials;
 		if(Array.isArray(wordsinbranch)) {
@@ -85,9 +84,14 @@ export default class FeedPadder extends Component {
 							</span>
 							<span id={style.feed_meta}>
 								<h1 className={style.feed_name}>
-									{feed.title}
+									{feed ? feed.title : 'Loading...'}
 								</h1>
-								<p id={style.feed_info}>This is the very beginning of the <a>{feed.title}</a> feed, within the <a>{branch.title}</a> branch.</p>
+								<p id={style.feed_info}>
+								This is the very beginning of the 
+								<a>&nbsp;{feed ? feed.title : 'Loading...'}&nbsp;</a> 
+								feed, within the<a>
+								&nbsp;{branch ? branch.title : 'Loading...'}&nbsp;</a>
+								branch.</p>
 							</span>
 							<ul className={style.feed_actions}>
 								<li className="inline_block"> 
