@@ -24,6 +24,14 @@ export default class ChatFooter extends Component {
 	render() {
 		const { typers, user, feed, branch, pushState } = this.props;
 	    const style = require('./ChatFooter.scss');
+	    let currentTypers = typers
+		.filter(typer => {
+			if(	typer.user.username !== user.username
+				&& typer.feed.id === feed.id
+				&& typer.feed.parent_id === branch.id) {
+				return typer
+			}
+		})
 		return (
 			<div className={user ? '' : style.prompt_footer} id={style.chat_footer}>
 				{
@@ -41,23 +49,26 @@ export default class ChatFooter extends Component {
 				}
 				<div id={style.notification_bar}>
 					{
-						typers
-						.filter(typer => {
-							if(typer.feed.id === feed.id
-								&& typer.feed.parent_id === branch.id) {
-								return typer
-							}
-						})
-						.map(typer => {
+						currentTypers.length < 3 
+						? currentTypers.map(typer => {
 							return (
-								<p key={'typer' + typer.feed.id + 'user' + typer.user.username}>
-									{typer.user.username}
+								<p key={'typer' + typer.feed.id + 'user' + typer.user.username}
+								   className={'inline_block ' + style.user_typing}>
+									<b>{typer.user.username}&nbsp;</b>
+									is typing
 								</p>
 							);
 						})
+						:
+						<p key={'typer' + typer.feed.id}
+						   className={'inline_block ' + style.user_typing}>
+							several people are typing
+						</p>
 					}
 				</div>
 			</div>
 		);
 	}
 }
+
+					

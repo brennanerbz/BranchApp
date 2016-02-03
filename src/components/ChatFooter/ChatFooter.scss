@@ -12,12 +12,21 @@
     	background: #f6f7f8;
     	border-top: 1px solid #EDF0F6;
     }
+    #notification_bar {
+    	position: absolute;
+    	bottom: 3px;
+    	left: 20px;
+    	.user_typing {
+			font-size: 12.5px;
+			margin-right: 10px;
+    	}
+    }
 }
 
 #message_composer {
 	font-size: .9rem;
 	position: absolute;
-	bottom: 21px;
+	bottom: 22px;
 	left: 3.4rem;
 	right: 15px;
 	box-shadow: none;
