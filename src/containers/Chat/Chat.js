@@ -79,7 +79,9 @@ export default class Chat extends Component {
       this.handleActiveChat(branches, branchMemberships, feeds, memberships, params, true, true)
     }
 
-    if(this.props.branches.length > 0 && branches.length === 0) pushState(null, '/')
+    if(this.props.branches.length > 0 && branches.length === 0) {
+      this.props.pushState(null, '/')
+    }
   }
 
   handleActiveChat(branches, branchMemberships, feeds, memberships, params, updateBranch, updateFeed) {
