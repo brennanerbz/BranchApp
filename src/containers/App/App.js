@@ -110,10 +110,9 @@ export default class App extends Component {
       this.props.clearFeeds()
       this.props.clearMessages()
       this.props.closeOnboarding()
-      socket.emit('request disconnect')
       socket.emit('disconnect')
-      global.socket = ''
       this.props.pushState(null, '/')
+      global.socket = ''
     }
   }
 
