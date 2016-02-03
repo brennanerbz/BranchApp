@@ -72,7 +72,7 @@ export default class MessageFeedback extends Component {
 						isMouseOverMessage
 						&&
 						<div onClick={() => {
-								if(!userVotedPositive && !userVotedNegative) {
+								if(!userVotedPositive && !userVotedNegative && !userVoted) {
 									this.handleVote(false)
 								} else if (userVoted) {
 									this.handleEditVote(userVoted.id, false)
