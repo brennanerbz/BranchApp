@@ -61,10 +61,12 @@ export default class Navigation extends Component {
 		if(nextBranch.title !== activeBranch) {
 			if(feed.title !== activeFeed) {
 				pushState(null, `/${nextBranch.title}/${nextFeed.title.replace("#", "")}`)
+				this.props.markBranchRead(nextBranch.id)
 			}
 		} else {
 			pushState(null, `/${activeBranch}/${nextFeed.title.replace("#", "")}`)
 		}
+		this.props.markFeedRead(nextFeed.id)
 	}
 
 	render() {

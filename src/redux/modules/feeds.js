@@ -96,13 +96,15 @@ export default function reducer(state = initialState, action) {
         feeds: feeds
       }
     case MARK_FEED_UNREAD:
+      feeds = feeds.map(feed => {
+        if(feed.id === action.feed_id) {
+          feed.unread = true
+        }
+        return feed;
+      })
       return {
         ...state,
-        feeds: feeds.map(feed => {
-          if(feed.id === action.feed_id) {
-            feed.unread = true
-          }
-        })
+        feeds: feeds
       }
     case MARK_FEED_READ:
       return {
@@ -111,6 +113,7 @@ export default function reducer(state = initialState, action) {
           if(feed.id === action.feed_id) {
             feed.unread = false
           }
+          return feed;
         })
       }
     case CLEAR_FEEDS:

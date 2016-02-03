@@ -74,19 +74,27 @@ export function receiveMessages(messages) {
 }
 
 // socket.on('receive message')
+import { markFeedUnread } from './feeds';
+import { markBranchUnread } from './branches';
 export function receiveMessage(message) {
 	return (dispatch, getState) => {
 		dispatch({type: RECEIVE_MESSAGE, message})
 
 		// Mark unread state
-		const activeBranch = getState().branches.activeBranch;
-		const activeFeed = getState().feeds.activeFeed;
-		// if(message.parent_id !== activeBranch) {
-		// 	dispatch(markBranchUnread(message.parent_id))
-		// }
-		// if(message.feed_id !== activeFeed) {
-		// 	dispatch(markFeedUnread(message.feed_id))
-		// }
+		const branchName = getState().branches.activeBranch;
+		const activeBranch = getState().branches.branches
+		.filter(branch => branch.title === branchName)[0]
+
+		const feedName = getState().feeds.activeFeed;
+		const activeFeed = getState().feeds.feeds
+		.filter(feed => feed.title.replace('#', "") === feedName && feed.parent_id === activeBranch.id)[0]
+
+		if(message.parent_feed_id !== activeBranch.id) {
+			dispatch(markBranchUnread(message.parent_feed_id))
+		}
+		if(message.feed_id !== activeFeed.id) {
+			dispatch(markFeedUnread(message.feed_id))
+		}
 	}
 }
 

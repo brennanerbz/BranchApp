@@ -61,6 +61,7 @@ export default function reducer(state = initialState, action) {
           if(branch.id == action.branch_id) {
             branch.unread = true
           }
+          return branch;
         })
       }
     case MARK_BRANCH_READ:
@@ -70,6 +71,7 @@ export default function reducer(state = initialState, action) {
           if(branch.id == action.branch_id) {
             branch.unread = false
           }
+          return branch;
         })
       }
     case CLEAR_BRANCHES:

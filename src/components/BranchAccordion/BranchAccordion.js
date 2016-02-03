@@ -50,7 +50,7 @@ export default class BranchAccordion extends Component {
 			className={style.branch_accordion_container}>
 				<div className={style.branch_accordion_wrapper}>
 					<div className={style.branch_accordion}>
-						<BranchSignal active={active} unread={true}/>
+						<BranchSignal active={active} unread={branch.unread}/>
 						<BranchIcon 
 						active={active}
 						branch={branch}

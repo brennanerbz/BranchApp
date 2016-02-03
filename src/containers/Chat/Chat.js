@@ -85,6 +85,7 @@ export default class Chat extends Component {
     if(updateBranch) {
       this.props.waitToJoinBranch()
       changeActiveBranch(params.branch_name)
+      document.getElementById('')
     }
 
     if(updateFeed) {

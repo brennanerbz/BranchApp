@@ -53,13 +53,14 @@ export default class FeedList extends Component {
 							key={'feed' + feed.id + 'index' + i} 
 							index={i}
 							feed={feed}
+							unread={feed.unread}
 							membership={memberships.filter(membership => membership.feed_id === feed.id)}
 							active={activeBranch && feed.title.replace("#", "") === activeFeed}
 							changeActiveFeed={onChangeActiveFeed}/>
 						)
 					})
 				}
-				{ /* Inline new feed creation */}
+				{ /* Inline feed creation */}
 				{
 					showInlineFeedCreation
 					&&

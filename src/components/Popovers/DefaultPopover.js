@@ -85,6 +85,7 @@ export default class DefaultPopover extends Component {
 						ref="popover_share_input"
 						id="popover_share_input"
 						className={'read_only_input'}
+						readOnly={true}
 						value={`http://branch.com/${shareBranchRoute}/${shareFeedRoute}`}
 					/>
 			    </Popover>
