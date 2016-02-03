@@ -191,6 +191,9 @@ export default class App extends Component {
         console.log('left child', res)
         this.props.leaveFeed(res.feed_id)
       })
+      socket.on('reflection', (res) => {
+        console.log('reflection: ', res)
+      })
       socket.on('user left', (res) => {
         console.log('user left', res)
         this.props.userLeftFeed(res)
@@ -204,6 +207,9 @@ export default class App extends Component {
       })
       socket.on('receive vote', (res) => {
         this.props.receiveVote(res)
+      })
+      socket.on('update vote', (res) => {
+        this.props.updateVote(res)
       })
       socket.on('user typing', (res) => {
         this.props.userTyping(res)

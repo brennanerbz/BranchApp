@@ -35,7 +35,6 @@ export default class BranchActions extends Component {
 					<OverlayTrigger delayShow={500} delayHide={15} placement="bottom" overlay={::this.tooltip('Close branch')}>
 						<i 
 						onClick={() => {
-							console.log('leave parent', branch.id)
 							socket.emit('leave parent', {
 								feed_id: branch.id
 							})

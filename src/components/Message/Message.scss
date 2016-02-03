@@ -91,6 +91,9 @@
 			.positive {
 				top: 4.75px;
 				right: 0;
+				&.voted {
+					color: #2A86FF;
+				}
 				&:hover {
 					color: #2A86FF;
 				}
@@ -103,6 +106,9 @@
 			.negative {
 				top: 35px;
 				right: 0;
+				&.voted {
+					color: #dc0d17;
+				}
 				&:hover {
 					color: #dc0d17;
 				}

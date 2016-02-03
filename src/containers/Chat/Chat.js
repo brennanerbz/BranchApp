@@ -78,6 +78,8 @@ export default class Chat extends Component {
     if(feedRouteChanged || branchRouteChanged) {
       this.handleActiveChat(branches, branchMemberships, feeds, memberships, params, true, true)
     }
+
+    if(this.props.branches.length > 0 && branches.length === 0) pushState(null, '/')
   }
 
   handleActiveChat(branches, branchMemberships, feeds, memberships, params, updateBranch, updateFeed) {
@@ -135,12 +137,12 @@ export default class Chat extends Component {
     let branch = branches.filter(branch => {
       return branch.title === activeBranch
     })[0]
-    let feed = feeds.filter(feed => {
+    let feed = branch ? feeds.filter(feed => {
       return feed.title.replace("#", "") === activeFeed && feed.parent_id === branch.id
-    })[0]
-    let membership = memberships.filter(membership => {
+    })[0] : null
+    let membership = feed ? memberships.filter(membership => {
       return membership.feed.title.replace("#", "") === activeFeed && membership.feed.parent_id === branch.id
-    })[0]
+    })[0] : null
     return (
       <div id={style.chat}>
         <Header

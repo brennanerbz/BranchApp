@@ -3,6 +3,7 @@ import _ from 'lodash';
 export const RECEIVE_MESSAGES = 'BranchApp/messages/RECEIVE_MESSAGES';
 export const RECEIVE_MESSAGE = 'BranchApp/messages/RECEIVE_MESSAGE';
 export const RECEIVE_VOTE = 'BranchApp/messages/RECEIVE_VOTE';
+export const UPDATE_VOTE = 'BranchApp/messages/UPDATE_VOTE';
 export const USER_TYPING = 'BranchApp/messages/USER_TYPING';
 export const USER_STOP_TYPING = 'BranchApp/messages/USER_STOP_TYPING';
 
@@ -30,15 +31,26 @@ export default function reducer(state = initialState, action) {
 				messages: _.uniqWith([...state.messages, action.message], _.isEqual)
 			}
 		case RECEIVE_VOTE:
-			messages = messages.map(message => {
-				if(message.id == action.vote.message_id) {
-					if(action.vote.vote) {
-						message.positives += 1
-					} else if(!action.vote.vote) {
-						message.negatives += 1
+			return {
+				...state,
+				messages: messages.map(message => {
+							if(message.id === action.vote.message_id) {
+								message.votes = [...message.votes, action.vote]
+							}
+							return message;
+						})
+			}
+		case UPDATE_VOTE:
+			var message, vote;
+			for (var m = 0; m < messages.length; m++) {
+				message = messages[m];
+				for (var v = 0; v < message.votes.length; v++) {
+					vote = message.votes[v];
+					if(vote.id === action.vote.id) {
+						messages[m].votes[v] = action.vote
 					}
 				}
-			})
+			}
 			return {
 				...state,
 				messages: messages
@@ -102,6 +114,13 @@ export function receiveMessage(message) {
 export function receiveVote(vote) {
 	return {
 		type: RECEIVE_VOTE,
+		vote
+	}
+}
+// socket.on('update vote')
+export function updateVote(vote) {
+	return {
+		type: UPDATE_VOTE,
 		vote
 	}
 }

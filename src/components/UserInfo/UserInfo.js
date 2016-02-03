@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import cookie from 'react-cookie';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { pushState } from 'redux-router';
@@ -78,6 +79,7 @@ export default class UserInfo extends Component {
 								this.props.openModal('settings')
 							}}
 							handleLogOut={() => {
+								cookie.remove('_token')
 								this.props.logout()
 							}}
 						/>

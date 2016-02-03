@@ -51,8 +51,8 @@ export default function reducer(state = initialState, action) {
         activeBranch: action.branch_id
       }
     case LEAVE_BRANCH:
-      branchMemberships = branchMemberships.filter(membership => { return membership.feed_id !== action.branch.id })
-      branches = branches.filter(branch => { return branch.id !== action.branch.id })
+      branchMemberships = branchMemberships.filter(membership => { return membership.feed_id !== action.branch_id })
+      branches = branches.filter(branch => { return branch.id !== action.branch_id })
       return {
         ...state,
         branchMemberships: branchMemberships,
@@ -139,10 +139,10 @@ export function receiveBranches(branches) {
 }
 
 // socket.on('left parent')
-export function leaveBranch(branch) {
+export function leaveBranch(branch_id) {
   return {
     type: LEAVE_BRANCH,
-    branch
+    branch_id
   }
 }
 

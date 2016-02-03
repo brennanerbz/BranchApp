@@ -51,7 +51,7 @@ export default class FeedItem extends Component {
 						<OverlayTrigger delayShow={500} delayHide={15} placement="bottom" overlay={::this.tooltip('Close feed')}>
 							<span 
 							onClick={() => {
-								console.log('leave child', feed.id)
+								console.log('leave child with feed_id', feed.id)
 								socket.emit('leave child', {
 									feed_id: feed.id
 								})
