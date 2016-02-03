@@ -18,7 +18,7 @@ export default class BranchActions extends Component {
 	openSharePopover() {
 		const { branch, openPopover } = this.props;
 		const node = this.refs[`share_${branch.id}`]
-		openPopover('share', node)
+		openPopover('nav_share', 'right', node, branch)
 	}
 
 	render() {

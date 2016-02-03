@@ -10,7 +10,7 @@ export default class MessageIcon extends Component {
 		const style = require('./Message.scss');
 		return (
 			<div className={style.message_icon}>
-				<Avatar size={36} message={true} picture={user.profile_picture}/>
+				<Avatar size={36} message={true} user={user}/>
 			</div>
 		);
 	}

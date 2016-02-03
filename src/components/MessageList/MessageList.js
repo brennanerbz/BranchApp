@@ -30,7 +30,7 @@ export default class MessageList extends Component {
 			return message.feed_id === feed.id && feed.parent_id === branch.id
 		})
 		var newUser = true, currentUserId = '', oldUserId = '',
-		showSeparator = false, currentDay, previousDay;
+		showSeparator = false, currentDay, previousDay, today = moment().utc(), renderedTodayDivider = false;
 		filteredMessages.map((message, i) => {
 
 			// First message anchor logic
@@ -42,27 +42,30 @@ export default class MessageList extends Component {
 
 			// Day divider logic
 			currentDay = moment.utc(message.creation)
-			if(i == 0) showSeparator = true
+			if(i == 0) showSeparator = true 
 			else if(currentDay.isSame(previousDay, 'day')) showSeparator = false
 			else showSeparator = true
 			previousDay = currentDay
 
 			if(showSeparator) {
-				messagesList.push(
-					<div key={'divider' + message.creation} className={style.day_divider}>
-						<hr className="separator"/>
-						<div className={style.day_divider_label}>
-							{moment.utc(message.creation).local().calendar(null, {
-								sameDay: '[Today]',
-							    nextDay: '[Tomorrow]',
-							    nextWeek: 'dddd',
-							    lastDay: '[Yesterday]',
-							    lastWeek: '[Last] dddd',
-							    sameElse: 'DD/MM/YYYY'
-							})}
+				if((!renderedTodayDivider && currentDay.isSame(today, 'day')) || !currentDay.isSame(today, 'day')) {
+					messagesList.push(
+						<div key={'divider' + message.creation} className={style.day_divider}>
+							<hr className="separator"/>
+							<div className={style.day_divider_label}>
+								{currentDay.local().calendar(null, {
+									sameDay: '[Today]',
+								    nextDay: '[Tomorrow]',
+								    nextWeek: 'dddd',
+								    lastDay: '[Yesterday]',
+								    lastWeek: '[Last] dddd',
+								    sameElse: 'DD/MM/YYYY'
+								})}
+							</div>
 						</div>
-					</div>
-				)
+					)
+				}
+				if(currentDay.isSame(today, 'day')) renderedTodayDivider = true;
 			}
 
 			messagesList.push(

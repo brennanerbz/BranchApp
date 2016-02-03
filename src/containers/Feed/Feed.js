@@ -89,6 +89,7 @@ export default class Feed extends Component {
 			className="flex_vertical flex_spacer">
 				<div ref="area" className={style.scrollable_area}>
 					<div 
+					id="messages_wrapper"
 					ref="wrapper" 
 					className={style.scrollable_area_wrapper}>
 						{

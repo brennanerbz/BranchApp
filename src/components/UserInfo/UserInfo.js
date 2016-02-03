@@ -55,7 +55,7 @@ export default class UserInfo extends Component {
 					<OverlayTrigger delayShow={250} delayHide={15} placement="bottom" overlay={::this.tooltip('Profile and settings')}>
 						<span className="bubble_dropdown_container">
 							<button ref="dropdown_target" className="button_as_link">
-								<Avatar size={36} message={false} picture={user.profile_picture}/>
+								<Avatar size={36} message={false} user={user}/>
 								<span id={style.username} className="inline_block">
 									{user.username}
 							</span>

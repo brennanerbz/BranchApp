@@ -45,7 +45,8 @@
 		height: 42px;
 		&.disabled {
 	    	cursor: default;
-	    	background: #f6f7f8;
+	    	background: #EDEEEE;
+	    	border: none;
 	    }
 	}
 	#message_form {
@@ -81,7 +82,9 @@
     	    height: 38px;
     	    &.disabled {
     	    	cursor: default;
-    	    	background: #f6f7f8;
+    	    	// background: #f6f7f8;
+    	    	background: #EDEEEE;
+    	    	border: none;
     	    }
 	    }
 	}

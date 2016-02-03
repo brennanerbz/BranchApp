@@ -29,6 +29,7 @@ export default class UpdateProfile extends Component {
 	}
 
 	render() {
+		const { user } = this.props;
 		const style = require('./Modal.scss');
 		const { name, username, email } = this.state;
 		return (
@@ -39,7 +40,7 @@ export default class UpdateProfile extends Component {
 		      		</div>
 		      		<div className={'clearfix ' + style.form_input}>
 		          		<span className="float_left">
-		          			<Avatar size={70} message={false} picture={null}/>
+		          			<Avatar size={70} message={false} user={user}/>
 		          		</span>
 		          		<span className={'inline_block'}>
 		          			<button className="button">Upload new picture</button>

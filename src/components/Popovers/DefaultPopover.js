@@ -10,9 +10,13 @@ import * as popoverActions from '../../redux/modules/misc';
 
 @connect(
   state => ({
+  	router: state.router,
   	open: state.misc.popoverOpen,
   	type: state.misc.popoverType,
-  	target: state.misc.targetComponent
+  	placement: state.misc.popoverPlacement,
+  	target: state.misc.targetComponent,
+  	branch: state.misc.targetBranch,
+  	// feed: state.misc.targetFeed
   }),
   dispatch => ({
     ...bindActionCreators({
@@ -26,31 +30,67 @@ export default class DefaultPopover extends Component {
 	}
 
 	componentDidMount() {
-		const node = this.refs.popover;
-		document.onclick = (e) => {
-			if(node.offsetParent !== null) {
-				// this.props.closePopover()
-			}
+		var self = this;
+		$(document).click(function(event) { 
+		    if(!$(event.target).closest('#popover').length && !$(event.target).is('#popover')) {
+		    	console.log($('#popover').css('opacity'))
+		        if($('#popover').css('opacity') !== '0') {
+		            self.props.closePopover()
+		        }
+		    }        
+		})
+	}
+
+	componentWillReceiveProps(nextProps) {
+		if(!this.props.open && nextProps.open) {
+			setTimeout(() => {
+				this.refs.popover_share_input.select()
+			}, 100)
 		}
 	}
 
 	render() {
-		const { open, type, target } = this.props;
+		const { open, type, placement, target, branch, router} = this.props;
 		const style = require('./Popover.scss');
 		const hiddenTarget = isEmpty(target);
-		let node;
-		if(!hiddenTarget) node = target.getBoundingClientRect(); 
+		let node, shareBranchRoute, shareFeedRoute;
+		let left;
+		if(!hiddenTarget) { node = target.getBoundingClientRect(); }
+		if(isEmpty(branch)) { shareBranchRoute = 'teambranch' }
+		else {
+			if(branch.title == router.params.branch_name) {
+				shareBranchRoute = router.params.branch_name
+				shareFeedRoute = router.params.feed_name
+			} else {
+				shareBranchRoute = branch.title
+				shareFeedRoute = 'general'
+			}
+			if(type == 'feed_share') left = node.width
+			else { left = 30 }
+		}		
 		return (
-			<div ref="popover" className={open ? '' : 'hidden'}>
-				{!hiddenTarget && <Popover 
-					placement={'right'}
-					id={!hiddenTarget ? node.top : 'hidden'} 
-					title={'Instant invite'}
-					positionLeft={!hiddenTarget ? node.left + 30 : 0} 
-					positionTop={!hiddenTarget ? node.top - 40 : 0}>
-					<h1>Instant invite</h1>
-			    </Popover>}
-		    </div>
+			<div id="popover" ref="popover" className={'fade ' + (open ? 'in' : '')}>
+				<Popover 
+					placement={placement}
+					id={'share_popover'} 
+					title={'Share this link to invite people'}
+					positionLeft={!hiddenTarget ? node.left + left : -1000} 
+					positionTop={!hiddenTarget ? node.top - 40 : -1000}>
+					<input 
+						style={{
+							height: '32px',
+							padding: '0.75em'
+						}}
+						onClick={() => this.refs.popover_share_input.select()}
+						ref="popover_share_input"
+						id="popover_share_input"
+						className={'read_only_input'}
+						value={`http://branch.com/${shareBranchRoute}/${shareFeedRoute}`}
+					/>
+			    </Popover>
+			</div>
 		);
 	}
 }
+
+

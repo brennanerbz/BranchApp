@@ -57,7 +57,7 @@ a, abbr, acronym, address, applet, big, blockquote, body, caption, cite, code, d
 // Input 
 input {
 	&:not([type='checkbox']) {
-		font-size: 1.25rem;
+		font-size: 15px;
 		line-height: normal;
 		height: 32px;
 		padding: .75rem;
@@ -201,6 +201,12 @@ button {
 	}
 }
 
+.fade {
+	opacity: 0;
+    -webkit-transition: opacity 0.05s linear;
+    -o-transition: opacity 0.05s linear;
+    transition: opacity 0.05s linear;
+}
 // Popover 
 .popover {
 	min-width: 350px;
@@ -213,6 +219,11 @@ button {
     &.bottom {
     	.arrow {
     		border-bottom-color: rgba(0, 0, 0, 0.17);
+    	}
+    }
+    &.right {
+    	.arrow {
+    		top: 40%;
     	}
     }
 	.popover-title {

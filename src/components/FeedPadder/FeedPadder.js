@@ -1,5 +1,19 @@
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { pushState } from 'redux-router';
 
+import * as popoverActions from '../../redux/modules/misc';
+
+@connect(state => ({
+
+	}),
+	dispatch => ({
+		...bindActionCreators({
+			...popoverActions
+		}, dispatch)
+	})
+)
 export default class FeedPadder extends Component {
 	static propTypes = {
 	}
@@ -30,10 +44,16 @@ export default class FeedPadder extends Component {
 		window.removeEventListener('resize', ::this.updatePaddingContentHeight)
 	}
 
+	openSharePopover() {
+		const { branch, openPopover } = this.props;
+		const node = this.refs.feed_share_link;
+		openPopover('feed_share', 'right', node, branch)
+	}
+
 	render() {
-		const { feed, branch, appHeight, feedHeight, feedWidth } = this.props,
-		{ paddingContentHeight } = this.state,
-		style = require('./FeedPadder.scss');
+		const { feed, branch, appHeight, feedHeight, feedWidth } = this.props;
+		const { paddingContentHeight } = this.state;
+		const style = require('./FeedPadder.scss');
 		let height;
 		// if(feedHeight - paddingContentHeight > 0) height = feedHeight - paddingContentHeight
 		// else height = 0
@@ -71,7 +91,7 @@ export default class FeedPadder extends Component {
 							</span>
 							<ul className={style.feed_actions}>
 								<li className="inline_block"> 
-									<a className={style.feed_action}>
+									<a onClick={::this.openSharePopover} ref="feed_share_link" className={style.feed_action}>
 										<span style={{marginRight: '5px'}} className="fa fa-user-plus"></span>
 										Invite others to this feed
 									</a>

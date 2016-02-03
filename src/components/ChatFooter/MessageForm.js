@@ -13,8 +13,15 @@ export default class MessageForm extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		const { activeFeed } = this.props;
-		if(prevProps.activeFeed !== activeFeed) this.refs.message_input.focus()
+		const { activeBranch, activeFeed, emptyFeed } = this.props;
+		if(prevProps.activeFeed !== activeFeed
+		|| prevProps.activeBranch !== activeBranch
+		|| prevProps.emptyFeed && !emptyFeed) {
+			this.refs.message_input.focus()
+			setTimeout(() => {
+				this.refs.message_input.focus()
+			}, 250)
+		}
 	}
 
 	handleTyping() {
@@ -43,6 +50,9 @@ export default class MessageForm extends Component {
 			this.setState({
 				text: ''
 			});
+			// Scroll feed to bottom when user sends message
+			var node = document.getElementById('messages_wrapper')
+			node.scrollTop = node.scrollHeight
 		}
 	}
 

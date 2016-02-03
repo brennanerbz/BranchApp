@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { isEmpty } from '../../utils/validation';
 
 export default class Avatar extends Component {
 	static propTypes = {
@@ -7,24 +8,23 @@ export default class Avatar extends Component {
 	}
 
 	render() {
-		const { size, message, picture } = this.props,
-		style = require('./Avatar.scss'),
-		defaultProfilePic = require('./DefaultProfilePic.png')
+		const { size, message, user } = this.props;
+		const style = require('./Avatar.scss');
+		const picture = !isEmpty(user.profile_picture) ? user.gravatar : user.profile_picture;
 		return (
-			<span className={
+			<span 
+				className={
 				'inline_block' 
 				+ ' ' + style.avatar_wrapper
-				+ ' ' + (message ? style.avatar_message : '')
-			}>
+				+ ' ' + (message ? style.avatar_message : '')}>
 				<div 
-				className={
+					className={
 					'circle' 
 					+ ' ' + style.circle_avatar
-					+ ' ' + style[`c_${String(size)}`]
-				}>
-					<img src={picture !== null ? picture : defaultProfilePic}/>
+					+ ' ' + style[`c_${String(size)}`]}>
+					<img src={picture}/>
 				</div>
 			</span>
 		);
 	}
-}
+} 

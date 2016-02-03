@@ -40,14 +40,18 @@ export default function reducer(state = initialState, action) {
         ...state,
         popoverOpen: true,
         popoverType: action.popoverType,
-        targetComponent: action.targetComponent
+        popoverPlacement: action.placement,
+        targetComponent: action.targetComponent,
+        targetBranch: action.targetBranch
       }
     case CLOSE_POPOVER:
       return {
         ...state,
         popoverOpen: false,
         popoverType: '',
-        targetComponent: ''
+        popoverPlacement: '',
+        targetComponent: '',
+        targetBranch: ''
       }
     default:
       return state;
@@ -79,11 +83,9 @@ export function closeModal() {
 
 
 // Open a global popover
-export function openPopover(popoverType, targetComponent) {
-  return {
-    type: OPEN_POPOVER,
-    popoverType,
-    targetComponent
+export function openPopover(popoverType, placement, targetComponent, targetBranch) {
+  return (dispatch, getState) => {
+    dispatch({type: OPEN_POPOVER, placement, popoverType, targetComponent, targetBranch})
   }
 }
 
