@@ -27,24 +27,63 @@ const initialState = {
   feedsLoaded: false // <---- the initialState of feeds have been loaded
 };
 
+Array.prototype.__alphabetizeList = function() {
+  const alphabetical = function (a, b) {
+    var first = a.title.replace("#").toLowerCase()
+    var second = b.title.replace("#").toLowerCase()
+    if(first < second) return -1;
+    else if(first > second) return 1;
+    else return 0;
+  }
+  return this.sort(alphabetical)
+}
+
+Array.prototype.__uniqueShallow = function() {
+  var seen = new Set;
+  return this.filter(function(item, i){
+    if (!seen.has(item)) {
+      seen.add(item);
+      return true;
+    }
+  });
+}
+
+Array.prototype.__findUniqueByKey = function(key) {
+  var keyList = [];
+  for(var l = 0; l < this.length; l++) {
+    keyList.push(this[l][key])
+  }
+  var uniqueKeys = [];
+  var unique = [];
+  for (var i = 0; i < keyList.length; i++) {
+    if(uniqueKeys.indexOf(keyList[i]) === -1) {
+      uniqueKeys.push(keyList[i])
+      unique.push(this[i])
+    }
+  }
+  return unique;
+}
+
+
 export default function reducer(state = initialState, action) {
   { /* Variables to be used for multiple cases */}
   let { memberships } = state;
   let { feeds } = state;
   var isNewFeedInState;
+  var isNewMembershipInState;
 
   switch (action.type) {
     case RECEIVE_MEMBERSHIPS:
-      let receivedMemberships = _.uniqWith([...memberships, ...action.memberships], _.isEqual)
+      let receivedMemberships = [...memberships, ...action.memberships].__findUniqueByKey('id');
       let receivedFeeds = [];
       receivedMemberships.forEach(membership => {
         receivedFeeds.push(membership.feed)
       })
-      receivedFeeds = _.uniqWith([...feeds, ...receivedFeeds], _.isEqual)
+      receivedFeeds = [...feeds, ...receivedFeeds].__findUniqueByKey('id')
       return {
         ...state,
         memberships: receivedMemberships,
-        feeds: receivedFeeds
+        feeds: receivedFeeds.__alphabetizeList()
       }
     case MEMBERSHIPS_LOADED:
       return {
@@ -54,7 +93,7 @@ export default function reducer(state = initialState, action) {
     case RECEIVE_ALL_FEEDS:
       return {
         ...state,
-        feeds: _.uniqWith([...feeds, ...action.feeds], _.isEqual)
+        feeds: [...feeds, ...action.feeds].__findUniqueByKey('id').__alphabetizeList()
       }
     case FEEDS_LOADED:
       return {
@@ -72,15 +111,18 @@ export default function reducer(state = initialState, action) {
         joined: false
       }
     case NEW_FEED:
+      isNewFeedInState = feeds.filter(feed => feed.id === action.feed.id)[0]
       return {
         ...state,
-        feeds: _.uniqWith([...state.feeds, action.feed], _.isEqual)
+        feeds: !isNewFeedInState ? [...feeds, action.feed].__alphabetizeList() : feeds
       }
     case RECEIVE_FEED:
+      isNewMembershipInState = memberships.filter(membership => membership.id === action.membership.id)[0]
+      isNewFeedInState = feeds.filter(feed => feed.id === action.membership.feed.id)[0]
       return {
         ...state,
-        memberships: _.uniqWith([...state.memberships, action.membership], _.isEqual),
-        feeds: _.uniqWith([...state.feeds, action.membership.feed], _.isEqual)
+        memberships: !isNewMembershipInState ? [...memberships, action.membership] : memberships,
+        feeds: !isNewFeedInState ? [...feeds, action.feed].__alphabetizeList() : feeds
       }
     case CHANGE_ACTIVE_FEED:
       return {
@@ -88,8 +130,8 @@ export default function reducer(state = initialState, action) {
         activeFeed: action.feed_id
       }
     case LEAVE_FEED:
-      memberships = memberships.filter(membership => membership.feed_id !== action.feed_id)
-      feeds = feeds.filter(feed => feed.id !== action.feed_id)
+      memberships = memberships.filter(membership => { return membership.feed_id !== action.feed_id })
+      feeds = feeds.filter(feed => { return feed.id !== action.feed_id })
       return {
         ...state,
         memberships: memberships,

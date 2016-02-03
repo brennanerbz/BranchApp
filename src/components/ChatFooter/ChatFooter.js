@@ -22,7 +22,7 @@ export default class ChatFooter extends Component {
 	}
 
 	render() {
-		const { typers, user, feed, pushState } = this.props;
+		const { typers, user, feed, branch, pushState } = this.props;
 	    const style = require('./ChatFooter.scss');
 		return (
 			<div className={user ? '' : style.prompt_footer} id={style.chat_footer}>
@@ -43,14 +43,15 @@ export default class ChatFooter extends Component {
 					{
 						typers
 						.filter(typer => {
-							if(typer.username !== user.username 
-								&& typer.feed_id === feed.id) {
+							if(typer.feed.id === feed.id
+								&& typer.feed.parent_id === branch.id) {
 								return typer
 							}
-						}).map(typer => {
+						})
+						.map(typer => {
 							return (
-								<p>
-									{typer.username}
+								<p key={'typer' + typer.feed.id + 'user' + typer.user.username}>
+									{typer.user.username}
 								</p>
 							);
 						})

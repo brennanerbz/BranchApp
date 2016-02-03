@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import _ from 'lodash';
 import FeedItem from '../FeedItem/FeedItem';
 
 export default class FeedList extends Component {
@@ -36,25 +37,17 @@ export default class FeedList extends Component {
 		const { feeds, memberships, activeBranch, activeFeed, onChangeActiveFeed, showInlineFeedCreation } = this.props;
 		const { newFeedName } = this.state;
 		const style = require('./FeedList.scss');
-		const alphabetical = (a, b) => {
-			var firstfeed = a.title.replace("#").toLowerCase()
-			var secondfeed = b.title.replace("#").toLowerCase()
-			if(firstfeed < secondfeed) return -1;
-			else if(firstfeed > secondfeed) return 1;
-			else return 0;
-		}
-		const alphabetizedFeeds = feeds.sort(alphabetical)
 		return (
 			<ul id={style.feed_list}>
 				{
-					alphabetizedFeeds.map((feed, i) => {
+					feeds.map((feed, i) => {
 						return (
 							<FeedItem 
 							key={'feed' + feed.id + 'index' + i} 
 							index={i}
 							feed={feed}
 							unread={feed.unread}
-							membership={memberships.filter(membership => membership.feed_id === feed.id)}
+							membership={memberships.filter(membership => membership.feed_id === feed.id)[0]}
 							active={activeBranch && feed.title.replace("#", "") === activeFeed}
 							changeActiveFeed={onChangeActiveFeed}/>
 						)

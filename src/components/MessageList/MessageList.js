@@ -30,7 +30,7 @@ export default class MessageList extends Component {
 			return message.feed_id === feed.id && feed.parent_id === branch.id
 		})
 		var newUser = true, currentUserId = '', oldUserId = '',
-		showSeparator = false, currentDay, previousDay, today = moment().utc(), renderedTodayDivider = false;
+		showSeparator = false, currentDay, previousDay, today = moment().utc(), firstDay, todayIsFirstDivider = false;
 		filteredMessages.map((message, i) => {
 
 			// First message anchor logic
@@ -42,13 +42,18 @@ export default class MessageList extends Component {
 
 			// Day divider logic
 			currentDay = moment.utc(message.creation)
-			if(i == 0) showSeparator = true 
+			if(i == 0) {
+				showSeparator = true 
+				firstDay = currentDay;
+			}
 			else if(currentDay.isSame(previousDay, 'day')) showSeparator = false
 			else showSeparator = true
 			previousDay = currentDay
 
 			if(showSeparator) {
-				if((!renderedTodayDivider && currentDay.isSame(today, 'day')) || !currentDay.isSame(today, 'day')) {
+				if(todayIsFirstDivider && currentDay.isSame(today, 'day')) {
+					return;
+				} else {
 					messagesList.push(
 						<div key={'divider' + message.creation} className={style.day_divider}>
 							<hr className="separator"/>
@@ -65,7 +70,7 @@ export default class MessageList extends Component {
 						</div>
 					)
 				}
-				if(currentDay.isSame(today, 'day')) renderedTodayDivider = true;
+				if(firstDay.isSame(today, 'day')) todayIsFirstDivider = true;
 			}
 
 			messagesList.push(

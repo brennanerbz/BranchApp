@@ -20,21 +20,25 @@ export default function reducer(state = initialState, action) {
   { /* Variables to be used for multiple cases */}
   var { branchMemberships } = state;
   var { branches } = state;
+  var isNewBranchInState;
+  var isNewBranchMembershipInState;
 
   switch (action.type) {
     case NEW_BRANCH:
+      isNewBranchMembershipInState = branchMemberships.filter(membership => { return membership.id === action.branch.id })[0];
+      isNewBranchInState = branches.filter(branch => { return branch.id === action.branch.feed.id })[0];
       return {
         ...state, 
-        branchMemberships: _.uniqWith([action.branch, ...state.branchMemberships], _.isEqual),
-        branches: _.uniqWith([action.branch.feed, ...state.branches], _.isEqual)
+        branchMemberships: !isNewBranchMembershipInState ? [action.branch, ...branchMemberships] : branchMemberships,
+        branches: isNewBranchInState ? [action.branch.feed, ...branches] : branches
       }
     case RECEIVE_BRANCHES:
-      let receivedBranchMemberships = _.uniqWith([...branchMemberships, ...action.branches], _.isEqual)
+      let receivedBranchMemberships = [...branchMemberships, ...action.branches].__findUniqueByKey('id')
       let receivedBranches = [];
       receivedBranchMemberships.forEach(branch => {
         receivedBranches.push(branch.feed)
       })
-      receivedBranches = _.uniqWith([...branches, ...receivedBranches], _.isEqual)
+      receivedBranches = [...branches, ...receivedBranches].__findUniqueByKey('id')
       return {
         ...state,
         branchMemberships: receivedBranchMemberships,

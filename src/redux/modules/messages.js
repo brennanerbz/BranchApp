@@ -16,7 +16,7 @@ const initialState = {
 }
 
 export default function reducer(state = initialState, action) {
-	let { messages, loaded } = state;
+	let { messages, loaded, typers } = state;
 
 	switch(action.type) {
 		case RECEIVE_MESSAGES:
@@ -51,7 +51,7 @@ export default function reducer(state = initialState, action) {
 		case USER_STOP_TYPING:
 			return {
 				...state,
-				typers: state.typers.filter(typer => typer.username !== action.typer.username)
+				typers: typers.filter(typer => { return typer.user.username !== action.typer.user.username })
 			}
 		case CLEAR_MESSAGES:
 		  return {

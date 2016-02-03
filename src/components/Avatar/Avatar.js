@@ -10,7 +10,7 @@ export default class Avatar extends Component {
 	render() {
 		const { size, message, user } = this.props;
 		const style = require('./Avatar.scss');
-		const picture = !isEmpty(user.profile_picture) ? user.gravatar : user.profile_picture;
+		const picture = isEmpty(user.profile_picture) ? user.gravatar : user.profile_picture;
 		return (
 			<span 
 				className={

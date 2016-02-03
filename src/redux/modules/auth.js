@@ -51,7 +51,9 @@ export default function reducer(state = initialState, action) {
         ...state
       }
     case LOGIN:
-      cookie.remove('_token')
+      if(cookie.load('_token')) {
+        cookie.remove('_token')
+      }
       return {
         ...state,
         loggingIn: true,
@@ -96,7 +98,9 @@ export default function reducer(state = initialState, action) {
         logoutError: action.error
       };
     case SIGNUP:
-      cookie.remove('_token')
+      if(cookie.load('_token')) {
+        cookie.remove('_token')
+      }
       return {
         ...state,
         loggingIn: true,
