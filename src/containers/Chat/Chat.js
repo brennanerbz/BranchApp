@@ -84,6 +84,7 @@ export default class Chat extends Component {
     const feedRouteChanged = this.props.params.feed_name !== nextProps.params.feed_name;
 
     if(feedRouteChanged || branchRouteChanged) {
+      console.log('route changed')
       this.handleActiveChat(branches, branchMemberships, feeds, memberships, params, true, true)
     }
 

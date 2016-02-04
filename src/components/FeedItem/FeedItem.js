@@ -52,7 +52,7 @@ export default class FeedItem extends Component {
 				<a className={style.feed_name}>
 					<span 
 					onClick={() => {
-						if(!membership) {
+						if(!membership || (membership && !membership.open)) {
 							socket.emit('join child', {
 							  parent_id: branch.id,
 							  title: "#" + feed.title

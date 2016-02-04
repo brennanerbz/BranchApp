@@ -40,7 +40,9 @@ export default function reducer(state = initialState, action) {
     case RECEIVE_MEMBERSHIPS:
       let receivedMemberships = [...memberships, ...action.memberships].__findUniqueByKey('id');
       let receivedFeeds = [];
-      receivedMemberships.forEach(membership => {
+      receivedMemberships
+      .filter(membership => { return membership.open })
+      .forEach(membership => {
         receivedFeeds.push(membership.feed)
       })
       receivedFeeds = [...feeds, ...receivedFeeds].__findUniqueByKey('id')
@@ -167,7 +169,9 @@ export function receiveMemberships(memberships) {
     }
 
     const user = getState().auth.user;
-    memberships.forEach(membership => {
+    memberships
+    .filter(membership => { return membership.open })
+    .forEach(membership => {
       socket.emit('get messages', {
         feed_id: membership.feed_id
       })
@@ -213,7 +217,6 @@ export function receiveFeed(membership) {
     })
     setTimeout(() => {
       dispatch({type: SERVER_JOINED_FEED})
-      __JOINED__ = false;
     }, 1000)
   }
 }
@@ -229,14 +232,14 @@ export function userJoinedFeed(membership) {
 // socket.emit('leave child')
 export function leaveFeed(feed_id, branch_id, pushState) {
   return (dispatch, getState) => {
-    dispatch({type: LEAVE_FEED, feed_id})
 
     const feeds = getState().feeds.feeds;
     const branches = getState().branches.branches;
     const activeBranch = getState().branches.activeBranch;
     const activeFeed = getState().feeds.activeFeed;
-
     const activeFeedId = feeds.filter(feed => { return feed.title.replace('#', "") === activeFeed })[0]
+
+    dispatch({type: LEAVE_FEED, feed_id})
 
     if(feed_id !== activeFeedId) {
       pushState(null, `/${activeBranch}/general`)
@@ -277,9 +280,9 @@ export function markFeedRead(feed_id) {
 
 
 // Loop to join feed on route change / load
-global.__JOINED__ = false;
 export function waitToJoinFeed() {
   return (dispatch, getState) => {
+    console.log('wait to join feed')
     const _socket = global.socket;
     const { branches } = getState().branches;
     const { feeds, memberships } = getState().feeds;
@@ -288,7 +291,7 @@ export function waitToJoinFeed() {
 
     const isBranchInState = branches.filter(branch => branch.title === params.branch_name)[0]
     const { membershipsLoaded, feedsLoaded } = getState().feeds;
-    if(isEmpty(isBranchInState) || isEmpty(_socket) || (!feedsLoaded)) {
+    if(isEmpty(isBranchInState) || isEmpty(_socket) || (!membershipsLoaded)) {
       setTimeout(() => {
         dispatch(waitToJoinFeed())
       }, 500)
@@ -300,9 +303,8 @@ export function waitToJoinFeed() {
       if(isFeedInState) {
         isMembershipForFeed = memberships.filter(membership => membership.feed_id == isFeedInState.id)[0];
       }
-      if(isEmpty(isFeedInState) || isEmpty(isMembershipForFeed) && !__JOINED__) {
+      if(isEmpty(isFeedInState) || isEmpty(isMembershipForFeed) || (!isEmpty(isMembershipForFeed) && !isMembershipForFeed.open)) {
         dispatch({type: CLIENT_JOINED_FEED})
-        __JOINED__ = true;
         socket.emit('join child', {
           parent_id: isBranchInState.id,
           title: "#" + params.feed_name
