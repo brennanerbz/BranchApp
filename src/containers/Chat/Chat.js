@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 import { pushState } from 'redux-router';
 import { bindActionCreators } from 'redux';
+import cookie from 'react-cookie';
 import { isEmpty } from '../../utils/validation';
 
 /* Config */
@@ -80,6 +81,8 @@ export default class Chat extends Component {
     }
 
     if(this.props.branches.length > 0 && branches.length === 0) {
+      cookie.remove('_lastbranch');
+      cookie.remove('_lastfeed');
       this.props.pushState(null, '/')
     }
   }
@@ -98,22 +101,25 @@ export default class Chat extends Component {
   handleRouting(branches, feeds, params) {
     const { pushState } = this.props;
     if(Object.keys(params).length === 0 || isEmpty(params)) {
-      let nextBranch;
-      let nextFeed;
-      let nextFeeds;
-      if(branches.length > 0) {
-        nextBranch = branches[0];
-        nextFeeds = feeds.filter(feed => feed.parent_id === nextBranch.id)
-        if(nextFeeds.length > 0) {
-          nextFeed = nextFeeds[0];
+      let recentBranch = cookie.load('_lastbranch');
+      let recentFeed = cookie.load('_lastfeed');
+      if(recentBranch && recentFeed) {
+        pushState(null, `/${recentBranch}/${recentFeed}`)
+        return;
+      }
+      if(recentBranch && !recentFeed) {
+        pushState(null, `/${recentBranch}/general`)
+        return;
+      }
+      if(!recentBranch && !recentFeed) {
+        if(branches.length > 0) {
+          const nextBranch = branches[0]
+          const nextFeed = feeds.filter(feed => { return feed.parent_id === nextBranch.id })[0]
           if(nextFeed) {
-            pushState(null, `/${nextBranch.title}/${nextFeed.title.replace("#", "")}`)
+            pushState(null, `/${nextBranch.title}/${nextFeed.title.replace("#", "")}`)           
           } else {
             pushState(null, `/${nextBranch.title}/general`)
           }
-        } 
-        else {
-            pushState(null, `/${nextBranch.title}/general`)
         }
       }
     } else {

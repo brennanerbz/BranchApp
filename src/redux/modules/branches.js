@@ -1,5 +1,7 @@
 import { isEmpty } from '../../utils/validation';
 import _ from 'lodash';
+import cookie from 'react-cookie';
+
 
 const NEW_BRANCH = 'BranchApp/branches/NEW_BRANCH';
 const RECEIVE_BRANCHES = 'BranchApp/branches/RECEIVE_BRANCHES';
@@ -46,6 +48,7 @@ export default function reducer(state = initialState, action) {
         loaded: true
       }
     case CHANGE_ACTIVE_BRANCH:
+      cookie.save('_lastbranch', action.branch_id)
       return {
         ...state,
         activeBranch: action.branch_id

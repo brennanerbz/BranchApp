@@ -1,5 +1,6 @@
 import { isEmpty } from '../../utils/validation';
 import _ from 'lodash';
+import cookie from 'react-cookie';
 
 const RECEIVE_MEMBERSHIPS = 'BranchApp/feeds/RECEIVE_MEMBERSHIPS';
 const RECEIVE_ALL_FEEDS = 'BranchApp/feeds/RECEIVE_ALL_FEEDS';
@@ -125,6 +126,7 @@ export default function reducer(state = initialState, action) {
         feeds: !isNewFeedInState ? [...feeds, action.membership.feed].__alphabetizeList() : feeds
       }
     case CHANGE_ACTIVE_FEED:
+      cookie.save('_lastfeed', action.feed_id)
       return {
         ...state,
         activeFeed: action.feed_id

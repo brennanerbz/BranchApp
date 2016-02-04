@@ -45,7 +45,7 @@ export default class Feed extends Component {
 		if(appWidth !== nextProps.appWidth) this.updateFeedWidth(nextProps.appWidth)
 
 		if(this.props.activeFeed !== nextProps.activeFeed) {
-			
+			this.shouldScrollToBottom = true;
 		} 
 	}
 
@@ -58,6 +58,9 @@ export default class Feed extends Component {
 	componentDidUpdate(prevProps) {
 		var node = this.refs.wrapper;
 		if(this.shouldScrollToBottom) {
+			node.scrollTop = node.scrollHeight;
+		}
+		if(isEmpty(prevProps.feed) && !isEmpty(this.props.feed)) {
 			node.scrollTop = node.scrollHeight;
 		}
 	}
