@@ -68,6 +68,13 @@ export default class Chat extends Component {
   componentWillReceiveProps(nextProps) {
     const { changeActiveFeed, changeActiveBranch } = this.props;
     const { branches, branchMemberships, activeBranch, feeds, memberships, activeFeed, params } = nextProps;
+    
+    if(this.props.branches.length > 0 && branches.length === 0) {
+      cookie.remove('_lastbranch');
+      cookie.remove('_lastfeed');
+      this.props.pushState(null, '/')
+    }
+
     if((!this.props.user && nextProps.user) || (this.props.user && !nextProps.user)) {
     } else {
       this.handleRouting(branches, feeds, params)
@@ -80,11 +87,6 @@ export default class Chat extends Component {
       this.handleActiveChat(branches, branchMemberships, feeds, memberships, params, true, true)
     }
 
-    if(this.props.branches.length > 0 && branches.length === 0) {
-      cookie.remove('_lastbranch');
-      cookie.remove('_lastfeed');
-      this.props.pushState(null, '/')
-    }
   }
 
   handleActiveChat(branches, branchMemberships, feeds, memberships, params, updateBranch, updateFeed) {
