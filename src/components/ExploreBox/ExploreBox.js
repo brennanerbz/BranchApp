@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { pushState } from 'redux-router';
 
 import * as branchActions from '../../redux/modules/branches';
+import * as onboardActions from '../../redux/modules/user';
 import ExploreForm from './ExploreForm'
 
 @connect(
@@ -14,6 +15,7 @@ import ExploreForm from './ExploreForm'
   dispatch => ({
     ...bindActionCreators({
       ...branchActions,
+      ...onboardActions,
       pushState
     }, dispatch)
   })
@@ -24,14 +26,14 @@ export default class ExploreBox extends Component {
 
 	render() {
 		const { onboardingPopoverIndex, pushState, params } = this.props;
-		const styles = require('./ExploreBox.scss'),
-		branchLogo = require('./MessengerLogo.png');
+		const styles = require('./ExploreBox.scss');
+		const branchLogo = require('./MessengerLogo.png');
 		return (
 			<div ref="explore_box" className={styles.explore_box + ' float_left'}>
 				<span onClick={() => pushState(null, '/')} id="branch_logo_wrapper" className="inline_block">
 					<img id={styles.branch_logo} src={branchLogo}/>
 				</span>
-				<ExploreForm pushState={pushState} params={params}/>
+				<ExploreForm pushState={pushState} params={params} closeOnboarding={this.props.closeOnboarding}/>
 			</div>
 		);
 	}

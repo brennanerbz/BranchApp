@@ -6,22 +6,34 @@ export default class ExploreForm extends Component {
 	}
 
 	state = {
-		text: ''
+		text: '',
+		creating: false
 	}
 
 	handleOpenBranch() {
 		const { pushState, params } = this.props;
 		const { text } = this.state;
-		if(params.branch_name !== text) {
-			pushState(null, `/${text}/general`)
-		} else {
-			socket.emit('go to parent', {
-				title: text
-			})
+		if(text.length > 0) {
+			this.setState({
+				creating: true
+			});
+			setTimeout(() => {
+				this.setState({
+					creating: false
+				});
+			}, 500)
+			this.props.closeOnboarding()
+			if(params.branch_name !== text) {
+				pushState(null, `/${text}/general`)
+			} else {
+				socket.emit('go to parent', {
+					title: text
+				})
+			}
+			this.setState({
+				text: ''
+			});
 		}
-		this.setState({
-			text: ''
-		});
 	}
 
 	tooltip(text) {
@@ -31,8 +43,8 @@ export default class ExploreForm extends Component {
 	}
 
 	render() {
-		const { text } = this.state,
-		style = require('./ExploreBox.scss');
+		const { text, creating } = this.state;
+		const style = require('./ExploreBox.scss');
 		return (
 			<span id="explore_form_wrapper" className="inline_block">
 				<form id={style.explore_form}>
@@ -66,8 +78,11 @@ export default class ExploreForm extends Component {
 								this.refs.explore_input.focus()
 							}
 						}}
+						style={{
+							fontSize: creating ? '1.1em' : '0.9em'
+						}}
 						id={style.explore_icon} 
-						className="fa fa-arrow-right"></span>
+						className={creating ? 'fa fa-spin fa-spinner' : 'fa fa-arrow-right'}></span>
 					</OverlayTrigger>
 				</form>
 			</span>

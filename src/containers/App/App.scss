@@ -279,4 +279,85 @@ a {
 }
 
 
+//
+
+@mixin keyframes($animation-name) {
+    @-webkit-keyframes #{$animation-name} {
+        @content;
+    }
+    @-moz-keyframes #{$animation-name} {
+        @content;
+    }  
+    @-ms-keyframes #{$animation-name} {
+        @content;
+    }
+    @-o-keyframes #{$animation-name} {
+        @content;
+    }  
+    @keyframes #{$animation-name} {
+        @content;
+    }
+}
+
+@mixin animation($str) {
+  -webkit-animation: #{$str};
+  -moz-animation: #{$str};
+  -ms-animation: #{$str};
+  -o-animation: #{$str};
+  animation: #{$str};      
+}
+
+:global .react-spinner {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  top: 50%;
+  left: 50%;
+}
+
+@include keyframes('spin') {
+  0% { opacity: 1; }
+  100% { opacity: 0.15; }
+}
+
+@keyframes react-spin {
+ 0% { opacity: 1; }
+ 100% { opacity: 0.15; }
+}
+
+@-moz-keyframes react-spin {
+ 0% { opacity: 1; }
+ 100% { opacity: 0.15; }
+}
+
+@-webkit-keyframes react-spin {
+ 0% { opacity: 1; }
+ 100% { opacity: 0.15; }
+}
+
+:global .react-spinner_bar {
+  border-radius: 5px;
+  position: absolute;
+  width: 20%;
+  height: 7.8%;
+  top: -3.9%;
+  left: -10%;
+  background-color: black;
+  -webkit-animation: react-spin 1s infinite linear!important;
+  -moz-animation: react-spin 1.2s infinite linear!important;
+  -ms-animation: react-spin 1.2s infinite linear!important;
+  -o-animation: react-spin 1.2s infinite linear!important;
+  animation: react-spin 1.2s infinite linear!important;
+}
+
+
+//
+:global .fa-spin {
+    -webkit-animation: fa-spin 1s infinite linear!important;
+    -moz-animation: fa-spin 1s infinite linear!important;
+    -ms-animation: fa-spin 1s infinite linear!important;
+    -o-animation: fa-spin 1s infinite linear!important;
+    animation: fa-spin 1s infinite linear!important;
+}
+
 

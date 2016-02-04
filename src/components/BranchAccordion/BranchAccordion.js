@@ -15,12 +15,23 @@ export default class BranchAccordion extends Component {
 	state = {
 		collapsed: true,
 		isMouseOverBranch: false,
-		showInlineFeedCreation: false
+		showInlineFeedCreation: false,
+		creatingFeed: false
 	}
 
 	componentDidMount() {
 		const { index } = this.props;
 		if(index == 0) this.setState({collapsed: false});
+	}
+
+	componentDidUpdate(prevProps) {
+		if(prevProps.feeds.length < this.props.feeds.length) {
+			setTimeout(() => {
+				this.setState({
+					creatingFeed: false
+				});
+			}, 500)
+		}
 	}
 
 	handleOpenNewFeed() {
@@ -31,6 +42,9 @@ export default class BranchAccordion extends Component {
 
 	createNewFeed(feedTitle) {
 		const { pushState, branch, params } = this.props;
+		this.setState({
+			creatingFeed: true
+		});
 		if(params.feed_name !== feedTitle) {
 			pushState(null, `/${branch.title}/${feedTitle}`)
 		} else {
@@ -79,9 +93,11 @@ export default class BranchAccordion extends Component {
 							collapsed={collapsed}
 							isMouseOverBranch={isMouseOverBranch}
 							branch={branch}
+							feeds={feeds}
 							openNewFeed={::this.handleOpenNewFeed}
 							openPopover={this.props.openPopover}
 							closePopover={this.props.closePopover}
+							creating={this.state.creatingFeed}
 						/>
 						<div 
 						 id={style.accordion}
