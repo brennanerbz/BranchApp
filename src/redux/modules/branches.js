@@ -48,7 +48,7 @@ export default function reducer(state = initialState, action) {
         loaded: true
       }
     case CHANGE_ACTIVE_BRANCH:
-      cookie.save('_lastbranch', action.branch_id)
+      cookie.save('_lastbranch', action.branch_id, { path: '/'})
       return {
         ...state,
         activeBranch: action.branch_id
@@ -142,10 +142,28 @@ export function receiveBranches(branches) {
 }
 
 // socket.on('left parent')
-export function leaveBranch(branch_id) {
-  return {
-    type: LEAVE_BRANCH,
-    branch_id
+export function leaveBranch(branch_id, pushState) {
+  return (dispatch, getState) => {
+    const branches = getState().branches.branches;
+    const activeBranch = getState().branches.activeBranch;
+    const activeBranchId = branches.filter(branch => { return branch.title === activeBranch })[0].id
+
+    dispatch({type: LEAVE_BRANCH, branch_id})
+
+    var nextBranch;
+    for(var b = 0; b < branches.length; b++) {
+      if(branches[b].id !== activeBranchId) {
+        nextBranch = branches[b]
+        break;
+      }
+    }
+
+    if(activeBranchId === branch_id) {
+      if(nextBranch) {
+        pushState(null, `/${nextBranch.title}/general`)
+      }
+    }
+
   }
 }
 

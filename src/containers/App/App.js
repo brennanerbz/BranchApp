@@ -105,7 +105,6 @@ export default class App extends Component {
         return;
       }
     } else if (this.props.user && !nextProps.user) {
-      cookie.remove('_token')
       this.props.clearBranches()
       this.props.clearFeeds()
       this.props.clearMessages()
@@ -127,7 +126,7 @@ export default class App extends Component {
     global.socket = this.initSocket();
     this.initSocketListeners()
     socket.emit('authenticate', {
-      token: cookie.load('_token')
+      token: cookie.load('_token', { path: '/'})
     })
     socket.emit('get parent memberships', {
       user_id: user.id
@@ -159,6 +158,9 @@ export default class App extends Component {
       socket.on('authenticate', (res) => {
         console.log('authenticated')
       })
+      socket.on('signup', (res) => {
+        this.props.signupSuccess(res)
+      })
       // <---- Branches
       socket.on('receive parent memberships', (res) => {
         this.props.receiveBranches(res.memberships)
@@ -168,7 +170,7 @@ export default class App extends Component {
       })
       socket.on('left parent', (res) => {
         console.log('left parent', res)
-        this.props.leaveBranch(res.feed_id)
+        this.props.leaveBranch(res.feed_id, pushState)
       })
       // <---- Feeds
       socket.on('receive child memberships', (res) => {
@@ -188,7 +190,7 @@ export default class App extends Component {
       })
       socket.on('left child', (res) => {
         console.log('left child', res)
-        this.props.leaveFeed(res.feed_id)
+        this.props.leaveFeed(res.feed_id, res.parent_id, pushState)
       })
       socket.on('reflection', (res) => {
         console.log('reflection: ', res)

@@ -61,7 +61,9 @@ export default class Feed extends Component {
 			node.scrollTop = node.scrollHeight;
 		}
 		if(isEmpty(prevProps.feed) && !isEmpty(this.props.feed)) {
-			node.scrollTop = node.scrollHeight;
+			setTimeout(() => {
+				node.scrollTop = node.scrollHeight;
+			}, 100)
 		}
 	}
 

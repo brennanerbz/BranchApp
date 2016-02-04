@@ -79,7 +79,6 @@ export default class UserInfo extends Component {
 								this.props.openModal('settings')
 							}}
 							handleLogOut={() => {
-								cookie.remove('_token')
 								this.props.logout()
 							}}
 						/>

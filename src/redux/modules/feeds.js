@@ -28,44 +28,6 @@ const initialState = {
   feedsLoaded: false // <---- the initialState of feeds have been loaded
 };
 
-Array.prototype.__alphabetizeList = function() {
-  const alphabetical = function (a, b) {
-    var first = a.title.replace("#").toLowerCase()
-    var second = b.title.replace("#").toLowerCase()
-    if(first < second) return -1;
-    else if(first > second) return 1;
-    else return 0;
-  }
-  return this.sort(alphabetical)
-}
-
-Array.prototype.__uniqueShallow = function() {
-  var seen = new Set;
-  return this.filter(function(item, i){
-    if (!seen.has(item)) {
-      seen.add(item);
-      return true;
-    }
-  });
-}
-
-Array.prototype.__findUniqueByKey = function(key) {
-  var keyList = [];
-  for(var l = 0; l < this.length; l++) {
-    keyList.push(this[l][key])
-  }
-  var uniqueKeys = [];
-  var unique = [];
-  for (var i = 0; i < keyList.length; i++) {
-    if(uniqueKeys.indexOf(keyList[i]) === -1) {
-      uniqueKeys.push(keyList[i])
-      unique.push(this[i])
-    }
-  }
-  return unique;
-}
-
-
 export default function reducer(state = initialState, action) {
   { /* Variables to be used for multiple cases */}
   let { memberships } = state;
@@ -126,7 +88,7 @@ export default function reducer(state = initialState, action) {
         feeds: !isNewFeedInState ? [...feeds, action.membership.feed].__alphabetizeList() : feeds
       }
     case CHANGE_ACTIVE_FEED:
-      cookie.save('_lastfeed', action.feed_id)
+      cookie.save('_lastfeed', action.feed_id, {path: '/'})
       return {
         ...state,
         activeFeed: action.feed_id
@@ -258,10 +220,21 @@ export function userJoinedFeed(membership) {
 }
 
 // socket.emit('leave child')
-export function leaveFeed(feed_id) {
-  return {
-    type: LEAVE_FEED,
-    feed_id
+export function leaveFeed(feed_id, branch_id, pushState) {
+  return (dispatch, getState) => {
+    dispatch({type: LEAVE_FEED, feed_id})
+
+    const feeds = getState().feeds.feeds;
+    const branches = getState().branches.branches;
+    const activeBranch = getState().branches.activeBranch;
+    const activeFeed = getState().feeds.activeFeed;
+
+    const activeFeedId = feeds.filter(feed => { return feed.title.replace('#', "") === activeFeed })[0]
+
+    if(feed_id !== activeFeedId) {
+      pushState(null, `/${activeBranch}/general`)
+    }
+  
   }
 }
 

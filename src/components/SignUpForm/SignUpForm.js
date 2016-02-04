@@ -123,6 +123,7 @@ export default class SignUpForm extends Component {
 					password: password
 				}
 				console.log('newUser: ', newUser)
+				// socket.emit('signup', newUser)
 				signup(newUser)
 			} else {
 				this.setState({

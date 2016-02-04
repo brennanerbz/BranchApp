@@ -68,10 +68,10 @@ export default class Chat extends Component {
   componentWillReceiveProps(nextProps) {
     const { changeActiveFeed, changeActiveBranch } = this.props;
     const { branches, branchMemberships, activeBranch, feeds, memberships, activeFeed, params } = nextProps;
-    
+
     if(this.props.branches.length > 0 && branches.length === 0) {
-      cookie.remove('_lastbranch');
-      cookie.remove('_lastfeed');
+      cookie.remove('_lastbranch', { path: '/'});
+      cookie.remove('_lastfeed', { path: '/'});
       this.props.pushState(null, '/')
     }
 
@@ -103,8 +103,8 @@ export default class Chat extends Component {
   handleRouting(branches, feeds, params) {
     const { pushState } = this.props;
     if(Object.keys(params).length === 0 || isEmpty(params)) {
-      let recentBranch = cookie.load('_lastbranch');
-      let recentFeed = cookie.load('_lastfeed');
+      let recentBranch = cookie.load('_lastbranch', { path: '/'});
+      let recentFeed = cookie.load('_lastfeed', { path: '/'});
       if(recentBranch && recentFeed) {
         pushState(null, `/${recentBranch}/${recentFeed}`)
         return;

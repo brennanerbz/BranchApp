@@ -1,5 +1,6 @@
 import cookie from 'react-cookie';
 import request from 'superagent';
+import $ from 'jquery';
 
 // LogIn & Out
 export const LOGIN = 'BranchApp/auth/LOGIN';
@@ -56,17 +57,14 @@ export default function reducer(state = initialState, action) {
         ...state
       }
     case LOGIN:
-      if(cookie.load('_token')) {
-        cookie.remove('_token')
-      }
       return {
         ...state,
         loggingIn: true,
         errorOnLogIn: false,
         errorData: null
-      };
+      };      
     case LOGIN_SUCCESS:
-      cookie.save('_token', action.result.token);
+      cookie.save('_token', action.result.token, { path: '/'});
       return {
         ...state,
         loggingIn: false,
@@ -103,9 +101,6 @@ export default function reducer(state = initialState, action) {
         logoutError: action.error
       };
     case SIGNUP:
-      if(cookie.load('_token')) {
-        cookie.remove('_token')
-      }
       return {
         ...state,
         loggingIn: true,
@@ -114,7 +109,7 @@ export default function reducer(state = initialState, action) {
         errorData: null
       }
     case SIGNUP_SUCCESS:
-      cookie.save('_token', action.result.token)
+      cookie.save('_token', action.result.token, {path: '/'})
       return {
         ...state,
         loggingIn: false,
@@ -162,7 +157,7 @@ export function loadAuth() {
   }
 }
 export function loadAuthCookie() {
-  const token = cookie.load('_token');
+  const token = cookie.load('_token', { path: '/'});
   return {
     types: [LOAD_AUTH, LOAD_AUTH_SUCCESS, LOAD_AUTH_FAILURE],
     promise: (client) => client.post('/authenticate', {
@@ -176,8 +171,11 @@ export function login(user) {
     promise: (client) => client.post('/login', user)
   };
 }
+
 export function logout() {
-  cookie.remove('_token');
+  cookie.remove('_token', { path: '/' });
+  cookie.remove('_lastbranch', { path: '/' })
+  cookie.remove('_lastfeed', { path: '/' })
   return {
     type: LOGOUT_SUCCESS
   };
@@ -186,6 +184,12 @@ export function signup(user) {
   return {
     types: [SIGNUP, SIGNUP_SUCCESS, SIGNUP_FAILURE],
     promise: (client) => client.post('/signup', user)
+  };
+}
+export function signupSuccess(user) {
+  return {
+    type: SIGNUP_SUCCESS,
+    user
   };
 }
 

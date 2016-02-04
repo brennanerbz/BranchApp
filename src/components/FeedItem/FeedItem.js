@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { pushState } from 'react-redux';
 import * as feedActions from '../../redux/modules/feeds';
 
 @connect(state => ({
@@ -32,7 +33,7 @@ export default class FeedItem extends Component {
 	}
 
 	render() {
-		const { index, feed, branch, membership, active, unread, handleChangeActiveFeed} = this.props;
+		const { index, feed, branch, membership, active, unread, handleChangeActiveFeed, pushState } = this.props;
 		const { isMouseOverFeedItem } = this.state;
 		const style = require('./FeedItem.scss');
 		return (
@@ -77,7 +78,7 @@ export default class FeedItem extends Component {
 										feed_id: feed.id
 									})
 								} else {
-									this.props.leaveFeed(feed.id)
+									this.props.leaveFeed(feed.id, branch.id, pushState)
 								}
 							}}
 							className={'float_right ' + style.feed_item_actions}>
