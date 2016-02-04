@@ -8,6 +8,7 @@ import ExploreForm from './ExploreForm'
 
 @connect(
   state => ({
+  	params: state.router.params,
   	user: state.auth.user
   }),
   dispatch => ({
@@ -22,7 +23,7 @@ export default class ExploreBox extends Component {
 	}
 
 	render() {
-		const { onboardingPopoverIndex, pushState } = this.props;
+		const { onboardingPopoverIndex, pushState, params } = this.props;
 		const styles = require('./ExploreBox.scss'),
 		branchLogo = require('./MessengerLogo.png');
 		return (
@@ -30,7 +31,7 @@ export default class ExploreBox extends Component {
 				<span onClick={() => pushState(null, '/')} id="branch_logo_wrapper" className="inline_block">
 					<img id={styles.branch_logo} src={branchLogo}/>
 				</span>
-				<ExploreForm pushState={pushState}/>
+				<ExploreForm pushState={pushState} params={params}/>
 			</div>
 		);
 	}

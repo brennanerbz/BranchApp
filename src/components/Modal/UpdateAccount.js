@@ -1,4 +1,6 @@
 import React, { Component, PropTypes } from 'react';
+import { isEmpty } from '../../utils/validation';
+import LaddaButton from 'react-ladda';
 
 export default class Account extends Component {
 
@@ -10,15 +12,20 @@ export default class Account extends Component {
 		const { user } = this.props;
 		const newPw = this.refs.newPw.value;
 		const newPwConfirmed = this.refs.newPwConfirmed.value;
-		if(newPw === newPwConfirmed) {
-			socket.emit('edit user', {
-				user_id: user.id,
-				password: newPw
-			})
+		const oldPassword = this.refs.old_password.value;
+		if(!isEmpty(newPw) && !isEmpty(newPwConfirmed) && !isEmpty(oldPassword)) {
+			if(newPw === newPwConfirmed && newPw !== oldPassword) {
+				this.props.handleUpdateUser()
+				socket.emit('edit user', {
+					user_id: user.id,
+					password: newPw
+				})
+			}
 		}
 	}
 
 	render() {
+		const { user, updating } = this.props;
 		const style = require('./Modal.scss');
 		return (
 			<div className={style.update_account}>
@@ -27,7 +34,7 @@ export default class Account extends Component {
 						<label>Old password</label>
 					</div>
 					<div className={style.form_input}>
-						<input type="password" />
+						<input type="password" ref="old_password"/>
 					</div>
 				</div>
 				<div className={style.form}>
@@ -46,7 +53,15 @@ export default class Account extends Component {
 						<input type="password" ref="newPwConfirmed" />
 					</div>
 				</div>
-				<button className='button primary'>Update password</button>
+				<LaddaButton 
+				onClick={::this.updatePassword}
+				loading={updating}
+				className={"button primary " + (updating ? 'right' : '')}
+				buttonStyle="expand-right"
+				spinnerSize={26}
+				spinnerColor="#fff">
+					Update button
+				</LaddaButton>
 			</div>
 		);
 	}

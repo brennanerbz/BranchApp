@@ -11,6 +11,7 @@ import * as modalActions from '../../redux/modules/misc';
 
 @connect(
 	state => ({
+		params: state.router.params
 	}),
 	dispatch => ({
 		...bindActionCreators({

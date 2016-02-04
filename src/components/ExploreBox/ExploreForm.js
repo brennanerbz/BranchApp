@@ -10,9 +10,15 @@ export default class ExploreForm extends Component {
 	}
 
 	handleOpenBranch() {
-		const { pushState } = this.props;
+		const { pushState, params } = this.props;
 		const { text } = this.state;
-		pushState(null, `/${text}/general`)
+		if(params.branch_name !== text) {
+			pushState(null, `/${text}/general`)
+		} else {
+			socket.emit('go to parent', {
+				title: text
+			})
+		}
 		this.setState({
 			text: ''
 		});

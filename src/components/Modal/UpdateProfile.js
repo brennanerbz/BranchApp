@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import Avatar from '../Avatar/Avatar';
+import { isEmpty } from '../../utils/validation';
 import LaddaButton from 'react-ladda';
-import FileInput from 'react-file-input';
 
 export default class UpdateProfile extends Component {
 	static propTypes = {
@@ -22,14 +22,24 @@ export default class UpdateProfile extends Component {
 	}
 
 	updateUser() {
-		this.props.handleUpdateUser()
 		const { user } = this.props;
 		const { username, email } = this.state;
-		socket.emit('edit user', {
-			user_id: user.id,
-			username: username,
-			email: email
-		})
+		if(!isEmpty(username) && !isEmpty(email)) {
+			if(username !== user.username) {
+				this.props.handleUpdateUser()
+				socket.emit('edit user', {
+					user_id: user.id,
+					username: username
+				})
+			}
+			if(email !== user.email) {
+				this.props.handleUpdateUser()
+				socket.emit('edit user', {
+					user_id: user.id,
+					email: email
+				})
+			}
+		}
 	}
 
 	handleUploadPhoto(e) {
@@ -61,7 +71,7 @@ export default class UpdateProfile extends Component {
 		      		</div>
 		      		<div className={'clearfix ' + style.form_input}>
 		      			<a id={style.upload_photo_wrapper}>
-			          		<span style={{cursor: 'default'}} className="float_left">
+			          		<span style={{cursor: 'default', marginRight: '10px'}} className="float_left">
 			          			<Avatar size={70} message={false} user={user}/>
 			          		</span>
 			          		<span 
@@ -123,6 +133,10 @@ export default class UpdateProfile extends Component {
 		      				});
 		      			}}
 		      			/>
+		      			<p style={{margin: '0'}} 
+		      			className="input_note">
+		      			You can only change your username twice per day. Choose wisely.
+		      			</p>
 		      		</div>
 		      	</div>
 		      	<div className={style.form}>

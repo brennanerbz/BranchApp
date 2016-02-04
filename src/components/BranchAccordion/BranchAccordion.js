@@ -30,8 +30,15 @@ export default class BranchAccordion extends Component {
 	}
 
 	createNewFeed(feedTitle) {
-		const { pushState, branch } = this.props;
-		pushState(null, `/${branch.title}/${feedTitle}`)
+		const { pushState, branch, params } = this.props;
+		if(params.feed_name !== feedTitle) {
+			pushState(null, `/${branch.title}/${feedTitle}`)
+		} else {
+			socket.emit('join child', {
+			  parent_id: branch.id,
+			  title: "#" + feedTitle
+			})
+		}
 		setTimeout(() => {
 			this.setState({
 				showInlineFeedCreation: false
@@ -86,6 +93,7 @@ export default class BranchAccordion extends Component {
 						 		<FeedList
 						 			memberships={memberships}
 						 			activeBranch={active}
+						 			branch={branch}
 						 			feeds={feeds}
 						 			activeFeed={activeFeed}
 						 			onChangeActiveFeed={this.props.onChangeActiveFeed}

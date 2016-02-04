@@ -32,7 +32,7 @@ export default class FeedItem extends Component {
 	}
 
 	render() {
-		const { index, feed, membership, active, unread, handleChangeActiveFeed} = this.props;
+		const { index, feed, branch, membership, active, unread, handleChangeActiveFeed} = this.props;
 		const { isMouseOverFeedItem } = this.state;
 		const style = require('./FeedItem.scss');
 		return (
@@ -51,7 +51,16 @@ export default class FeedItem extends Component {
 				<a className={style.feed_name}>
 					<span 
 					onClick={() => {
+						if(!membership) {
+							socket.emit('join child', {
+							  parent_id: branch.id,
+							  title: "#" + feed.title
+							})
+						}
 						if(!active) handleChangeActiveFeed(feed, membership)
+					}}
+					style={{
+						width: '140px'
 					}}
 					className="float_left overflow_ellipsis">
 						<span className={style.prefix_icon}>#</span>
