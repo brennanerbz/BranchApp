@@ -9,6 +9,7 @@ const SERVER_JOINED_FEED = 'BranchApp/feeds/SERVER_JOINED_FEED';
 const NEW_FEED = 'BranchApp/feeds/NEW_FEED';
 const RECEIVE_FEED = 'BranchApp/feeds/RECEIVE_FEED';
 const LEAVE_FEED = 'BranchApp/feeds/LEAVE_FEED';
+import { LEAVE_BRANCH } from './branches';
 const USER_JOINED_FEED = 'BranchApp/feeds/USER_JOINED_FEED';
 const USER_LEFT_FEED = 'BranchApp/feeds/USER_LEFT_FEED';
 const CHANGE_ACTIVE_FEED = 'BranchApp/feeds/CHANGE_ACTIVE_FEED';
@@ -100,6 +101,12 @@ export default function reducer(state = initialState, action) {
         ...state,
         memberships: memberships,
         feeds: feeds
+      }
+    case LEAVE_BRANCH:
+      return {
+        ...state,
+        memberships: memberships.filter(membership => { return membership.feed.parent_id !== action.branch_id }),
+        feeds: feeds.filter(feed => { return feed.parent_id !== action.branch_id })
       }
     case MARK_FEED_UNREAD:
       feeds = feeds.map(feed => {
@@ -235,6 +242,13 @@ export function leaveFeed(feed_id, branch_id, pushState) {
       pushState(null, `/${activeBranch}/general`)
     }
   
+  }
+}
+
+export function leaveAllFeedsForBranch(branch_id) {
+  return {
+    type: LEAVE_BRANCH,
+    branch_id
   }
 }
 

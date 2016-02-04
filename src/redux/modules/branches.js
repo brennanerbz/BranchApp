@@ -107,6 +107,10 @@ export function newBranch(branch) {
     dispatch({type: NEW_BRANCH, branch})
     dispatch(changeActiveBranch(branch.feed.title))
     const user = getState().auth.user
+    socket.emit('get child memberships', {
+      user_id: user.id,
+      feed_id: branch.feed_id
+    })
     socket.emit('get nonmembership feeds', {
       user_id: user.id,
       feed_id: branch.feed_id
@@ -142,6 +146,7 @@ export function receiveBranches(branches) {
 }
 
 // socket.on('left parent')
+import { leaveAllFeedsForBranch } from './feeds';
 export function leaveBranch(branch_id, pushState) {
   return (dispatch, getState) => {
     const branches = getState().branches.branches;
@@ -149,6 +154,7 @@ export function leaveBranch(branch_id, pushState) {
     const activeBranchId = branches.filter(branch => { return branch.title === activeBranch })[0].id
 
     dispatch({type: LEAVE_BRANCH, branch_id})
+    dispatch(leaveAllFeedsForBranch(branch_id))
 
     var nextBranch;
     for(var b = 0; b < branches.length; b++) {
