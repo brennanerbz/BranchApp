@@ -164,7 +164,11 @@ export function leaveBranch(branch_id, pushState) {
       }
     }
 
-    if(activeBranchId === branch_id) {
+    console.log('branch_id', branch_id)
+    console.log('active_id', activeBranchId)
+    console.log('nextBranch', nextBranch)
+
+    if(activeBranchId == branch_id) {
       if(nextBranch) {
         pushState(null, `/${nextBranch.title}/general`)
       }

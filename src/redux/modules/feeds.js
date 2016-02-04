@@ -9,7 +9,7 @@ const SERVER_JOINED_FEED = 'BranchApp/feeds/SERVER_JOINED_FEED';
 const NEW_FEED = 'BranchApp/feeds/NEW_FEED';
 const RECEIVE_FEED = 'BranchApp/feeds/RECEIVE_FEED';
 const LEAVE_FEED = 'BranchApp/feeds/LEAVE_FEED';
-import { LEAVE_BRANCH } from './branches';
+const LEAVE_BRANCH = 'BranchApp/feeds/LEAVE_BRANCH';
 const USER_JOINED_FEED = 'BranchApp/feeds/USER_JOINED_FEED';
 const USER_LEFT_FEED = 'BranchApp/feeds/USER_LEFT_FEED';
 const CHANGE_ACTIVE_FEED = 'BranchApp/feeds/CHANGE_ACTIVE_FEED';
