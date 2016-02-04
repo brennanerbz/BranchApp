@@ -42,7 +42,6 @@ export default class SignUpForm extends Component {
 
 	componentWillReceiveProps(nextProps) {
 		if(!this.props.errorOnSignUp && nextProps.errorOnSignUp) {
-			console.log('reroute')
 			this.props.pushState(null, '/signup')
 			this.displayError(nextProps.errorData, nextProps.signUpError)
 		}
@@ -123,6 +122,7 @@ export default class SignUpForm extends Component {
 					email: email,
 					password: password
 				}
+				console.log('newUser: ', newUser)
 				signup(newUser)
 			} else {
 				this.setState({

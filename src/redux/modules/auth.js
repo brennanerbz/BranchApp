@@ -17,11 +17,16 @@ export const LOAD_AUTH = 'BranchApp/auth/LOAD_AUTH';
 export const LOAD_AUTH_SUCCESS = 'BranchApp/auth/LOAD_AUTH_SUCCESS';
 export const LOAD_AUTH_FAILURE = 'BranchApp/auth/LOAD_AUTH_FAILURE';
 
+export const UPDATE_USER = 'BranchApp/auth/UPDATE_USER';
+export const UPDATE_USER_SUCCESS = 'BranchApp/auth/UPDATE_USER_SUCCESS';
+
 const initialState = {
   loaded: false,
   errorOnLogIn: false,
   errorOnSignUp: false,
-  errorData: null
+  errorData: null,
+  user: null,
+  updatingUser: false
 };
 
 export default function reducer(state = initialState, action) {
@@ -131,6 +136,17 @@ export default function reducer(state = initialState, action) {
         signUpError: action.error.text,
         errorData: errorData
       }
+    case UPDATE_USER:
+      return {
+        ...state,
+        updatingUser: true
+      }
+    case UPDATE_USER_SUCCESS:
+      return {
+        ...state,
+        user: action.user,
+        updatingUser: false
+      }
     default:
       return state;
   }
@@ -171,5 +187,18 @@ export function signup(user) {
     types: [SIGNUP, SIGNUP_SUCCESS, SIGNUP_FAILURE],
     promise: (client) => client.post('/signup', user)
   };
+}
+
+// Update user
+export function updateUser() {
+  return {
+    type: UPDATE_USER
+  }
+}
+export function updateUserSuccess(user) {
+  return {
+    type: UPDATE_USER_SUCCESS,
+    user
+  }
 }
 

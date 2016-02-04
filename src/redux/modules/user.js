@@ -9,7 +9,7 @@ export const NEXT_ONBOARDING_POPOVER = 'BranchApp/user/NEXT_ONBOARDING_POPOVER';
 export const CLOSE_ONBOARDING = 'BranchApp/user/CLOSE_ONBOARDING';
 
 // Updating user
-export const UPDATE_USER_SUCCESS = 'BranchApp/user/UPDATE_USER_SUCCESS';
+import { UPDATE_USER_SUCCESS } from './auth';
 export const UPDATE_USER_FAILURE = 'BranchApp/user/UPDATE_USER_FAILURE';
 
 
@@ -112,11 +112,4 @@ export function closeOnboarding() {
 	}
 }
 
-// Update user
-export function updateUser(user) {
-	return {
-		type: UPDATE_USER_SUCCESS,
-		user
-	}
-}
 

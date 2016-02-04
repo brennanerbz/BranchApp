@@ -9,7 +9,8 @@ import UpdateAccount from './UpdateAccount';
 
 @connect(
   state => ({
-  	user: state.auth.user
+  	user: state.auth.user,
+  	updating: state.auth.updatingUser
   }),
   dispatch => ({
     ...bindActionCreators({
@@ -27,7 +28,7 @@ export default class Settings extends Component {
 	}
 
 	render() {
-		const { user } = this.props;
+		const { user, updating } = this.props;
 		const { settings, activeSetting } = this.state;
 		const style = require('./Modal.scss');
 		return (
@@ -56,12 +57,16 @@ export default class Settings extends Component {
 						activeSetting === 0 &&
 						<UpdateProfile
 							user={user}
+							updating={updating}
+							handleUpdateUser={this.props.updateUser}
 						/>
 					}
 					{
 						activeSetting === 1 &&
 						<UpdateAccount
 							user={user}
+							updating={updating}
+							handleUpdateUser={this.props.updateUser}
 						/>
 					}
 				</div>

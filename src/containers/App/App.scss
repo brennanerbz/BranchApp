@@ -245,4 +245,38 @@ a {
 }
 
 
+// Custom ladda styles
+:global .ladda-button {
+	-webkit-transition: .3s cubic-bezier(.175,.885,.32,1.275) all!important;
+	transition: .3s cubic-bezier(.175,.885,.32,1.275) all!important;
+	.ladda-spinner {
+	    -webkit-transition: .3s cubic-bezier(.175,.885,.32,1.275) all!important;
+	    transition: .3s cubic-bezier(.175,.885,.32,1.275) all!important;
+	}
+	&.right {
+		padding-right: 40px;
+		.ladda-spinner {
+			position: absolute;
+			right: 20px;
+			top: 16px;
+		}	
+	}
+}
+
+
+
+// Upload input hidden for button
+:global .upload_input_button {
+	font: 500px monospace; /* make the input's button HUGE */
+    opacity:0; /* this will make it transparent */
+    filter: alpha(opacity=0); /* transparency for Internet Explorer */
+    position: absolute;  /* making it absolute with z-index:1 will place it on top of the button */
+    z-index: 1;
+    top:0;
+    right:0;
+    padding:0;
+    margin: 0;
+}
+
+
 

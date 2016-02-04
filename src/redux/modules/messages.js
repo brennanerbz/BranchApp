@@ -18,17 +18,19 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
 	let { messages, loaded, typers } = state;
+	var isMessageInState;
 
 	switch(action.type) {
 		case RECEIVE_MESSAGES:
 			return {
 				...state,
-				messages: _.uniqWith([...messages, ...action.messages], _.isEqual)
+				messages: [...messages, ...action.messages].__findUniqueByKey('id')
 			}
 		case RECEIVE_MESSAGE:
+			isMessageInState = messages.filter(m => { return m.id === action.message.id })[0]
 			return {
 				...state,
-				messages: _.uniqWith([...state.messages, action.message], _.isEqual)
+				messages: !isMessageInState ? [...messages, action.message] : messages
 			}
 		case RECEIVE_VOTE:
 			return {

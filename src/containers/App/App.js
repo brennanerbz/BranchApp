@@ -215,7 +215,7 @@ export default class App extends Component {
       })
       // <---- User
       socket.on('update user', (res) => {
-        this.props.updateUser(res)
+        this.props.updateUserSuccess(res)
       })
       // <---- Error
       socket.on('error', (res) => {

@@ -49,7 +49,7 @@ export default class FeedList extends Component {
 							unread={feed.unread}
 							membership={memberships.filter(membership => membership.feed_id === feed.id)[0]}
 							active={activeBranch && feed.title.replace("#", "") === activeFeed}
-							changeActiveFeed={onChangeActiveFeed}/>
+							handleChangeActiveFeed={onChangeActiveFeed}/>
 						)
 					})
 				}
