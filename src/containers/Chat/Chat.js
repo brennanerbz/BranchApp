@@ -62,7 +62,9 @@ export default class Chat extends Component {
 
   componentDidMount() {
     const { user, onboarded, branches, branchMemberships, feeds, memberships, changeActiveFeed, changeActiveBranch, params, pushState } = this.props;
-    this.handleRouting(branches, feeds, params)
+    if(params.branch_name !== 'signup' && params.branch_name !== 'login') {
+      this.handleRouting(branches, feeds, params)
+    }
     this.handleActiveChat(branches, branchMemberships, feeds, memberships, params, true, true)
   }
 
@@ -80,7 +82,9 @@ export default class Chat extends Component {
 
     if((!this.props.user && nextProps.user) || (this.props.user && !nextProps.user)) {
     } else {
-      this.handleRouting(branches, feeds, nextProps.params)
+      if(params.branch_name !== 'signup' && params.branch_name !== 'login') {
+        this.handleRouting(branches, feeds, nextProps.params)
+      }
     }
 
     const branchRouteChanged = this.props.params.branch_name !== nextProps.params.branch_name;
@@ -105,35 +109,35 @@ export default class Chat extends Component {
  
   handleRouting(branches, feeds, params) {
     const { pushState } = this.props;
-    if(Object.keys(params).length === 0 || isEmpty(params)) {
-      let recentBranch = cookie.load('_lastbranch', { path: '/'});
-      let recentFeed = cookie.load('_lastfeed', { path: '/'});
-      if(recentBranch && recentFeed) {
-        pushState(null, `/${recentBranch}/${recentFeed}`)
-        return;
-      }
-      if(recentBranch && !recentFeed) {
-        pushState(null, `/${recentBranch}/general`)
-        return;
-      }
-      if(!recentBranch && !recentFeed) {
-        if(branches.length > 0) {
-          const nextBranch = branches[0]
-          const nextFeed = feeds.filter(feed => { return feed.parent_id === nextBranch.id })[0]
-          if(nextFeed) {
-            pushState(null, `/${nextBranch.title}/${nextFeed.title.replace("#", "")}`)           
-          } else {
-            pushState(null, `/${nextBranch.title}/general`)
+    if(params.branch_name && params.branch_name !== 'signup' && params.branch_name !== 'login') {
+      if(Object.keys(params).length === 0 || isEmpty(params)) {
+        let recentBranch = cookie.load('_lastbranch', { path: '/'});
+        let recentFeed = cookie.load('_lastfeed', { path: '/'});
+        if(recentBranch && recentFeed) {
+          pushState(null, `/${recentBranch}/${recentFeed}`)
+          return;
+        }
+        if(recentBranch && !recentFeed) {
+          pushState(null, `/${recentBranch}/general`)
+          return;
+        }
+        if(!recentBranch && !recentFeed) {
+          if(branches.length > 0) {
+            const nextBranch = branches[0]
+            const nextFeed = feeds.filter(feed => { return feed.parent_id === nextBranch.id })[0]
+            if(nextFeed) {
+              pushState(null, `/${nextBranch.title}/${nextFeed.title.replace("#", "")}`)           
+            } else {
+              pushState(null, `/${nextBranch.title}/general`)
+            }
           }
         }
+      } else {
+          if(!params.feed_name) {
+            pushState(null, `/${params.branch_name}/general`)
+          }
+        } 
       }
-    } else {
-      if(params.branch_name) {
-        if(!params.feed_name) {
-          pushState(null, `/${params.branch_name}/general`)
-        }
-      } 
-    }
   }
 
   render() {
