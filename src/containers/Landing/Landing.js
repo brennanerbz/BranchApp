@@ -38,7 +38,7 @@ export default class Landing extends Component {
     const { height, width } = this.state;
     const { pushState } = this.props;
     const style = require('./Landing.scss');
-    const brandLogo = require('../../../static/messengerLogo.png');
+    const brandLogo = require('./messengerLogo.png');
     return (
       <div ref="landing_page" id={style.landing_page}>
         <Helmet title="Home"/>

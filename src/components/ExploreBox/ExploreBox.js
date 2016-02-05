@@ -27,11 +27,11 @@ export default class ExploreBox extends Component {
 	render() {
 		const { onboardingPopoverIndex, pushState, params } = this.props;
 		const styles = require('./ExploreBox.scss');
-		const branchLogo = require('../../../static/MessengerLogo.png');
+		const logo = require('./MessengerLogo.png');
 		return (
 			<div ref="explore_box" className={styles.explore_box + ' float_left'}>
 				<span onClick={() => pushState(null, '/')} id="branch_logo_wrapper" className="inline_block">
-					<img id={styles.branch_logo} src={branchLogo}/>
+					<img id={styles.branch_logo} src={logo}/>
 				</span>
 				<ExploreForm pushState={pushState} params={params} closeOnboarding={this.props.closeOnboarding}/>
 			</div>
