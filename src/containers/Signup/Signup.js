@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { pushState } from 'redux-router';
 import SignUpForm from '../../components/SignUpForm/SignUpForm';
+import cookie from 'react-cookie';
 
 @connect(
 	state => ({
@@ -20,7 +21,9 @@ export default class Signup extends Component {
 
 	componentWillReceiveProps(nextProps) {
 		if(!this.props.user && nextProps.user) {
-			this.props.pushState(null, '/')
+			if(!cookie.load('_lastbranch') && !cookie.load('_lastfeed')) {
+				this.props.pushState(null, '/')
+			}
 		}
 	}
 

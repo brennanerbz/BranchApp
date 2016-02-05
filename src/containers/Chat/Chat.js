@@ -30,6 +30,8 @@ import * as feedActions from '../../redux/modules/feeds';
 
 @connect(
   state => ({
+    location: state.router.location,
+    pathname: state.router.location.pathname,
     params: state.router.params,
     onboarded: state.user.onboarded,
     user: state.auth.user,
@@ -61,8 +63,18 @@ export default class Chat extends Component {
   }
 
   componentDidMount() {
-    const { user, onboarded, branches, branchMemberships, feeds, memberships, changeActiveFeed, changeActiveBranch, params, pushState } = this.props;
-    if(params.branch_name !== 'signup' && params.branch_name !== 'login') {
+    const { user, 
+            onboarded, 
+            branches, 
+            branchMemberships, 
+            feeds, 
+            memberships, 
+            changeActiveFeed, 
+            changeActiveBranch, 
+            params, 
+            pathname,
+            pushState } = this.props;
+    if(pathname !== '/signup' && pathname !== '/login') {
       this.handleRouting(branches, feeds, params)
     }
     this.handleActiveChat(branches, branchMemberships, feeds, memberships, params, true, true)
@@ -70,7 +82,15 @@ export default class Chat extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { changeActiveFeed, changeActiveBranch } = this.props;
-    const { branches, branchMemberships, activeBranch, feeds, memberships, activeFeed, params, user } = nextProps;
+    const { branches, 
+            branchMemberships, 
+            activeBranch, 
+            feeds, 
+            memberships, 
+            activeFeed, 
+            params, 
+            pathname,
+            user } = nextProps;
 
     if(this.props.branches.length > 0 && branches.length === 0) {
       cookie.remove('_lastbranch', { path: '/'});
@@ -82,7 +102,7 @@ export default class Chat extends Component {
 
     if((!this.props.user && nextProps.user) || (this.props.user && !nextProps.user)) {
     } else {
-      if(params.branch_name !== 'signup' && params.branch_name !== 'login') {
+      if(pathname !== '/signup' && pathname !== '/login') {
         this.handleRouting(branches, feeds, nextProps.params)
       }
     }
@@ -108,8 +128,8 @@ export default class Chat extends Component {
   }
  
   handleRouting(branches, feeds, params) {
-    const { pushState } = this.props;
-    if(params.branch_name && params.branch_name !== 'signup' && params.branch_name !== 'login') {
+    const { pushState, pathname } = this.props;
+    if(pathname !== '/signup' && pathname !== '/login') {
       if(Object.keys(params).length === 0 || isEmpty(params)) {
         let recentBranch = cookie.load('_lastbranch', { path: '/'});
         let recentFeed = cookie.load('_lastfeed', { path: '/'});
@@ -155,10 +175,12 @@ export default class Chat extends Component {
       return branch.title === activeBranch
     })[0]
     let feed = branch ? feeds.filter(feed => {
-      return feed.title.replace("#", "") === activeFeed && feed.parent_id === branch.id
+      return feed.title
+      .replace("#", "") === activeFeed && feed.parent_id === branch.id
     })[0] : null
     let membership = feed ? memberships.filter(membership => {
-      return membership.feed.title.replace("#", "") === activeFeed && membership.feed.parent_id === branch.id
+      return membership.feed.title
+      .replace("#", "") === activeFeed && membership.feed.parent_id === branch.id
     })[0] : null
     return (
       <div id={style.chat}>

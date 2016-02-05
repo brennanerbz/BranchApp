@@ -3,6 +3,8 @@ import {connect} from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { pushState } from 'redux-router';
 import LogInForm from '../../components/LogInForm/LogInForm';
+import cookie from 'react-cookie';
+
 
 @connect(
 	state => ({
@@ -20,7 +22,9 @@ export default class Login extends Component {
 
 	componentWillReceiveProps(nextProps) {
 		if(!this.props.user && nextProps.user) {
-			this.props.pushState(null, '/')
+			if(!cookie.load('_lastbranch') && !cookie.load('_lastfeed')) {
+				this.props.pushState(null, '/')
+			}
 		}
 	}
 

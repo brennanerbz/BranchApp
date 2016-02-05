@@ -180,7 +180,7 @@ export default class App extends Component {
         this.props.newBranch(res)
       })
       socket.on('receive parent feed', (res) => {
-        console.log('receive parent feed', res)
+        // console.log('receive parent feed', res)
         this.props.newBranchReadOnly(res.feed)
       })
       socket.on('left parent', (res) => {
@@ -192,7 +192,7 @@ export default class App extends Component {
         this.props.receiveMemberships(res.memberships)
       })
       socket.on('receive child feed', (res) => {
-        console.log('receive child feed', res)
+        // console.log('receive child feed', res)
         this.props.newFeedReadOnly(res.feed)
       })
       socket.on('receive nonmembership feeds', (res) => {
@@ -208,11 +208,11 @@ export default class App extends Component {
         this.props.userJoinedFeed(res)
       })
       socket.on('left child', (res) => {
-        console.log('left child', res)
+        // console.log('left child', res)
         this.props.leaveFeed(res.feed_id, res.parent_id, pushState)
       })
       socket.on('reflection', (res) => {
-        console.log('reflection: ', res)
+        // console.log('reflection: ', res)
       })
       socket.on('user left', (res) => {
         console.log('user left', res)
