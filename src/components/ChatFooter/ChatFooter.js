@@ -39,20 +39,8 @@ export default class ChatFooter extends Component {
 	    }
 	    
 		return (
-			<div className={user ? '' : style.prompt_footer} id={style.chat_footer}>
-				{
-					user
-					? 
-					<MessageComposer {...this.props}/>
-					:
-					<div style={{padding: '1.35em 1em 1em', textAlign: 'center'}} id={style.chat_footer_call_to_action}>
-						<p>To join the conversation, either 
-							<a onClick={() => pushState(null, '/login')}>&nbsp;Log In</a> 
-							&nbsp;or&nbsp; 
-							<a onClick={() => pushState(null, '/signup')}>Sign Up</a>
-						</p>
-					</div>
-				}
+			<div className={''} id={style.chat_footer}>
+				<MessageComposer {...this.props}/>
 				<div id={style.notification_bar}>
 					{
 						currentTypers.length < 3 

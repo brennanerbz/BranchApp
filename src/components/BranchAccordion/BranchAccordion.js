@@ -98,6 +98,8 @@ export default class BranchAccordion extends Component {
 							openPopover={this.props.openPopover}
 							closePopover={this.props.closePopover}
 							creating={this.state.creatingFeed}
+							user={this.props.user}
+							leaveBranch={this.props.leaveBranch}
 						/>
 						<div 
 						 id={style.accordion}

@@ -37,7 +37,7 @@ export default class MessageForm extends Component {
 
 	handleSubmitMessage() {
 		const { text } = this.state;
-		const { user, membership, feed } = this.props;
+		const { user, membership, feed, pushState } = this.props;
 		if(text.length > 0) {
 			var newMessage = {
 				user_id: user.id,
@@ -57,7 +57,7 @@ export default class MessageForm extends Component {
 	}
 
 	render() {
-		const { feed, emptyFeed } = this.props;
+		const { feed, emptyFeed, notLoggedIn, pushState } = this.props;
 		const { text } = this.state;
 		const style = require('./ChatFooter.scss');
 		return (
@@ -66,13 +66,13 @@ export default class MessageForm extends Component {
 				onSubmit={(e) => e.preventDefault()} 
 				id={style.message_form}>
 				<textarea 
-					className={emptyFeed ? style.disabled : ''}
+					className={emptyFeed || notLoggedIn ? style.disabled : ''}
 					id={style.message_input}
-					disabled={emptyFeed}
+					readOnly={emptyFeed || notLoggedIn}
 					ref="message_input"
 					tabIndex={1}
 					autofocus={true}
-					placeholder={emptyFeed ? 'To send a message, open a new branch': 'Type a message...'}
+					placeholder={notLoggedIn ? '' : (emptyFeed ? 'To send a message, open a new branch': 'Type a message...')}
 					value={text}
 					onChange={(e) => {
 						this.setState({
@@ -87,6 +87,16 @@ export default class MessageForm extends Component {
 						}
 					}}
 				/>
+				{
+					notLoggedIn
+					&&
+					<p id={style.signup_prompt}>
+						To join the conversation, either 
+						<a onClick={() => pushState(null, '/login')}>&nbsp;Log In</a> 
+						&nbsp;or&nbsp; 
+						<a onClick={() => pushState(null, '/signup')}>Sign Up</a>
+					</p>
+				}
 			</form>
 		);
 	}

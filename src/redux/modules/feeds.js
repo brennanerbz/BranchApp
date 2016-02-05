@@ -71,7 +71,7 @@ export default function reducer(state = initialState, action) {
     case FEEDS_LOADED:
       return {
         ...state,
-        feedsLoaded: true
+        loaded: true
       }
     case CLIENT_JOINED_FEED:
       return {

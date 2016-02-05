@@ -5,13 +5,17 @@ export default class FileUpload extends Component {
 	}
 
 	render() {
-		const { emptyFeed } = this.props;
+		const { emptyFeed, notLoggedIn } = this.props;
 		const style = require('./ChatFooter.scss')
 		return ( 
 			<a 
-			className={emptyFeed ? style.disabled : ''}
+			className={emptyFeed || notLoggedIn ? style.disabled : ''}
 			id={style.file_upload_wrapper}>
-				<i className="fa fa-plus"></i>
+				<i 
+				style={{
+					fontSize: notLoggedIn ? '1.15em' : '0.9em'
+				}}
+				className={'fa ' + (notLoggedIn ? 'fa-commenting' : 'fa-plus')}></i>
 			</a>
 		);
 	}

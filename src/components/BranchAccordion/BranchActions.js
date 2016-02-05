@@ -20,7 +20,7 @@ export default class BranchActions extends Component {
 	}
 
 	render() {
-		const { branch, collapsed, isMouseOverBranch, creating } = this.props;
+		const { branch, collapsed, isMouseOverBranch, creating, user } = this.props;
 		const style = require('./BranchAccordion.scss');
 		return(
 			<div className={style.branch_actions}>
@@ -33,9 +33,13 @@ export default class BranchActions extends Component {
 					<OverlayTrigger delayShow={500} delayHide={15} placement="bottom" overlay={::this.tooltip('Close branch')}>
 						<i 
 						onClick={() => {
-							socket.emit('leave parent', {
-								feed_id: branch.id
-							})
+							if(user) {
+								socket.emit('leave parent', {
+									feed_id: branch.id
+								})
+							} else {
+								this.props.leaveBranch(branch.id)
+							}
 						}}
 						style={{
 							fontSize: '14px', 
@@ -56,7 +60,7 @@ export default class BranchActions extends Component {
 					</OverlayTrigger>
 				}
 				{
-					!collapsed
+					!collapsed && user
 					&&
 					<OverlayTrigger delayShow={350} delayHide={50} placement="bottom" overlay={::this.tooltip('Add feed')}>
 						<button 

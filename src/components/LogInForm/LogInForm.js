@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { pushState } from 'redux-router';
 import { isEmpty, validateEmail } from '../../utils/validation';
 import * as loginActions from '../../redux/modules/auth';
+import cookie from 'react-cookie';
 
 @connect(
 	state => ({
@@ -47,6 +48,15 @@ export default class LogInForm extends Component {
 				email: ''
 			});
 			this.refs.login_password.value = '';
+
+			const lastBranch = cookie.load('_lastbranch', { path: '/'})
+			const lastFeed = cookie.load('_lastfeed', { path: '/'})
+			if(lastBranch && lastFeed) {
+				this.props.pushState(null, `/${lastBranch}/${lastFeed}`)
+			} else if(lastBranch && !lastFeed) {
+				this.props.pushState(null, `/${lastBranch}/general`)
+			}
+
 		}
 	}
 

@@ -8,7 +8,7 @@ export default class MessageComposer extends Component {
 	}
 
 	render() {
-		const { feed } = this.props;
+		const { feed, user } = this.props;
 		const emptyFeed = isEmpty(feed);
 		const style = require('./ChatFooter.scss')
 		return(
@@ -16,10 +16,12 @@ export default class MessageComposer extends Component {
 				<FileUpload
 					{...this.props}
 					emptyFeed={emptyFeed}
+					notLoggedIn={!user}
 				/>
 				<MessageForm
 					{...this.props}
 					emptyFeed={emptyFeed}
+					notLoggedIn={!user}
 				/>
 			</div>
 		);

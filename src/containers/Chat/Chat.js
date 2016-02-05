@@ -67,12 +67,14 @@ export default class Chat extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { changeActiveFeed, changeActiveBranch } = this.props;
-    const { branches, branchMemberships, activeBranch, feeds, memberships, activeFeed, params } = nextProps;
+    const { branches, branchMemberships, activeBranch, feeds, memberships, activeFeed, params, user } = nextProps;
 
     if(this.props.branches.length > 0 && branches.length === 0) {
       cookie.remove('_lastbranch', { path: '/'});
       cookie.remove('_lastfeed', { path: '/'});
-      this.props.pushState(null, '/')
+      if(user) {
+        this.props.pushState(null, '/')
+      }
     }
 
     if((!this.props.user && nextProps.user) || (this.props.user && !nextProps.user)) {
@@ -160,6 +162,7 @@ export default class Chat extends Component {
           feed={feed}
           branch={branch}
           membership={membership}
+          pushState={this.props.pushState}
         />
         <div 
           id={style.chat_body} 

@@ -11,6 +11,7 @@ import * as modalActions from '../../redux/modules/misc';
 
 @connect(
 	state => ({
+		user: state.auth.user,
 		params: state.router.params
 	}),
 	dispatch => ({
@@ -95,6 +96,8 @@ export default class Navigation extends Component {
 								closePopver={this.props.closePopover}
 								pushState={this.props.pushState}
 								params={this.props.params}
+								user={this.props.user}
+								leaveBranch={this.props.leaveBranch}
 							/>
 						)
 					})}
