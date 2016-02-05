@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import {connect} from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { pushState } from 'redux-router';
+import cookie from 'react-cookie';
 
 import { isEmpty, validateEmail } from '../../utils/validation';
 import * as signupActions from '../../redux/modules/auth';
@@ -50,7 +51,15 @@ export default class SignUpForm extends Component {
 				email: '',
 				username: ''
 			});
+
 			this.refs.signup_password.value = '';
+			const lastBranch = cookie.load('_lastbranch', { path: '/'})
+			const lastFeed = cookie.load('_lastfeed', { path: '/'})
+			if(lastBranch && lastFeed) {
+				this.props.pushState(null, `/${lastBranch}/${lastFeed}`)
+			} else if(lastBranch && !lastFeed) {
+				this.props.pushState(null, `/${lastBranch}/general`)
+			}
 		}
 	}
 

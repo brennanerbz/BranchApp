@@ -30,6 +30,7 @@ import * as feedActions from '../../redux/modules/feeds';
 
 @connect(
   state => ({
+    params: state.router.params,
     onboarded: state.user.onboarded,
     user: state.auth.user,
     branchMemberships: state.branches.branchMemberships,
@@ -61,7 +62,7 @@ export default class Chat extends Component {
 
   componentDidMount() {
     const { user, onboarded, branches, branchMemberships, feeds, memberships, changeActiveFeed, changeActiveBranch, params, pushState } = this.props;
-    this.handleRouting(branches, feeds, changeActiveBranch, changeActiveFeed, params)
+    this.handleRouting(branches, feeds, params)
     this.handleActiveChat(branches, branchMemberships, feeds, memberships, params, true, true)
   }
 
@@ -79,7 +80,7 @@ export default class Chat extends Component {
 
     if((!this.props.user && nextProps.user) || (this.props.user && !nextProps.user)) {
     } else {
-      this.handleRouting(branches, feeds, params)
+      this.handleRouting(branches, feeds, nextProps.params)
     }
 
     const branchRouteChanged = this.props.params.branch_name !== nextProps.params.branch_name;

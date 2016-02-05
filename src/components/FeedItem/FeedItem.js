@@ -55,10 +55,12 @@ export default class FeedItem extends Component {
 						if(!membership || (membership && !membership.open)) {
 							socket.emit('join child', {
 							  parent_id: branch.id,
-							  title: "#" + feed.title
+							  title: "#" + feed.title.replace('#', "")
 							})
 						}
-						if(!active) handleChangeActiveFeed(feed, membership)
+						if(!active) {
+							handleChangeActiveFeed(feed, membership)
+						}
 					}}
 					style={{
 						width: '140px'

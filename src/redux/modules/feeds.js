@@ -314,7 +314,6 @@ export function markFeedRead(feed_id) {
 // Loop to join feed on route change / load
 export function waitToJoinFeed() {
   return (dispatch, getState) => {
-    console.log('wait to join feed')
     const _socket = global.socket;
     const { branches } = getState().branches;
     const { feeds, memberships } = getState().feeds;
