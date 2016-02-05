@@ -7,6 +7,7 @@ const RECEIVE_ALL_FEEDS = 'BranchApp/feeds/RECEIVE_ALL_FEEDS';
 const CLIENT_JOINED_FEED = 'BranchApp/feeds/CLIENT_JOINED_FEED';
 const SERVER_JOINED_FEED = 'BranchApp/feeds/SERVER_JOINED_FEED';
 const NEW_FEED = 'BranchApp/feeds/NEW_FEED';
+const NEW_FEED_READONLY = 'BranchApp/feeds/NEW_FEED_READONLY';
 const RECEIVE_FEED = 'BranchApp/feeds/RECEIVE_FEED';
 const LEAVE_FEED = 'BranchApp/feeds/LEAVE_FEED';
 const LEAVE_BRANCH = 'BranchApp/feeds/LEAVE_BRANCH';
@@ -17,6 +18,7 @@ const MARK_FEED_UNREAD = 'BranchApp/feeds/MARK_FEED_UNREAD';
 const MARK_FEED_READ = 'BranchApp/feeds/MARK_FEED_READ';
 const CLEAR_FEEDS = 'BranchApp/feeds/CLEAR_FEEDS';
 
+const READ_ONLY_ACTIVE = 'BranchApp/feeds/READ_ONLY_ACTIVE';
 const MEMBERSHIPS_LOADED = 'BranchApp/feeds/MEMBERSHIPS_LOADED';
 const FEEDS_LOADED = 'BranchApp/feeds/FEEDS_LOADED';
 
@@ -25,7 +27,7 @@ const initialState = {
   feeds: [],
   activeFeed: null,
   joined: false, // <---- Update the temporary state for joining feed here
-  membershipsLoaded: false,
+  loaded: false,
   feedsLoaded: false // <---- the initialState of feeds have been loaded
 };
 
@@ -54,7 +56,12 @@ export default function reducer(state = initialState, action) {
     case MEMBERSHIPS_LOADED:
       return {
         ...state,
-        membershipsLoaded: true
+        loaded: true
+      }
+    case READ_ONLY_ACTIVE:
+      return {
+        ...state,
+        loaded: true
       }
     case RECEIVE_ALL_FEEDS:
       return {
@@ -89,6 +96,12 @@ export default function reducer(state = initialState, action) {
         ...state,
         memberships: !isNewMembershipInState ? [...memberships, action.membership] : memberships,
         feeds: !isNewFeedInState ? [...feeds, action.membership.feed].__alphabetizeList() : feeds
+      }
+    case NEW_FEED_READONLY:
+      isNewFeedInState = feeds.filter(feed => feed.id === action.feed.id)[0]
+      return {
+        ...state,
+        feeds: !isNewFeedInState ? [...feeds, action.feed].__alphabetizeList() : feeds
       }
     case CHANGE_ACTIVE_FEED:
       cookie.save('_lastfeed', action.feed_id, {path: '/'})
@@ -137,11 +150,17 @@ export default function reducer(state = initialState, action) {
         memberships: [],
         feeds: [],
         activeFeed: null,
-        membershipsLoaded: false,
+        loaded: false,
         feedsLoaded: false
       }
     default:
       return state;
+  }
+}
+
+export function activateFeedsReadOnly() {
+  return {
+    type: READ_ONLY_ACTIVE
   }
 }
 
@@ -221,6 +240,19 @@ export function receiveFeed(membership) {
   }
 }
 
+// socket.on('receive child feed')
+export function newFeedReadOnly(feed) {
+  return (dispatch, getState) => {
+    if(!isEmpty(feed)) {
+      dispatch({type: NEW_FEED_READONLY, feed})
+      dispatch(changeActiveFeed(feed.title.replace('#', '')))
+      socket.emit('get messages', {
+        feed_id: feed.id
+      })
+    }
+  }
+}
+
 // socket.on('user joined')
 export function userJoinedFeed(membership) {
   return {
@@ -290,8 +322,8 @@ export function waitToJoinFeed() {
     const { params } = getState().router;
 
     const isBranchInState = branches.filter(branch => branch.title === params.branch_name)[0]
-    const { membershipsLoaded, feedsLoaded } = getState().feeds;
-    if(isEmpty(isBranchInState) || isEmpty(_socket) || (!membershipsLoaded)) {
+    const { loaded, feedsLoaded } = getState().feeds;
+    if(isEmpty(isBranchInState) || isEmpty(_socket) || !loaded) {
       setTimeout(() => {
         dispatch(waitToJoinFeed())
       }, 500)

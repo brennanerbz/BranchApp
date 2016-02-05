@@ -13,27 +13,17 @@ export default class ExploreForm extends Component {
 	handleOpenBranch() {
 		const { pushState, params } = this.props;
 		const { text } = this.state;
-		if(text.length > 0) {
-			this.setState({
-				creating: true
-			});
-			setTimeout(() => {
-				this.setState({
-					creating: false
-				});
-			}, 500)
-			this.props.closeOnboarding()
-			if(params.branch_name !== text) {
-				pushState(null, `/${text}/general`)
-			} else {
-				socket.emit('go to parent', {
-					title: text
-				})
-			}
-			this.setState({
-				text: ''
-			});
+		this.props.closeOnboarding()
+		if(params.branch_name !== text) {
+			pushState(null, `/${text}/general`)
+		} else {
+			socket.emit('go to parent', {
+				title: text
+			})
 		}
+		this.setState({
+			text: ''
+		});
 	}
 
 	tooltip(text) {
@@ -62,9 +52,17 @@ export default class ExploreForm extends Component {
 							});
 						}}
 						onKeyDown={(e) => {
-							if(e.which == 13) {
+							if(e.which == 13 && text.length > 0) {
+								this.setState({
+									creating: true
+								});
 								e.preventDefault()
 								this.handleOpenBranch()
+								setTimeout(() => {
+									this.setState({
+										creating: false
+									});
+								}, 500)
 							}
 						}}
 						/>

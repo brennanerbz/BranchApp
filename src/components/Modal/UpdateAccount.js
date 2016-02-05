@@ -60,7 +60,7 @@ export default class Account extends Component {
 				buttonStyle="expand-right"
 				spinnerSize={26}
 				spinnerColor="#fff">
-					Update button
+					Update password
 				</LaddaButton>
 			</div>
 		);

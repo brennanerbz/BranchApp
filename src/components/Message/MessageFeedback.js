@@ -29,13 +29,19 @@ export default class MessageFeedback extends Component {
 			vote = message.votes[v];
 			if(vote.vote) {
 				positives++
-				if(vote.user_id === user.id) userVotedPositive = vote;
+				if(user) {
+					if(vote.user_id === user.id) userVotedPositive = vote;
+				}
 			} 
 			else if(vote.vote === false) {
 				negatives++
-				if(vote.user_id === user.id) userVotedNegative = vote;
+				if(user) {
+					if(vote.user_id === user.id) userVotedNegative = vote;
+				}
 			} else if(vote.vote === null) {
-				if(vote.user_id === user.id) userVoted = vote;
+				if(user) {
+					if(vote.user_id === user.id) userVoted = vote;
+				}
 			}
 		}
 		const count = (positives - negatives)

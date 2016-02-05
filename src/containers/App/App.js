@@ -88,18 +88,21 @@ export default class App extends Component {
       height: this.refs.app.clientHeight,
       width: this.refs.app.clientWidth
     });
-    const { mounted, appMounted } = this.props;
+    const { mounted, appMounted, user, params } = this.props;
+
     if(!mounted) {
       appMounted()
       window.addEventListener('resize', ::this.updateAppSize)
       window.addEventListener('beforeunload', ::this.removeSocketListeners)
+      if((!cookie.load('_token')) && Object.keys(params).length !== 0) {
+        this.setSocket()
+      }
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (!this.props.user && nextProps.user) {
       this.setSocket(nextProps.user)
-      // <--- On signup, go to the welcome route for onboarding
       if(this.props.onboarded && !nextProps.onboarded) {
         this.props.pushState(null, '/teambranch/general');
         return;
@@ -125,12 +128,20 @@ export default class App extends Component {
   setSocket(user) {
     global.socket = this.initSocket();
     this.initSocketListeners()
-    socket.emit('authenticate', {
-      token: cookie.load('_token', { path: '/'})
-    })
-    socket.emit('get parent memberships', {
-      user_id: user.id
-    })
+    if(user) {
+      // <=== Read && Write state
+      socket.emit('authenticate', {
+        token: cookie.load('_token', { path: '/'})
+      })
+      socket.emit('get parent memberships', {
+        user_id: user.id
+      })
+    } else {
+      // <=== Read-Only state
+      console.log('start here')
+      this.props.activateBranchesReadOnly()
+      this.props.activateFeedsReadOnly()
+    }
   }
 
   initSocket() {
@@ -168,6 +179,10 @@ export default class App extends Component {
       socket.on('receive parent membership', (res) => {
         this.props.newBranch(res)
       })
+      socket.on('receive parent feed', (res) => {
+        console.log('receive parent feed', res)
+        this.props.newBranchReadOnly(res.feed)
+      })
       socket.on('left parent', (res) => {
         console.log('left parent', res)
         this.props.leaveBranch(res.feed_id, pushState)
@@ -175,6 +190,10 @@ export default class App extends Component {
       // <---- Feeds
       socket.on('receive child memberships', (res) => {
         this.props.receiveMemberships(res.memberships)
+      })
+      socket.on('receive child feed', (res) => {
+        console.log('receive child feed', res)
+        this.props.newFeedReadOnly(res.feed)
       })
       socket.on('receive nonmembership feeds', (res) => {
         this.props.receiveAllFeeds(res.feeds)
@@ -235,7 +254,6 @@ export default class App extends Component {
   removeSocketListeners() {
     window.removeEventListener('resize', ::this.updateAppSize)
     window.removeEventListener('beforeunload', ::this.removeSocketListeners)
-    // socket.emit('disconnect')
   }
 
   render() {

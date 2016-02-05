@@ -4,12 +4,14 @@ import cookie from 'react-cookie';
 
 
 const NEW_BRANCH = 'BranchApp/branches/NEW_BRANCH';
+const NEW_BRANCH_READONLY = 'BranchApp/branches/NEW_BRANCH_READONLY';
 const RECEIVE_BRANCHES = 'BranchApp/branches/RECEIVE_BRANCHES';
 const LEAVE_BRANCH = 'BranchApp/branches/LEAVE_BRANCH';
 const CHANGE_ACTIVE_BRANCH = 'BranchApp/branches/CHANGE_ACTIVE_BRANCH';
 const MARK_BRANCH_UNREAD = 'BranchApp/branches/MARK_BRANCH_UNREAD';
 const MARK_BRANCH_READ = 'BranchApp/branches/MARK_BRANCH_READ';
 const CLEAR_BRANCHES = 'BranchApp/branches/CLEAR_BRANCHES';
+const READ_ONLY_ACTIVE = 'BranchApp/branches/READ_ONLY_ACTIVE';
 
 const initialState = {
   branchMemberships: [],
@@ -34,6 +36,12 @@ export default function reducer(state = initialState, action) {
         branchMemberships: !isNewBranchMembershipInState ? [action.branch, ...branchMemberships] : branchMemberships,
         branches: !isNewBranchInState ? [action.branch.feed, ...branches] : branches
       }
+    case NEW_BRANCH_READONLY:
+      isNewBranchInState = branches.filter(branch => { return branch.id === action.branch.id })[0];
+      return {
+        ...state,
+        branches: !isNewBranchInState ? [action.branch, ...branches] : branches
+      }
     case RECEIVE_BRANCHES:
       let receivedBranchMemberships = [...branchMemberships, ...action.branches].__findUniqueByKey('id')
       let receivedBranches = [];
@@ -45,6 +53,11 @@ export default function reducer(state = initialState, action) {
         ...state,
         branchMemberships: receivedBranchMemberships,
         branches: receivedBranches,
+        loaded: true
+      }
+    case READ_ONLY_ACTIVE:
+      return {
+        ...state,
         loaded: true
       }
     case CHANGE_ACTIVE_BRANCH:
@@ -93,6 +106,12 @@ export default function reducer(state = initialState, action) {
   }
 }
 
+export function activateBranchesReadOnly() {
+  return {
+    type: READ_ONLY_ACTIVE
+  }
+}
+
 // Change the active branch
 export function changeActiveBranch(branch_id) {
   return {
@@ -115,6 +134,18 @@ export function newBranch(branch) {
       user_id: user.id,
       feed_id: branch.feed_id
     })
+  }
+}
+// socket.on('receive parent feed')
+export function newBranchReadOnly(branch) {
+  return (dispatch, getState) => {
+    if(!isEmpty(branch)) {
+      dispatch({type: NEW_BRANCH_READONLY, branch})
+      dispatch(changeActiveBranch(branch.title))
+      socket.emit('get nonmembership feeds', {
+        feed_id: branch.id
+      })
+    }
   }
 }
 
@@ -194,6 +225,7 @@ export function markBranchRead(branch_id) {
 // Loop to join branch on route load/change
 export function waitToJoinBranch() {
   return (dispatch, getState) => {
+    console.log('wait to join branch')
     const _socket = global.socket;
     const { params } = getState().router;
     const { branches } = getState().branches;
@@ -207,14 +239,10 @@ export function waitToJoinBranch() {
         dispatch(waitToJoinBranch())
       }, 500)
     } else {
-      if(isEmpty(activeBranch) && !isEmpty(branches)) {
+      if(isEmpty(activeBranch)) {
         socket.emit('go to parent', {
           title: params.branch_name
         })
-      } else if (isEmpty(branches)) {
-        setTimeout(() => {
-          dispatch(waitToJoinBranch())
-        }, 500)
       } else {
         dispatch(changeActiveBranch(params.branch_name))
       }
