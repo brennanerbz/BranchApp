@@ -36,6 +36,20 @@ Array.prototype.__findUniqueByKey = function(key) {
 }
 
 
+Array.prototype.__placeItemFirst = function(key, value) {
+  var values = [];
+
+  for(var v = 0; v < this.length; v++) {
+    values.push(this[v][key])
+  }
+  var index = values.indexOf(value)
+  var obj = this[index]
+
+  this.splice(index, 1)
+  this.unshift(obj)
+  return this;
+}
+
 // const isEmpty = value => value === undefined || value === null || value === '';
 const join = (rules) => (value, data) => rules.map(rule => rule(value, data)).filter(error => !!error)[0 /* first error */ ];
 

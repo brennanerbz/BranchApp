@@ -70,7 +70,7 @@ export default class FeedItem extends Component {
 						{ feed.title.replace("#", "") }
 					</span>
 					{
-						isMouseOverFeedItem
+						isMouseOverFeedItem && feed.title !== 'general' && feed.title !== '#general'
 						&&
 						<OverlayTrigger delayShow={500} delayHide={15} placement="bottom" overlay={::this.tooltip('Close feed')}>
 							<span 

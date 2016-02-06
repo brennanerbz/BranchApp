@@ -78,6 +78,8 @@ export default class Chat extends Component {
       this.handleRouting(branches, feeds, params)
     }
     this.handleActiveChat(branches, branchMemberships, feeds, memberships, params, true, true)
+
+    if(!global.socket) this.props.loadSocket()
   }
 
   componentWillReceiveProps(nextProps) {
@@ -182,6 +184,11 @@ export default class Chat extends Component {
       return membership.feed.title
       .replace("#", "") === activeFeed && membership.feed.parent_id === branch.id
     })[0] : null
+    // console.log('-----')
+    // console.log('branch: ', branch)
+    // console.log('feed: ', feed)
+    // console.log('membership: ', membership)
+    // console.log('-----')
     return (
       <div id={style.chat}>
         <Header

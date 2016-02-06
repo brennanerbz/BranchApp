@@ -25,12 +25,19 @@ export default class BranchAccordion extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		if(prevProps.feeds.length < this.props.feeds.length) {
+		if(prevProps.feeds.length < this.props.feeds.length 
+		|| prevProps.activeFeed !== this.props.activeFeed
+		|| !prevProps.active && this.props.active) {
 			setTimeout(() => {
 				this.setState({
 					creatingFeed: false
 				});
 			}, 500)
+		}
+		if(!prevProps.active && this.props.active) {
+			this.setState({
+				collapsed: false
+			});
 		}
 	}
 
@@ -52,6 +59,7 @@ export default class BranchAccordion extends Component {
 			  parent_id: branch.id,
 			  title: "#" + feedTitle
 			})
+			pushState(null, `/${branch.title}/${feedTitle}`)
 		}
 		setTimeout(() => {
 			this.setState({
@@ -62,9 +70,9 @@ export default class BranchAccordion extends Component {
 
 
 	render() {
-		const { index, branch, active, activeFeed, feeds, memberships } = this.props,
-		{ collapsed, isMouseOverBranch, showInlineFeedCreation } = this.state,
-		style = require('./BranchAccordion.scss');
+		const { index, branch, active, activeFeed, feeds, memberships } = this.props;
+		const { collapsed, isMouseOverBranch, showInlineFeedCreation } = this.state;
+		const style = require('./BranchAccordion.scss');
 		return (
 			<div 
 			onMouseOver={() => this.setState({isMouseOverBranch: true})}

@@ -31,6 +31,7 @@ const initialState = {
   feedsLoaded: false // <---- the initialState of feeds have been loaded
 };
 
+
 export default function reducer(state = initialState, action) {
   { /* Variables to be used for multiple cases */}
   let { memberships } = state;
@@ -47,11 +48,14 @@ export default function reducer(state = initialState, action) {
       .forEach(membership => {
         receivedFeeds.push(membership.feed)
       })
-      receivedFeeds = [...feeds, ...receivedFeeds].__findUniqueByKey('id')
+      receivedFeeds = [...feeds, ...receivedFeeds]
+      .__findUniqueByKey('id')
+      .__alphabetizeList()
+      // .__placeItemFirst('title', '#general')
       return {
         ...state,
         memberships: receivedMemberships,
-        feeds: receivedFeeds.__alphabetizeList()
+        feeds: receivedFeeds
       }
     case MEMBERSHIPS_LOADED:
       return {
@@ -66,7 +70,12 @@ export default function reducer(state = initialState, action) {
     case RECEIVE_ALL_FEEDS:
       return {
         ...state,
-        feeds: action.feeds.length > 0 ? [...feeds, ...action.feeds].__findUniqueByKey('id').__alphabetizeList() : feeds
+        feeds: action.feeds.length > 0 
+        ? [...feeds, ...action.feeds]
+        .__findUniqueByKey('id')
+        .__alphabetizeList()
+        // .__placeItemFirst('title', '#general') 
+        : feeds
       }
     case FEEDS_LOADED:
       return {
@@ -87,7 +96,11 @@ export default function reducer(state = initialState, action) {
       isNewFeedInState = feeds.filter(feed => feed.id === action.feed.id)[0]
       return {
         ...state,
-        feeds: !isNewFeedInState ? [...feeds, action.feed].__alphabetizeList() : feeds
+        feeds: !isNewFeedInState 
+        ? [...feeds, action.feed]
+        .__alphabetizeList() 
+        // .__placeItemFirst('title', '#general')
+        : feeds
       }
     case RECEIVE_FEED:
       isNewMembershipInState = memberships.filter(membership => membership.id === action.membership.id)[0]
@@ -95,13 +108,21 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         memberships: !isNewMembershipInState ? [...memberships, action.membership] : memberships,
-        feeds: !isNewFeedInState ? [...feeds, action.membership.feed].__alphabetizeList() : feeds
+        feeds: !isNewFeedInState 
+        ? [...feeds, action.membership.feed]
+        .__alphabetizeList()
+        // .__placeItemFirst('title', '#general') 
+        : feeds
       }
     case NEW_FEED_READONLY:
       isNewFeedInState = feeds.filter(feed => feed.id === action.feed.id)[0]
       return {
         ...state,
-        feeds: !isNewFeedInState ? [...feeds, action.feed].__alphabetizeList() : feeds
+        feeds: !isNewFeedInState 
+        ? [...feeds, action.feed]
+        .__alphabetizeList()
+        // .__placeItemFirst('title', '#general') 
+        : feeds
       }
     case CHANGE_ACTIVE_FEED:
       cookie.save('_lastfeed', action.feed_id, {path: '/'})
@@ -150,8 +171,7 @@ export default function reducer(state = initialState, action) {
         memberships: [],
         feeds: [],
         activeFeed: null,
-        loaded: false,
-        feedsLoaded: false
+        loaded: true
       }
     default:
       return state;

@@ -154,17 +154,6 @@ export default class SignUpForm extends Component {
 				  	e.preventDefault()
 				}}>
 				<input 
-					placeholder="Pick a username"
-					autoFocus={this.props.shouldFocus}
-					value={this.state.username}
-					className={showUsernameError ? 'error' : ''}
-					onChange={(e) => {
-						this.setState({
-							showUsernameError: false,
-							username: e.target.value
-						})
-					}}/>
-				<input 
 					placeholder="Your email"
 					type="text"
 					value={this.state.email}
@@ -173,6 +162,17 @@ export default class SignUpForm extends Component {
 						this.setState({
 							showEmailError: false,
 							email: e.target.value
+						})
+					}}/>
+				<input 
+					placeholder="Pick a username"
+					autoFocus={this.props.shouldFocus}
+					value={this.state.username}
+					className={showUsernameError ? 'error' : ''}
+					onChange={(e) => {
+						this.setState({
+							showUsernameError: false,
+							username: e.target.value
 						})
 					}}/>
 				<input 

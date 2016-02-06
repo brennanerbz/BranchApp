@@ -263,7 +263,8 @@ export default class App extends Component {
       return React.cloneElement(child, {
         appHeight: height,
         appWidth: width,
-        user: user
+        user: user,
+        loadSocket: () => this.setSocket()
       })
     });
     const styles = require('./App.scss');

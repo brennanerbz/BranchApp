@@ -99,7 +99,8 @@ export default function reducer(state = initialState, action) {
         ...state = initialState,
         branchMemberships: [],
         branches: [],
-        activeBranch: null
+        activeBranch: null,
+        loaded: true
       }
     default:
       return state;
