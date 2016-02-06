@@ -96,20 +96,32 @@ export function receiveMessage(message) {
 	return (dispatch, getState) => {
 		dispatch({type: RECEIVE_MESSAGE, message})
 
+		const { typers } = getState().messages;
+		const messageSenderIsTyper = typers.filter(typer => { return typer.user.username === message.user.username })[0]
+		const typer = message;
+		if(messageSenderIsTyper) {
+			dispatch({type: USER_STOP_TYPING, typer})
+		}
+
 		// Mark unread state
 		const branchName = getState().branches.activeBranch;
 		const activeBranch = getState().branches.branches
-		.filter(branch => branch.title === branchName)[0]
+		.filter(branch => {return branch.title === branchName })[0]
 
 		const feedName = getState().feeds.activeFeed;
 		const activeFeed = getState().feeds.feeds
-		.filter(feed => feed.title.replace('#', "") === feedName && feed.parent_id === activeBranch.id)[0]
+		.filter(feed => { return feed.title.replace('#', "") === feedName && feed.parent_id === activeBranch.id })[0]
 
-		if(message.parent_feed_id !== activeBranch.id) {
-			dispatch(markBranchUnread(message.parent_feed_id))
+		if(activeBranch) {
+			if(message.parent_feed_id !== activeBranch.id) {
+				dispatch(markBranchUnread(message.parent_feed_id))
+			}
 		}
-		if(message.feed_id !== activeFeed.id) {
-			dispatch(markFeedUnread(message.feed_id))
+		
+		if(activeFeed) {
+			if(message.feed_id !== activeFeed.id) {
+				dispatch(markFeedUnread(message.feed_id))
+			}
 		}
 	}
 }
