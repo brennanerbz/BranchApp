@@ -37,14 +37,13 @@ export default class ChatFooter extends Component {
 	    } else {
 	    	currentTypers = typers;
 	    }
-	    
 		return (
 			<div className={''} id={style.chat_footer}>
 				<MessageComposer {...this.props}/>
 				<div id={style.notification_bar}>
 					{
-						currentTypers.length < 3 
-						? currentTypers.map(typer => {
+						currentTypers.length < 3 && currentTypers.length > 0 
+						&& currentTypers.map(typer => {
 							return (
 								<p key={'typer' + typer.feed.id + 'user' + typer.user.username}
 								   className={'inline_block ' + style.user_typing}>
@@ -53,9 +52,11 @@ export default class ChatFooter extends Component {
 								</p>
 							);
 						})
-						:
-						<p key={'typer' + typer.feed.id}
-						   className={'inline_block ' + style.user_typing}>
+					}
+					{
+						currentTypers.length >= 3
+						&&
+						<p className={'inline_block ' + style.user_typing}>
 							several people are typing
 						</p>
 					}
