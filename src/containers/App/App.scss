@@ -1,13 +1,16 @@
 // App style 
 #app {
-	font-family: "Open Sans";
+	width: 100%;
+	height: 100%;
 	position: absolute;
 	bottom: 0;
 	left: 0;
 	right: 0;
 	top: 0;
-	overflow: auto;
-	text-rendering: optimizeLegibility;
+	font-family: "Helvetica Neue",Helvetica,"Segoe UI",Tahoma,Arial,sans-serif!important;
+	text-rendering: optimizeSpeed;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
 }
 
 // Text overflow => ellipsis
@@ -66,6 +69,7 @@
 }
 
 
+
 // Flexbox
 :global .display_flex {
 	display: -webkit-box;
@@ -82,15 +86,43 @@
 	-ms-justify-content: center;
 	justify-content: center;
 }
-:global .flex_align_left {
+// All Items
+:global .flex_container_left {
+	-webkit-align-items: flex-start;
+	-ms-align-items: flex-start;
+	align-items: flex-start;
+	-webkit-align-content: flex-start;
+	-ms-align-content: flex-start;
+	align-content: flex-start;
+}
+:global .flex_container_center {
+	-webkit-align-items: center;
+	-ms-align-items: center;
+	align-items: center;
+	margin: auto;
+}
+:global .flex_container_right {
+	-webkit-align-items: flex-end;
+	-ms-align-items: flex-end;
+	align-items: flex-end;
+	-webkit-align-content: flex-end;
+	-ms-align-content: flex-end;
+	align-content: flex-end;
+}
+// Single item
+:global .flex_item_align_left {
 	-webkit-align-self: flex-start;
 	-ms-align-self: flex-start;
 	align-self: flex-start;
 }
-:global .flex_align_center {
-	max-width: 50%;
+:global .flex_item_align_center {
+	// max-width: 50%;
+	-webkit-align-self: center;
+	-ms-align-self: center;
+	align-self: center;
+	margin: auto;
 }
-:global .flex_align_right {
+:global .flex_item_align_right {
 	-webkit-align-self: flex-end;
 	-ms-align-self: flex-end;
 	align-self: flex-end;
@@ -121,6 +153,17 @@
 	.flex_spacer {
 		min-width: 1px;
 	}
+}
+// Wrapping
+:global .flex_nowrap {
+	-webkit-flex-wrap: nowrap;
+	-ms-flex-wrap: nowrap;
+	flex-wrap: nowrap;
+}
+:global .flex_wrap {
+	-webkit-flex-wrap: wrap;
+	-ms-flex-wrap: wrap;
+	flex-wrap: wrap;
 }
 :global .flex_spacer {
 	-webkit-box-flex: 1;
@@ -174,31 +217,24 @@ a {
 :global .button {
 	font-family: "Helvetica Neue",Helvetica,"Segoe UI",Tahoma,Arial,sans-serif;
 	background-repeat: no-repeat;
-	// border: 1px solid #e1e8ed;
-	border: 1px solid rgba(0, 0, 0, .20);
-	// border: 1px solid #C7CACD;
-	border-radius: 3px;
+	border-radius: 999em;
 	color: #66757f;
 	cursor: pointer;
 	display: inline-block;
-	font-size: 13.5px;
+	font-size: 14.5px;
 	font-weight: bold;
 	line-height: normal;
-	padding: 7.5px 14.5px;
+	padding: 7px 30px;
 	position: relative;
-	// background-color: #f5f8fa;
-	// background-image: linear-gradient(#fff,#f5f8fa);
-	// -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffff, endColorstr=#f5f8fa)";
     background: #fff;
 	&:hover {
 		color: #232323;
 	}
 	&.primary {
-		color: #fff;
-		background-image: linear-gradient(-180deg, #2A86FF 0%, #207CF6 100%);
-		-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#2A86FF, endColorstr=#207CF6)";
-		border: 1px solid #1A75EC;
-		border-radius: 3px;
+		color: #4B515C;
+		background: #fff;
+		border: none;
+		border-radius: 999em;
 	}
 }
 
@@ -360,4 +396,56 @@ a {
     animation: fa-spin 1s infinite linear!important;
 }
 
+
+// Input with icon
+:global .input_wrapper {
+	position: relative;
+	input {
+	    padding: 0 15px 0 45px;
+		font-weight: 400;
+		width: 100%;
+		background: #735ADC;
+		border: none!important;
+		outline: none!important;
+		color: #fff;
+	}
+	::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+	    color: #fafafa;
+	}
+	:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+	   color: #fafafa;
+	   opacity:  1;
+	}
+	::-moz-placeholder { /* Mozilla Firefox 19+ */
+	   color: #fafafa;
+	   opacity:  1;
+	}
+	:-ms-input-placeholder { /* Internet Explorer 10-11 */
+	   color: #fafafa;
+	}
+	:placeholder-shown { /* Standard (https://drafts.csswg.org/selectors-4/#placeholder) */
+	  color: #fafafa;
+	}
+	i {
+		cursor: pointer;
+		color: #37DFA6;
+		opacity: 0.9;
+		margin: auto;
+		&.left {
+			position: absolute;
+			font-size: 1rem;
+			left: 15px;
+			top: 15px;
+		}
+		&.right {
+			position: absolute;
+			font-size: 1rem;
+			right: 15px;
+			top: 15px;
+		}
+		&:hover {
+			opacity: 1!important;
+		}
+	}
+}
 

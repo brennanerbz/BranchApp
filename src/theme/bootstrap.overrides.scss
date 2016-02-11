@@ -3,18 +3,6 @@
  *
  */
 
-.navbar-brand {
-  position: relative;
-  padding-left: 50px;
-}
-
-.navbar-default .navbar-nav > .active > a,
-.navbar-default .navbar-nav > .active > a:hover,
-.navbar-default .navbar-nav > .active > a:focus {
-  color: #33e0ff;
-  background-color: transparent;
-}
-
 // Normalize
 html {
 	font-size: 100%;
@@ -27,7 +15,7 @@ body {
 	height: 100%;
 	width: 100%;
 	min-width: 8in;
-	font-family: "Helvetica Neue",Helvetica,"Segoe UI",Tahoma,Arial,sans-serif;
+	font-family: "Helvetica Neue",Helvetica,"Segoe UI",Tahoma,Arial,sans-serif!important;
 	-webkit-font-smoothing: antialiased;
 	font-size: 1pc;
 	line-height: 1rem;
@@ -35,7 +23,6 @@ body {
 	color: #555459;
 	padding: 0!important;
 	margin: 0!important;
-	overflow-y: hidden;
 	overflow-x: hidden;
 }
 h1, h2, h3, h4 {
@@ -60,29 +47,24 @@ input {
 		font-size: 15px;
 		line-height: normal;
 		height: 32px;
-		padding: .75rem;
-		border: 1px solid rgba(0, 0, 0, .20);
-		border-radius: 3px;
+		border: none;
+		border-radius: 999em;
 		-webkit-appearance: none;
 		-moz-appearance: none;
 		appearance: none;
 		outline: 0;
-		color: rgba(0, 0, 0, 1);
 		width: 100%;
 		max-width: 100%;
-		margin: 0 0 .5rem;
-		-webkit-transition: box-shadow 70ms ease-out,border-color 70ms ease-out;
-		-moz-transition: box-shadow 70ms ease-out,border-color 70ms ease-out;
-		transition: box-shadow 70ms ease-out,border-color 70ms ease-out;
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
 		box-shadow: none;
 		height: auto;
+		padding: 0.75rem;
 		&:hover {
-			border: 1px solid rgba(0, 0, 0, .30);
+			// border: 1px solid rgba(0, 0, 0, .30);
 		}
 		&:focus {
-			border: 1px solid #498DFF;
+			// border: 1px solid #498DFF;
 			outline: none;
 		}
 		&.error {
@@ -245,8 +227,10 @@ button {
 	font-family: "Helvetica Neue", Helvetica,"Segoe UI",Tahoma,Arial,sans-serif!important;
 	font-size: 12.5px;
 	font-weight: 500;
+	color: #fff!important;
 	.tooltip-inner {
 		padding: 6px 10px;
+		color: #fff!important;
 	}
 }
 

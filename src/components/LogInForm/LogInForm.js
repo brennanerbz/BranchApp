@@ -112,6 +112,10 @@ export default class LogInForm extends Component {
 				<li className={style.email}>
 					<label>Email</label>
 					<input 
+						style={{
+							background: '#6E56D4',
+							color: '#fff'
+						}}
 						ref="email" 
 						id="email"
 						type="text"
@@ -129,6 +133,11 @@ export default class LogInForm extends Component {
 				<li className={style.password}>
 					<label>Password</label>
 					<input 
+						style={{
+							background: '#6E56D4',
+							color: '#fff'
+
+						}}
 						ref="login_password"
 						type="password" 
 						tabIndex={2}

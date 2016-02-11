@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { pushState } from 'redux-router';
 import Helmet from 'react-helmet';
 import Spinner from 'react-spinner';
+import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 
 import LogInForm from '../../components/LogInForm/LogInForm';
 import SignUpForm from '../../components/SignUpForm/SignUpForm';
@@ -19,7 +20,8 @@ import SignUpForm from '../../components/SignUpForm/SignUpForm';
 export default class Landing extends Component {
   state = {
     height: 0,
-    width: 0
+    width: 0,
+    uses: ['Share answers with classmates', 'Chat openly about politics', 'Organize your daily conversations']
   }
   componentDidMount() {
     this.updateLandingSize()
@@ -34,11 +36,16 @@ export default class Landing extends Component {
         width: this.refs.landing_page.clientWidth
     });
   }
+  tooltip(text) {
+    return (
+        <Tooltip id={'wiki_input' + text}><b>{text}</b></Tooltip>
+    )
+  }
   render() {
-    const { height, width } = this.state;
+    const { height, width, uses } = this.state;
     const { pushState } = this.props;
     const style = require('./Landing.scss');
-    const brandLogo = require('./messengerLogo.png');
+    const branchLogo = require('../../../static/branchFontLogo.png');
     return (
       <div ref="landing_page" id={style.landing_page}>
         <Helmet title="Home"/>
@@ -47,12 +54,7 @@ export default class Landing extends Component {
         		<div id={style.landing_header_wrapper} className="relative clearfix">
 	        		<div id={style.head_logo_link} className="float_left">
 	        			<a id={style.headlink}>
-	        				<div className="inline_block">
-	        					<img id={style.brand_logo} src={brandLogo}/>
-	        				</div>
-	        				<h1 id={style.brand_name} className="inline_block">
-	        					<div id={style.brand_link}>Branch</div>
-	        				</h1>
+	        				
 	        			</a>
 	        		</div>
 	        		<div id={style.log_in_wrapper} className="float_right">
@@ -67,19 +69,49 @@ export default class Landing extends Component {
         		</div>
         	</div>
         	<div id={style.landing_body}>
-        		<div id={style.landing_body_wrapper} className="clearfix">
-        			<div id={style.main_img_wrapper}>
-        			</div>
-    				<div id={style.app_intro_txt}>
-    					<h1>Simple. Personal. Organized messaging.</h1>
-    					<h2>Open, discover and organize real time conversations about things that interest with you with friends, family and people in your community.
-    					</h2>
-    				</div>
-    				<div id={style.app_register_form}>
-    					<SignUpForm 
-                            landing={true}
-    					/>
-    				</div>
+        		<div style={{height: '100%', width: '100%'}} className="display_flex flex_vertical flex_center">
+        			<img style={{height: '40px', margin: '0 0 20px 0'}} src={branchLogo}/>
+                    <h3 style={{color: '#fff', fontSize: '19px', textAlign: 'center', margin: '0 0 20px 0'}}>A messaging app for students to freely collaborate</h3>
+                    <div style={{margin: '0 auto 170px auto'}} className="display_flex flex_horizontal flex_item_align_center">
+                        <div style={{width: '500px'}} className="input_wrapper">
+                            <OverlayTrigger 
+                                delayShow={500} 
+                                delayHide={0} 
+                                placement="bottom" 
+                                overlay={::this.tooltip('If class doesn\'t exist, you\'ll be the first one there')}>
+                                <i style={{fontSize: '1.3em'}} className="fa fa-search left"></i>
+                            </OverlayTrigger>
+                            <input 
+                                style={{
+                                    height: '48px',
+                                    fontSize: '18px',
+                                    lineHeight: '22px'
+                                }}
+                                placeholder="Type in class name..."
+                                type="text"
+                            />
+                        </div>
+                        <button 
+                        style={{
+                            height: '48px',
+                            margin: '0 0 0 10px'
+                        }}
+                        className="button primary">Go</button>
+                    </div>
+                    <h3 style={{fontSize: '19px', color: '#fff', padding: '0 0 10px 0', margin: '0 0 10px 0', borderBottom: '2px solid #37DFA6', borderRadius: '0.1rem'}}>
+                        Ways to use
+                    </h3>
+                    <ul style={{listStyleType: 'none', marginBottom: '40px'}} className="flex_vertical">
+                        {
+                            uses.map(use => {
+                                return (
+                                    <li style={{textAlign: 'center', color: '#fff', fontSize: '15px', display: 'block', margin: '7.5px auto'}}>
+                                        {use}
+                                    </li>
+                                )
+                            })
+                        }
+                    </ul>
         		</div>
         	</div>
         	<div id={style.landing_footer}>

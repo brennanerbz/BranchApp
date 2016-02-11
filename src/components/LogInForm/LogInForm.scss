@@ -14,8 +14,8 @@
 	    display: block!important;
 	    font-size: 13px;
 	    font-weight: 500;
-	    margin: 0 0 .05rem;
-	    color: #777F86;
+	    margin: 0 0 4px 15px;
+	    color: #fff;
 	}
 	a {
 	    text-decoration: none;
@@ -24,16 +24,16 @@
 	    font-weight: 400;
 	    position: absolute;
 	    opacity: .7;
-	    color: #555459!important;
+	    color: #fafafa!important;
+	    margin: 2px 0 0 15px;
 	    &:hover {
-	    	color: #0084ff!important;
+	    	color: #fff!important;
 	    }
 	}
 	input {
 		&:not([type='checkbox']) {
 			font-size: 14.5px;
 			height: 32px;
-			padding-left: 5px;
 			margin-bottom: 2px;
 			&#sign_in_email {
 			    min-width: 185px;
@@ -55,15 +55,16 @@
 	        position: absolute;
 	        top: -0.5px;
 	        height: 12.5px;
+	        left: 15px;
 	    }
 	    a {
 	        display: inline!important;
 	        margin-top: -5px;
+	        margin-left: 0;
 	        position: absolute;
-	        width: 100%;
-	        top: 5.5px;
-	        left: 20px;
-	        color: #555459!important;
+	        top: 6.5px;
+	        left: 32px;
+	        color: #fafafa!important;
 	    }
 	}
 }
