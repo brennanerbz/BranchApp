@@ -21,7 +21,7 @@ export default class Landing extends Component {
   state = {
     height: 0,
     width: 0,
-    uses: ['Share answers with classmates', 'Chat openly about politics', 'Organize your daily conversations']
+    uses: ['Share answers with classmates', 'Schedule weekend plans', 'Organize your daily conversations']
   }
   componentDidMount() {
     this.updateLandingSize()
@@ -116,7 +116,7 @@ export default class Landing extends Component {
         	</div>
         	<div id={style.landing_footer}>
         		<div id={style.landing_footer_wrapper} className="relative">
-        		<p>&copy; Branch 2015. View our <a>Data Policy</a> and <a>Terms</a></p>
+        		<p>&copy; Branch 2016. View our <a>Data Policy</a> and <a>Terms</a></p>
         		</div>
         	</div>
     	</div>

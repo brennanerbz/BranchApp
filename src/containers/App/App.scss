@@ -206,10 +206,12 @@
 
 // Link 
 a {
-	color: #0084ff;
+	color: #7646FF;
 	cursor: pointer;
+	font-weight: 500;
 	&:hover {
-		color: #057CEB;
+		color: #7646FF;
+		text-decoration: underline;
 	}
 }
 
@@ -404,7 +406,7 @@ a {
 	    padding: 0 15px 0 45px;
 		font-weight: 400;
 		width: 100%;
-		background: #735ADC;
+		background: #6D56D0;
 		border: none!important;
 		outline: none!important;
 		color: #fff;

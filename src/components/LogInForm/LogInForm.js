@@ -113,7 +113,7 @@ export default class LogInForm extends Component {
 					<label>Email</label>
 					<input 
 						style={{
-							background: '#6E56D4',
+							background: '#6A53C9',
 							color: '#fff'
 						}}
 						ref="email" 
@@ -134,7 +134,7 @@ export default class LogInForm extends Component {
 					<label>Password</label>
 					<input 
 						style={{
-							background: '#6E56D4',
+							background: '#6A53C9',
 							color: '#fff'
 
 						}}
