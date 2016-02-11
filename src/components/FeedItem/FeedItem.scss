@@ -7,16 +7,16 @@
 	clear: both;
 	overflow: hidden;
 	.feed_name {
-		color: #85898D;
+		color: #D9D0FD;
 	    display: block;
 	    height: 1.5rem;
 	    padding: 0 .5rem 0 15px;
-	    border-radius: 0.25rem;
+	    border-radius: 999rem;
 	    background-clip: padding-box;
 	    text-decoration: none!important;
 	    cursor: pointer;
 	    .prefix_icon {
-	    	color: #85898D;
+	    	color: #D9D0FD;
 	    	margin-left: 0px;
 	    	margin-right: 5px;
 	    }
@@ -28,9 +28,9 @@
 	}
 	&.active {
 		.feed_name {
-			background: #2A86FF;
+			background: #9B85F8;
 			opacity: 1;
-			color: #FFFFFF !important;
+			color: #fff !important;
 			font-weight: 600;
 			.prefix_icon {
 				color: #fff;
@@ -39,7 +39,7 @@
 	}
 	&.unread {
 		.feed_name {
-			color: #555459;
+			color: #fff;
 			font-weight: 900;
 		}
 	}

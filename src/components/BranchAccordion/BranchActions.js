@@ -44,7 +44,8 @@ export default class BranchActions extends Component {
 						style={{
 							fontSize: '14px', 
 							marginRight: '9px', 
-							marginTop: '7px'
+							marginTop: '7px',
+							color: '#fff'
 						}} 
 						className="fa fa-times"></i>
 					</OverlayTrigger>

@@ -103,9 +103,9 @@ export default class Landing extends Component {
                     </h3>
                     <ul style={{listStyleType: 'none', marginBottom: '40px'}} className="flex_vertical">
                         {
-                            uses.map(use => {
+                            uses.map((use, i) => {
                                 return (
-                                    <li style={{textAlign: 'center', color: '#fff', fontSize: '15px', display: 'block', margin: '7.5px auto'}}>
+                                    <li key={i} style={{textAlign: 'center', color: '#fff', fontSize: '15px', display: 'block', margin: '7.5px auto'}}>
                                         {use}
                                     </li>
                                 )

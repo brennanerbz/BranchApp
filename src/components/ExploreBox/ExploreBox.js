@@ -31,9 +31,19 @@ export default class ExploreBox extends Component {
 		return (
 			<div ref="explore_box" className={styles.explore_box + ' float_left'}>
 				<span onClick={() => pushState(null, '/')} id="branch_logo_wrapper" className="inline_block">
-					<img id={styles.branch_logo} src={logo}/>
+					<img id={styles.branch_logo}/>
 				</span>
 				<ExploreForm pushState={pushState} params={params} closeOnboarding={this.props.closeOnboarding}/>
+				<span style={{position: 'absolute', right: '10px', top: '11px'}} className="inline_block">
+					<button 
+						type="button" 
+						id="open_branch_button"
+						className="outline circle">
+						<i 
+						id={styles.open_branch_icon}
+						className="glyphicon glyphicon-edit"></i>
+					</button>
+				</span>
 			</div>
 		);
 	}
@@ -42,14 +52,5 @@ export default class ExploreBox extends Component {
 
 { /* Explore Button */ }
 /*
-<span id={styles.open_branch_button_wrapper} className="inline_block">
-	<button 
-		type="button" 
-		id="open_branch_button"
-		className="button outline">
-		<span 
-		id={styles.open_branch_icon}
-		className="glyphicon glyphicon-edit"></span>
-	</button>
-</span>
+
 */

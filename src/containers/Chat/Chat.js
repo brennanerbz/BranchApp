@@ -4,7 +4,7 @@ import { pushState } from 'redux-router';
 import { bindActionCreators } from 'redux';
 import cookie from 'react-cookie';
 import { isEmpty } from '../../utils/validation';
-
+import $ from 'jquery';
 /* Config */
 import config from '../../config';
 /* Helpers */
@@ -63,6 +63,7 @@ export default class Chat extends Component {
   }
 
   componentDidMount() {
+    $('body').addClass('chat')
     const { user, 
             onboarded, 
             branches, 

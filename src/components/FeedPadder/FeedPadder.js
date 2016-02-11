@@ -91,7 +91,7 @@ export default class FeedPadder extends Component {
 								<a>&nbsp;{feed ? feed.title : 'Loading...'}&nbsp;</a> 
 								feed, within the<a>
 								&nbsp;{branch ? branch.title : 'Loading...'}&nbsp;</a>
-								branch.</p>
+								class.</p>
 							</span>
 							<ul className={style.feed_actions}>
 								<li className="inline_block"> 

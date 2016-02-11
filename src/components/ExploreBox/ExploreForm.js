@@ -45,7 +45,7 @@ export default class ExploreForm extends Component {
 						id={'branch_explore_input'}
 						className={style.explore_input}
 						value={text}
-						placeholder="Open Branch"
+						placeholder="Enter class name..."
 						onChange={(e) => {
 							this.setState({
 								text: e.target.value
@@ -67,7 +67,7 @@ export default class ExploreForm extends Component {
 						}}
 						/>
 					</div>
-					<OverlayTrigger delayShow={350} delayHide={50} placement="bottom" overlay={::this.tooltip('Click to open branch')}>
+					<OverlayTrigger delayShow={350} delayHide={50} placement="bottom" overlay={::this.tooltip('Click to open new class')}>
 						<span 
 						onClick={() => {
 							if(text.length > 0) {
@@ -77,10 +77,12 @@ export default class ExploreForm extends Component {
 							}
 						}}
 						style={{
-							fontSize: creating ? '1.1em' : '0.9em'
+							fontSize: creating ? '1.1em' : '0.9em',
+							// color: '#37DFA6'
+							color: '#fff'
 						}}
 						id={style.explore_icon} 
-						className={creating ? 'fa fa-spin fa-spinner' : 'fa fa-arrow-right'}></span>
+						className={creating ? 'fa fa-spin fa-spinner' : 'fa fa-search'}></span>
 					</OverlayTrigger>
 				</form>
 			</span>

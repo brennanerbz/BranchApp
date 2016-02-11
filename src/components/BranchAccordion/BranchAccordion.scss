@@ -7,7 +7,7 @@
 		width: 100%;
 		margin-left: 3.2rem;
 		padding: 1.5rem 0 1.5rem 0;
-		border-bottom: 1px solid #EDF0F6;
+		border-bottom: 1px solid #6F58D5;
 		.branch_accordion{
 			margin-left: 5px;
 			.branch_name {
@@ -20,12 +20,12 @@
 				-ms-user-select: none;
 				user-select: none;
 				&.active {
-					color: #2A86FF;
+					color: #fff;
 					font-weight: 600;
 					opacity: 1;
 				}
 				&.inactive {
-					color: #555459;
+					color: #D9D0FD;
 				}
 				&:hover {
 					opacity: 1;
@@ -43,7 +43,7 @@
 			    		height: 30px;
 			    		width: 10px;
 			    		border-radius: 6px;
-			    		background: #2A86FF;
+			    		background: #fff;
 			    	}
 			    }
 			}
@@ -57,13 +57,13 @@
 					opacity: 0.95;
 				}
 				.inactive {
-					background: #D8D8D8;
-					color: #555459;
+					background: #6850D1;
+					color: #D9D0FD;
 				}
 				.active {
 					opacity: 1;
-					background: #2A86FF;
-					color: #fff;
+					background: #fff;
+					color: #7A60E9;
 					font-weight: 600;
 				}
 				&:hover {
@@ -72,11 +72,11 @@
 			}
 			.branch_actions {
 				position: absolute;
-				right: 1rem;
+				right: 10px;
 				top: 18px;
 				i {
-					opacity: 0.75;
-					color: #9e9ea6;
+					opacity: 0.95;
+					color: #67686e;
 				}
 				button {
 					margin-left: 5px; 
