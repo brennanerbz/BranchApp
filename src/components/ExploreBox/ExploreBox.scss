@@ -16,26 +16,26 @@
 #explore_form {
 	margin: 0.75rem 10px 0;
 	padding-right: 21px;
-	width: 205px;
+	width: 210px;
 	position: absolute;
 	top: 0; 
 	right: 6;
 	::-webkit-input-placeholder { /* WebKit, Blink, Edge */
-	    color: #fafafa!important;
+	    color: #D9D0FD!important;
 	}
 	:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-	   color: #fafafa!important;
+	   color: #D9D0FD!important;
 	   opacity:  1;
 	}
 	::-moz-placeholder { /* Mozilla Firefox 19+ */
-	   color: #fafafa!important;
+	   color: #D9D0FD!important;
 	   opacity:  1;
 	}
 	:-ms-input-placeholder { /* Internet Explorer 10-11 */
-	   color: #fafafa!important;
+	   color: #D9D0FD!important;
 	}
 	:placeholder-shown { /* Standard (https://drafts.csswg.org/selectors-4/#placeholder) */
-	  color: #fafafa!important;
+	  color: #D9D0FD!important;
 	}
 	.explore_input {
 		padding: 1.25px 15px 1.5px 32px;
@@ -61,8 +61,24 @@
 		font-size: .9rem;
 		top: 8px;
 		left: 11px;
-		color: #CCC;
-		opacity: 0.95;
+		color: #CEC3FD;
+		&:hover, &.active {
+			opacity: 1;
+			color: #fff;
+		}
+	}
+}
+
+#open_branch_icon {
+	position: absolute;
+	top: 6px;
+	right: 7px;
+	font-size: 19px;
+	opacity: 0.95;
+	color: #CEC3FD;
+	&:hover {
+		opacity: 1;
+		color: #fff;
 	}
 }
 
@@ -71,8 +87,5 @@
 	position: absolute;
 	top: 0;
 	right: 0;
-	#open_branch_icon {
-		font-size: 14px;
-		opacity: 0.75;
-	}
+
 }

@@ -35,14 +35,9 @@ export default class ExploreBox extends Component {
 				</span>
 				<ExploreForm pushState={pushState} params={params} closeOnboarding={this.props.closeOnboarding}/>
 				<span style={{position: 'absolute', right: '10px', top: '11px'}} className="inline_block">
-					<button 
-						type="button" 
-						id="open_branch_button"
-						className="outline circle">
-						<i 
-						id={styles.open_branch_icon}
-						className="glyphicon glyphicon-edit"></i>
-					</button>
+					<i 
+					id={styles.open_branch_icon}
+					className="glyphicon glyphicon-edit"></i>
 				</span>
 			</div>
 		);

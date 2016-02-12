@@ -7,7 +7,8 @@ export default class ExploreForm extends Component {
 
 	state = {
 		text: '',
-		creating: false
+		creating: false,
+		focused: false
 	}
 
 	handleOpenBranch() {
@@ -33,7 +34,7 @@ export default class ExploreForm extends Component {
 	}
 
 	render() {
-		const { text, creating } = this.state;
+		const { text, creating, focused } = this.state;
 		const style = require('./ExploreBox.scss');
 		return (
 			<span id="explore_form_wrapper" className="inline_block">
@@ -46,6 +47,8 @@ export default class ExploreForm extends Component {
 						className={style.explore_input}
 						value={text}
 						placeholder="Enter class name..."
+						onFocus={() => this.setState({focused: true})}
+						onBlur={() => this.setState({focused: false})}
 						onChange={(e) => {
 							this.setState({
 								text: e.target.value
@@ -77,12 +80,10 @@ export default class ExploreForm extends Component {
 							}
 						}}
 						style={{
-							fontSize: creating ? '1.1em' : '0.9em',
-							// color: '#37DFA6'
-							color: '#fff'
+							fontSize: creating ? '1em' : '0.9em'
 						}}
 						id={style.explore_icon} 
-						className={creating ? 'fa fa-spin fa-spinner' : 'fa fa-search'}></span>
+						className={focused ? style.active : '' + (creating ? ' fa fa-spin fa-spinner' : 'fa fa-search')}></span>
 					</OverlayTrigger>
 				</form>
 			</span>

@@ -89,8 +89,7 @@ export default class FeedItem extends Component {
 									fontSize: '14px', 
 									lineHeight: '17px',
 									marginRight: '0px',
-									marginTop: '-2px',
-									color: '#fff'
+									marginTop: '-2px'
 								}} 
 								className="fa fa-times"></i>
 							</span>

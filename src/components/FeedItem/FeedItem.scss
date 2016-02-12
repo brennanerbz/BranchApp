@@ -43,4 +43,12 @@
 			font-weight: 900;
 		}
 	}
+	.feed_item_actions {
+		opacity: 0.95;
+		color: #CEC3FD;
+		&:hover {
+			opacity: 1;
+			color: #fff;
+		}
+	}
 }
