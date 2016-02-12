@@ -116,7 +116,6 @@ export default class Feed extends Component {
 									branch={branch}
 									membership={membership}
 									key={'messageList'}
-									messages={messages[branch.id + '#' + feed.id]}
 								/>
 							</div>
 						}

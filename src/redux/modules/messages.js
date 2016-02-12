@@ -12,6 +12,7 @@ const CLEAR_MESSAGES = 'BranchApp/feeds/CLEAR_MESSAGES';
 
 const initialState = {
 	loaded: false,
+	unfilteredMessages: [],
 	messages: {},
 	typers: [],
 	loaded: false // <---- the initialState of messages have been loaded
@@ -30,7 +31,7 @@ export function createMessageList(messages) {
 		}
 		if(i !== 0) {
 			difference = moment(message.creation).diff(moment(prevMessage.creation), 'minutes')
-			
+
 			if(message.user_id === prevMessage.user_id && difference < 6) group.push(message)
 			else if(message.user_id !== prevMessage.user_id || difference >= 6) {
 				list.push(group)
@@ -61,7 +62,8 @@ export default function reducer(state = initialState, action) {
 				messages[uniqueBranchFeedId] = messageGroups
 				return {
 					...state,
-					messages: messages
+					messages: messages,
+					unfilteredMessages: [...state.unfilteredMessages, ...action.messages]
 				}
 			} else {
 				return {
@@ -71,14 +73,19 @@ export default function reducer(state = initialState, action) {
 		case RECEIVE_MESSAGE:
 			var newMessage = action.message;
 			uniqueBranchFeedId = newMessage.parent_feed_id + '#' + newMessage.feed_id;
-			messageGroups = messages[uniqueBranchFeedId]
+			messageGroups = messages.length > 0 
+			? messages[uniqueBranchFeedId]
 			.reduce((a, b) => { return a.concat(b) })
 			.slice(-50)
-			var newMessageGroups = createMessageList([...messageGroups, newMessage].__findUniqueByKey('id'))
+			: null
+			var newMessageGroups = messageGroups !== null 
+			? createMessageList([...messageGroups, newMessage].__findUniqueByKey('id'))
+			: createMessageList([...newMessage])
 			messages[uniqueBranchFeedId] = newMessageGroups
 			return {
 				...state,
-				messages: messages
+				messages: messages,
+				unfilteredMessages: [...state.unfilteredMessages, action.message]
 			}
 		case RECEIVE_VOTE:
 			return {
