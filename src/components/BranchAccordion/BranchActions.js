@@ -55,7 +55,8 @@ export default class BranchActions extends Component {
 					&&
 					<OverlayTrigger delayShow={350} delayHide={50} placement="bottom" overlay={::this.tooltip('Invite people')}>
 						<i 
-						onClick={() => this.openSharePopover()} 
+						ref={`share_${branch.id}`}
+						onClick={::this.openSharePopover}
 						style={{lineHeight: '26px', marginRight: '10px', cursor: 'pointer'}}  
 						className={style.branch_action + ' fa fa-user-plus'}></i>
 					</OverlayTrigger>

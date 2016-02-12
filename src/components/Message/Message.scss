@@ -1,121 +1,153 @@
-.message_wrapper {
-	display: block;
-	width: 100%;
-	margin: 0 auto -1px;
-	position: relative;
-	padding: 3.5px 2.5rem 3.5px 0;
-	border-left: none;
-	border-right: none;
-	border-top: 1px solid transparent;
-	border-bottom: 1px solid transparent;
-	color: #2c2d30;
-	font-size: 14.5px;
-	line-height: 22px;
-	-webkit-user-select: text;
-	-moz-user-select: text;
-	-ms-user-select: text;
-	user-select: text;
-	word-wrap: break-word;
-	font-family: "Helvetica Neue", "Segoe UI", Helvetica, Arial, sans-serif;
-	-webkit-font-smoothing: antialiased;
-	opacity: 0.2;
-	-moz-transition: opacity 35ms ease-in;
-	transition: opacity 35ms ease-in;
-	-webkit-transition: opacity 35ms ease-in;
-	&.message_rendered {
-		opacity: 1;
-		-moz-transition: opacity 35ms ease-in;
-		transition: opacity 35ms ease-in;
-		-webkit-transition: opacity 35ms ease-in;
-	}
-	&.first {
-		.message_conent {
-			.message_body {
-				margin-top: -3px;
-			}
-		}
-	}
+.message {
 	&:hover {
 		background: #fafafa;
 	}
-	.message_gutter {
-		text-align: right;
-	    position: absolute;
-	    top: 5px;
-	    left: 0;
-	    width: 72px;
-	    padding-right: 7px;
-	}
-	.message_content {
-		margin-left: 72px;
-		margin-top: 0px;
-		.message_sender {
-			word-break: break-word;
-			font-weight: 900;
-			color: #233d30!important;
-			line-height: 18px;
-			display: inline;
-			margin-right: 0.25rem;
+	.message_wrapper {
+		display: block;
+		width: 100%;
+		margin: 0 auto -1px;
+		position: relative;
+	    padding: 0 2.5rem 0 0;
+		border-left: none;
+		border-right: none;
+		border-top: 1px solid transparent;
+		border-bottom: 1px solid transparent;
+		color: #2c2d30;
+		font-size: 14.5px;
+		line-height: 22px;
+		-webkit-user-select: text;
+		-moz-user-select: text;
+		-ms-user-select: text;
+		user-select: text;
+		word-wrap: break-word;
+		font-family: "Helvetica Neue", "Segoe UI", Helvetica, Arial, sans-serif;
+		-webkit-font-smoothing: antialiased;
+		opacity: 0.2;
+		-moz-transition: opacity 35ms ease-in;
+		transition: opacity 35ms ease-in;
+		-webkit-transition: opacity 35ms ease-in;
+		&.message_rendered {
+			opacity: 1;
+			-moz-transition: opacity 35ms ease-in;
+			transition: opacity 35ms ease-in;
+			-webkit-transition: opacity 35ms ease-in;
 		}
-		.message_body {
-			display: block;
-			cursor: text;
-			margin-top: -2px;
+		&.first {
+			.message_content {
+				.message_body {
+					margin-top: -3px;
+					border-top-left-radius: 4px;
+				}
+				&.user {
+					.message_body {
+						border-top-left-radius: 1.3em!important;
+						border-top-right-radius: 4px;
+					}
+				}
+			}
 		}
-	}
-	.message_ts {
-		margin-right: 0.25rem;
-		opacity: 1;
-		display: inline;
-		line-height: 18px;
-		color: #9e93a6;
-		font-size: 9pt;
-	}
-	.message_feedback {
-		position: absolute;
-		top: -8px;
-		right: 20px;
-		z-index: 97;
-		.message_feedback_wrapper {
-			position: relative;
-			display: block;
-			.count, .positive, .negative {
-				position: absolute;
+		&.message_is_user {
+			padding: 0;
+		}
+		.message_gutter {
+			text-align: right;
+		    position: absolute;
+		    top: 0px;
+		    left: 0;
+		    width: 72px;
+		    padding-right: 7px;
+		    &.user {
+		    	left: inherit;
+		    	right: 0;
+		    }
+		}
+		.message_content {
+			margin-left: 66px;
+			margin-top: 5px;
+			.message_sender {
+				word-break: break-word;
+				font-weight: 900;
+				color: #233d30!important;
+				line-height: 18px;
+				display: inline;
+				margin-right: 0.25rem;
+			}
+			.message_body {
 				display: block;
-				color: #7f7f7f;
+				cursor: text;
+				margin-top: -2px;
+				background: #F1F0F0;
+				color: #222222;
+				margin: 1px 0;
+				padding: 5px 12px;
+				border-radius: 1.3em;
+			    text-align: left;				
 			}
-			.positive, .negative {
-				cursor: pointer;
-				color: #AFB4BD;
-			}
-			.positive {
-				top: 4.75px;
-				right: 0;
-				&.voted {
-					color: #2A86FF;
+			&.user {
+				margin-left: 0;
+				margin-right: 58px;
+				.message_body {
+					background: #7646FF;
+					color: #fff;
+					text-align: right;
 				}
-				&:hover {
-					color: #2A86FF;
-				}
 			}
-			.count {
-				top: 20px;
-				right: 5px;
-				font-size: 9pt;
-			}
-			.negative {
-				top: 35px;
-				right: 0;
-				&.voted {
-					color: #dc0d17;
+		}
+		.message_ts {
+			margin: 0 0.25rem;
+			opacity: 1;
+			display: inline;
+			line-height: 23px;
+			color: #9e93a6;
+			font-size: 9pt;
+		}
+		.message_feedback {
+			position: absolute;
+			top: -8px;
+			right: 20px;
+			z-index: 97;
+			.message_feedback_wrapper {
+				position: relative;
+				display: block;
+				.count, .positive, .negative {
+					position: absolute;
+					display: block;
+					color: #7f7f7f;
 				}
-				&:hover {
-					color: #dc0d17;
+				.positive, .negative {
+					cursor: pointer;
+					color: #AFB4BD;
+				}
+				.positive {
+					top: 4.75px;
+					right: 0;
+					&.voted {
+						color: #2A86FF;
+					}
+					&:hover {
+						color: #2A86FF;
+					}
+				}
+				.count {
+					top: 20px;
+					right: 5px;
+					font-size: 9pt;
+				}
+				.negative {
+					top: 35px;
+					right: 0;
+					&.voted {
+						color: #dc0d17;
+					}
+					&:hover {
+						color: #dc0d17;
+					}
 				}
 			}
 		}
 	}
 }
+
 
 .message-enter {
   opacity: 0.01;

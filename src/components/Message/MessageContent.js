@@ -8,24 +8,10 @@ export default class MessageContent extends Component {
 	}
 
 	render() {
-		const { firstMessage, message } = this.props,
-		style = require('./Message.scss');
+		const { firstMessage, message, isUser } = this.props;
+		const style = require('./Message.scss');
 		return (
-			<div className={style.message_content}>
-				{
-					firstMessage
-					&&
-					<MessageSender
-						username={message.user.username}
-					/>
-				}
-				{
-					firstMessage
-					&&
-					<MessageTs
-						timestamp={message.creation}
-					/>
-				}
+			<div className={style.message_content + ' ' + (isUser ? style.user : '')}>
 				<span className={style.message_body}>
 					{message.text}
 				</span>

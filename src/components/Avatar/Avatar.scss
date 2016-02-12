@@ -2,6 +2,7 @@
 	&.avatar_message {
 		.circle_avatar {
 			margin-right: 7px;
+			margin-top: 0px;
 		}
 	}
 	.circle_avatar {
@@ -35,6 +36,12 @@
 			min-width: 32px;
 			height: 32px;
 			line-height: 32px;
+		}
+		&.c_33 {
+			width: 33px;
+			min-width: 33px;
+			height: 33px;
+			line-height: 33px;
 		}
 		&.c_36 {
 			width: 36px;

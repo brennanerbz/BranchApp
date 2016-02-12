@@ -13,6 +13,30 @@ export default class MessageList extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
+		const { feed, branch } = nextProps;
+		var messages = this.createMessageList(nextProps.messages.filter(message => { 
+			return message.feed_id === feed.id && feed.parent_id === branch.id
+		}))
+		console.log('messageGroups: ', messages)
+	}
+
+	createMessageList(messages) {
+		var list = [];
+		var group = [];
+		var message, prevMessage;
+		for(var i = 0; i < messages.length; i++) {
+			message = messages[i]
+			if(i === 0) group.push(message)
+			else if(message.user_id === prevMessage.user_id) group.push(message)
+			else if(message.user_id !== prevMessage.user_id) {
+				list.push(group)
+				group = [];
+				group.push(message);
+			}
+			if(i === messages.length - 1) list.push(group)
+			prevMessage = message;
+		}
+		return list;
 	}
 
 	componentWillUpdate(nextProps) {
@@ -85,7 +109,7 @@ export default class MessageList extends Component {
 			)
 		})
 		return (
-			<div id={style.message_list}>
+			<div style={{flex: '1'}} id={style.message_list}>
 				{messagesList}
 			</div>
 		);

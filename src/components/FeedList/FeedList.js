@@ -7,7 +7,7 @@ export default class FeedList extends Component {
 	}
 
 	state = {
-		newFeedName: 'New Feed'
+		newFeedName: 'new feed'
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -21,14 +21,14 @@ export default class FeedList extends Component {
 
 	handleCreateNewFeed() {
 		const { newFeedName } = this.state;
-		if(newFeedName !== 'New Feed' && newFeedName.length > 0) {
+		if(newFeedName !== 'new feed' && newFeedName.length > 0) {
 			this.props.createNewFeed(newFeedName)
 		} else {
 			this.props.closeNewFeed()
 		}
 		setTimeout(() => {
 			this.setState({
-				newFeedName: 'New Feed'
+				newFeedName: 'new feed'
 			})
 		}, 100)
 	}
@@ -61,6 +61,7 @@ export default class FeedList extends Component {
 					<li className={'relative' + ' ' + style.feed_input_wrapper}>
 						<span className={style.prefix_icon}>#</span>
 						<input 
+						style={{border: 'none'}}
 						ref="feed_input" 
 						autoFocus={true} 
 						type="text" 
