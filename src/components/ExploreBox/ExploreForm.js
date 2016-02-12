@@ -83,7 +83,7 @@ export default class ExploreForm extends Component {
 							fontSize: creating ? '1em' : '0.9em'
 						}}
 						id={style.explore_icon} 
-						className={focused ? style.active : '' + (creating ? ' fa fa-spin fa-spinner' : 'fa fa-search')}></span>
+						className={(creating ? ' fa fa-spin fa-spinner ' : 'fa fa-search ') + (focused ? style.active : '')}></span>
 					</OverlayTrigger>
 				</form>
 			</span>
