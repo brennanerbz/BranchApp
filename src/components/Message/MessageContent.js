@@ -1,8 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 
-import MessageSender from './MessageSender';
-import MessageTs from './MessageTs';
-
 export default class MessageContent extends Component {
 	static propTypes = {
 	}

@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import moment from 'moment';
 
 export const RECEIVE_MESSAGES = 'BranchApp/messages/RECEIVE_MESSAGES';
 export const RECEIVE_MESSAGE = 'BranchApp/messages/RECEIVE_MESSAGE';
@@ -11,27 +12,73 @@ const CLEAR_MESSAGES = 'BranchApp/feeds/CLEAR_MESSAGES';
 
 const initialState = {
 	loaded: false,
-	messages: [],
+	messages: {},
 	typers: [],
 	loaded: false // <---- the initialState of messages have been loaded
 }
 
+export function createMessageList(messages) {
+	var list = [];
+	var group = [];
+	var message, prevMessage;
+	var difference;
+	for(var i = 0; i < messages.length; i++) {
+		message = messages[i]
+		// Message groups
+		if(i === 0) {
+			group.push(message)
+		}
+		if(i !== 0) {
+			difference = moment(message.creation).diff(moment(prevMessage.creation), 'minutes')
+			
+			if(message.user_id === prevMessage.user_id && difference < 6) group.push(message)
+			else if(message.user_id !== prevMessage.user_id || difference >= 6) {
+				list.push(group)
+				group = [];
+				group.push(message);				
+			}
+		}
+		
+		if(i === messages.length - 1) list.push(group)
+		prevMessage = message;
+		
+	}
+	return list;
+}
 export default function reducer(state = initialState, action) {
 	let { messages, loaded, typers } = state;
 	var isMessageInState;
 	var isTyperInState;
+	var uniqueBranchFeedId;
+	var messageGroups;
 
 	switch(action.type) {
 		case RECEIVE_MESSAGES:
-			return {
-				...state,
-				messages: [...messages, ...action.messages].__findUniqueByKey('id')
+			messageGroups = createMessageList(action.messages.__findUniqueByKey('id'));
+			var message = action.messages.length > 0 ? action.messages[0] : null;
+			uniqueBranchFeedId = message !== null ? message.parent_feed_id + '#' + message.feed_id : null;
+			if(uniqueBranchFeedId) {
+				messages[uniqueBranchFeedId] = messageGroups
+				return {
+					...state,
+					messages: messages
+				}
+			} else {
+				return {
+					...state
+				}
 			}
 		case RECEIVE_MESSAGE:
-			isMessageInState = messages.filter(m => { return m.id === action.message.id })[0]
+			var newMessage = action.message;
+			uniqueBranchFeedId = newMessage.parent_feed_id + '#' + newMessage.feed_id;
+			messageGroups = messages[uniqueBranchFeedId]
+			.reduce((a, b) => { return a.concat(b) })
+			.slice(-50)
+			var newMessageGroups = createMessageList([...messageGroups, newMessage].__findUniqueByKey('id'))
+			messages[uniqueBranchFeedId] = newMessageGroups
 			return {
 				...state,
-				messages: !isMessageInState ? [...messages, action.message] : messages
+				messages: messages
 			}
 		case RECEIVE_VOTE:
 			return {
