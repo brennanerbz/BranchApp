@@ -11,7 +11,8 @@ import * as messageActions from '../../redux/modules/messages';
 
 @connect(
 	state => ({
-		messages: state.messages.messages
+		messages: state.messages.messages,
+		unfilteredMessages: state.messages.unfilteredMessages
 	}),
 	dispatch => ({
 		...bindActionCreators({
@@ -116,6 +117,7 @@ export default class Feed extends Component {
 									branch={branch}
 									membership={membership}
 									key={'messageList'}
+									messages={messages[branch.id + '#' + feed.id]}
 								/>
 							</div>
 						}

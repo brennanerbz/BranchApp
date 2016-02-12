@@ -10,7 +10,6 @@ import DayDivider from '../Message/DayDivider';
 
 @connect(
 	state => ({
-		messages: state.messages.messages,
 		unfilteredMessages: state.messages.unfilteredMessages
 	}),
 	dispatch => ({
@@ -25,13 +24,9 @@ export default class MessageList extends Component {
 	}
 
 	componentDidMount() {
-		var node = this.refs.message_list;
 	}
 
 	componentWillReceiveProps(nextProps) {
-		const { branch, feed, unfilteredMessages } = nextProps;
-		const messages = nextProps.messages[branch.id + '#' + feed.id]
-		this.setState({messages: messages})
 	}
 
 	componentWillUpdate(nextProps) {
@@ -42,9 +37,7 @@ export default class MessageList extends Component {
 
 	render() {
 		const style = require('./MessageList.scss');
-		const { user, feed, branch, membership } = this.props;
-		var { messages } = this.props;
-		messages = messages[branch.id + '#' + feed.id] 
+		const { user, feed, branch, membership, messages } = this.props;
 		
 		var messageList = [];
 		var today = moment();
