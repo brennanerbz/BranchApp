@@ -1,0 +1,99 @@
+.message_group_container {
+	margin-bottom: 15px;
+	margin-left: 15px;
+	position: relative;
+	.message_avatar_wrapper {
+		position: absolute;
+		bottom: 2px;
+	}
+	.message_sender {
+		height: 13px;
+		opacity: 1;
+		color: rgba(0, 0, 0, 0.40);
+		font-size: 12px;
+		line-height: 1.1;
+		padding-left: 12px;
+		margin: 0 0 1px 36px;
+		.sender {
+			-webkit-touch-callout: initial;
+			-webkit-user-select: text;
+		}
+	}
+	.message_group {
+		margin-left: 39px;
+		.message_wrapper {
+			position: relative;
+			white-space: pre-wrap;
+			.message_bubble {
+				background-color: #f1f0f0;
+			    color: rgba(0, 0, 0, 1);
+			    margin: 1px 0;
+			    padding: 5.5px 12px 6.5px 12px;
+			    border-radius: 4px;
+			    max-width: 85%;
+			    position: relative;
+			    outline: none;
+			    clear: left;
+			    float: left;
+			    word-wrap: break-word;
+			    border-bottom-right-radius: 1.3em;
+		        border-top-right-radius: 1.3em;
+			    &.first {
+					border-top-left-radius: 1.3em;
+			    }
+			    &.last {
+					border-bottom-left-radius: 1.3em;
+			    }
+			    @media screen and (min-width: 920px) {
+			    	box-sizing: content-box;
+			    	max-width: 70%;
+			    }
+			    @media screen and (min-width: 1211px) {
+			    	max-width: 55%;
+			    }
+			    @media screen and (min-width: 1300px) {
+			    	max-width: none;
+			    }
+			    .message_body {
+			    	-webkit-touch-callout: initial;
+		    	    -webkit-user-select: text;
+		    	    word-wrap: break-word;
+		    	    font-size: 14.5px;
+		    	    line-height: 17px;
+			    }
+			}
+		}
+	}
+	// For user messages
+	&.user {
+		margin-right: 15px;
+		.message_avatar_wrapper {
+			right: 0;
+		}
+		.message_sender {
+			margin: 0 52px 1px 0;
+			.sender {
+				float: right;
+			}
+		}
+		.message_group {
+			margin-right: 46px;
+			.message_wrapper {
+				.message_bubble {
+					background-color: #7646FF;
+					color: #fff;
+					float: right;
+					border-radius: 4px;
+				    border-bottom-left-radius: 1.3em;
+			        border-top-left-radius: 1.3em;
+		            &.first {
+		        		border-top-right-radius: 1.3em;
+		            }
+		            &.last {
+		        		border-bottom-right-radius: 1.3em;
+		            }
+				}
+			}
+		}
+	}
+}

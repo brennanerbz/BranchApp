@@ -7,6 +7,7 @@ import moment from 'moment';
 import { isEmpty } from '../../utils/validation';
 
 import DayDivider from '../Message/DayDivider';
+import MessageGroup from '../MessageGroup/MessageGroup';
 
 @connect(
 	state => ({
@@ -20,19 +21,6 @@ export default class MessageList extends Component {
 	}
 
 	state = {
-		messages: []
-	}
-
-	componentDidMount() {
-	}
-
-	componentWillReceiveProps(nextProps) {
-	}
-
-	componentWillUpdate(nextProps) {
-	}
-
-	componentDidUpdate(prevProps) {
 	}
 
 	render() {
@@ -51,7 +39,7 @@ export default class MessageList extends Component {
 				);
 			} 
 		    messageList.push(
-				<h1 key={'group' + i}>Group</h1>
+				<MessageGroup group={group} user={user}/>
 			);
 			prevDay = day;
 		})

@@ -73,7 +73,7 @@ export default function reducer(state = initialState, action) {
 		case RECEIVE_MESSAGE:
 			var newMessage = action.message;
 			uniqueBranchFeedId = newMessage.parent_feed_id + '#' + newMessage.feed_id;
-			messageGroups = messages.length > 0 
+			messageGroups = messages[uniqueBranchFeedId] && messages[uniqueBranchFeedId].length > 0 
 			? messages[uniqueBranchFeedId]
 			.reduce((a, b) => { return a.concat(b) })
 			.slice(-50)

@@ -243,3 +243,8 @@ button {
     animation: fa-spin 1.2s infinite linear;
 }
 
+
+// Highlight
+::-moz-selection { background: #E4DAFF; }
+::selection { background: #E4DAFF;}
+

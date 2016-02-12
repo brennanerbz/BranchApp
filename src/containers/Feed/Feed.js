@@ -93,8 +93,12 @@ export default class Feed extends Component {
 			style={{height: feedHeight}}
 			id={style.feed}
 			className="flex_vertical flex_spacer">
-				<div ref="area" className={style.scrollable_area}>
+				<div 
+				style={{position: 'relative', direction: 'ltr'}}
+				ref="area" 
+				className={style.scrollable_area}>
 					<div 
+					style={{position: 'relative', direction: 'ltr'}}
 					id="messages_wrapper"
 					ref="wrapper" 
 					className={style.scrollable_area_wrapper}>
