@@ -71,7 +71,7 @@ export default class Feed extends Component {
 	updateFeedHeight(height) {
 		if(height !== 0) {
 			this.setState({
-				feedHeight: height - 119
+				feedHeight: height - 112
 			});
 		}
 	}
