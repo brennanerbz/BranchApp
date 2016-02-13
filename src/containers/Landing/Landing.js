@@ -5,6 +5,7 @@ import { pushState } from 'redux-router';
 import Helmet from 'react-helmet';
 import Spinner from 'react-spinner';
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
+import $ from 'jquery';
 
 import LogInForm from '../../components/LogInForm/LogInForm';
 import SignUpForm from '../../components/SignUpForm/SignUpForm';
@@ -26,6 +27,7 @@ export default class Landing extends Component {
   componentDidMount() {
     this.updateLandingSize()
     window.addEventListener('resize', ::this.updateLandingSize)
+    $('body').removeClass('chat')
   }
   componentWillUnmount() {
     window.removeEventListener('resize', ::this.updateLandingSize)
