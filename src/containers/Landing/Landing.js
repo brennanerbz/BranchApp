@@ -47,7 +47,7 @@ export default class Landing extends Component {
     const { height, width, uses } = this.state;
     const { pushState } = this.props;
     const style = require('./Landing.scss');
-    const branchLogo = require('../../../static/branchFontLogo.png');
+    const logo = require('../../../static/flunkFontLogo.png');
     return (
       <div ref="landing_page" id={style.landing_page}>
         <Helmet title="Home"/>
@@ -72,7 +72,7 @@ export default class Landing extends Component {
         	</div>
         	<div id={style.landing_body}>
         		<div style={{height: '100%', width: '100%'}} className="display_flex flex_vertical flex_center">
-        			<img style={{height: '40px', margin: '0 0 20px 0'}} src={branchLogo}/>
+        			<img style={{height: '40px', margin: '0 0 20px 0'}} src={logo}/>
                     <h3 style={{color: '#fff', fontSize: '19px', textAlign: 'center', margin: '0 0 20px 0'}}>A messaging app for students to freely collaborate</h3>
                     <div style={{margin: '0 auto 170px auto'}} className="display_flex flex_horizontal flex_item_align_center">
                         <div style={{width: '500px'}} className="input_wrapper">
@@ -118,7 +118,7 @@ export default class Landing extends Component {
         	</div>
         	<div id={style.landing_footer}>
         		<div id={style.landing_footer_wrapper} className="relative">
-        		<p>&copy; Branch 2016. View our <a>Data Policy</a> and <a>Terms</a></p>
+        		<p>&copy; Flunk 2016. View our <a>Data Policy</a> and <a>Terms</a></p>
         		</div>
         	</div>
     	</div>
