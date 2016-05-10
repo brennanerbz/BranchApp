@@ -3,6 +3,7 @@
     -moz-box-sizing: border-box;    /* Firefox, other Gecko */
     box-sizing: border-box;         /* Opera/IE 8+ */
 	max-width: 350px;
+
 	::-webkit-input-placeholder {
 	   color: #999999;
 	}
@@ -58,3 +59,68 @@
 		}
 	}
 }
+
+.landingSignUpForm {
+	width: 100%;
+	margin: 20px 0 50px 0;
+	-webkit-box-sizing: border-box; /* Safari, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */
+	max-width: 350px;
+	::-webkit-input-placeholder {
+	   color: #fff;
+	}
+
+	:-moz-placeholder { /* Firefox 18- */
+	   color: #fff;  
+	}
+
+	::-moz-placeholder {  /* Firefox 19+ */
+	   color: #fff;  
+	}
+
+	:-ms-input-placeholder {  
+	   color: #fff;  
+	}
+	input {
+		font-family: "Helvetica Neue",Helvetica,"Segoe UI",Tahoma,Arial,sans-serif;
+		-webkit-font-smoothing: antialiased;
+		display: block;
+		width: 100%;
+		margin-top: 5px;
+		height: 36px;
+		border-radius: 999em;
+		border: none!important;
+		color: #fff;
+		display: block;
+		font-family: "Helvetica Neue", "Segoe UI", Helvetica, Arial, sans-serif;
+		font-size: 17px;
+		height: 42px;
+		margin-bottom: 10px;
+		margin-left: auto;
+		margin-right: auto;
+		padding: 0 16px;
+		background: #6D56D0;
+	}
+	button {
+	    font-size: 17px;
+	    font-weight: 500;
+	    height: 44px!important;
+	    margin-bottom: 10px;
+	    padding: 0;
+	}
+	.sign_up_txt {
+		color: #ccc;
+		font-size: 12.5px;
+		margin-top: 10px;
+		margin-bottom: 10px;
+	}
+	p {
+		&.error {
+			color: #D66060;
+			margin-top: 10px;
+			font-size: 15px;
+		}
+	}
+}
+

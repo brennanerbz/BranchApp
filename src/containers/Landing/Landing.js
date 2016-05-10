@@ -9,6 +9,7 @@ import $ from 'jquery';
 
 import LogInForm from '../../components/LogInForm/LogInForm';
 import SignUpForm from '../../components/SignUpForm/SignUpForm';
+import LandingSignUpForm from '../../components/LandingSignUpForm/LandingSignUpForm';
 
 @connect(
     state => ({}),
@@ -74,56 +75,9 @@ export default class Landing extends Component {
         	<div id={style.landing_body}>
         		<div style={{height: '100%', width: '100%'}} className="display_flex flex_vertical flex_center">
         			<img style={{height: '40px', margin: '0 0 20px 0'}} src={logo}/>
-                    <h3 style={{color: '#fff', fontSize: '19px', textAlign: 'center', margin: '0 0 20px 0'}}>A messaging app for students to freely collaborate</h3>
-                    <div style={{margin: '0 auto 170px auto'}} className="display_flex flex_horizontal flex_item_align_center">
-                        <div style={{width: '500px'}} className="input_wrapper">
-                            <OverlayTrigger 
-                                delayShow={500} 
-                                delayHide={0} 
-                                placement="bottom" 
-                                overlay={::this.tooltip('If class doesn\'t exist, you\'ll be the first one there')}>
-                                <i style={{fontSize: '1.3em'}} className="fa fa-search left"></i>
-                            </OverlayTrigger>
-                            <input 
-                                style={{
-                                    height: '48px',
-                                    fontSize: '18px',
-                                    lineHeight: '22px'
-                                }}
-                                placeholder="Type in class name..."
-                                type="text"
-                                onChange={(e) => {
-                                    this.setState({
-                                        branchName: e.target.value
-                                    });
-                                }}
-                                onKeyDown={(e) => {
-                                    if(e.which === 13) {
-                                        if(socket) {
-                                           socket.emit('go to parent', {
-                                               title: this.state.branchName
-                                           })  
-                                        }
-                                    }
-                                }}
-                            />
-                        </div>
-                        <button 
-                        style={{
-                            height: '48px',
-                            margin: '0 0 0 10px'
-                        }}
-                        className="button primary"
-                        onClick={() => {
-                            if(socket) {
-                                console.log('going')
-                               socket.emit('go to parent', {
-                                   title: this.state.branchName
-                               })  
-                            }
-                        }}>Go</button>
-                    </div>
-                    <h3 style={{fontSize: '19px', color: '#fff', padding: '0 0 10px 0', margin: '0 0 10px 0', borderBottom: '2px solid #37DFA6', borderRadius: '0.1rem'}}>
+                <h3 style={{color: '#fff', fontSize: '19px', textAlign: 'center', margin: '0 0 20px 0'}}>A messaging app for students to freely collaborate</h3>
+                    <LandingSignUpForm/>
+                    <h3 style={{fontSize: '19px', color: '#fff', padding: '0 0 10px 0', margin: '20px 0 10px 0', borderBottom: '2px solid #37DFA6', borderRadius: '0.1rem'}}>
                         Ways to use
                     </h3>
                     <ul style={{listStyleType: 'none', marginBottom: '40px'}} className="flex_vertical">
