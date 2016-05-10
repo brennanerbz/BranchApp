@@ -22,7 +22,8 @@ export default class Landing extends Component {
   state = {
     height: 0,
     width: 0,
-    uses: ['Share answers with classmates', 'Schedule weekend plans', 'Organize your daily conversations']
+    uses: ['Share answers with classmates', 'Schedule weekend plans', 'Organize your daily conversations'],
+    branchName: ''
   }
   componentDidMount() {
     this.updateLandingSize()
@@ -91,6 +92,20 @@ export default class Landing extends Component {
                                 }}
                                 placeholder="Type in class name..."
                                 type="text"
+                                onChange={(e) => {
+                                    this.setState({
+                                        branchName: e.target.value
+                                    });
+                                }}
+                                onKeyDown={(e) => {
+                                    if(e.which === 13) {
+                                        if(socket) {
+                                           socket.emit('go to parent', {
+                                               title: this.state.branchName
+                                           })  
+                                        }
+                                    }
+                                }}
                             />
                         </div>
                         <button 
@@ -98,7 +113,15 @@ export default class Landing extends Component {
                             height: '48px',
                             margin: '0 0 0 10px'
                         }}
-                        className="button primary">Go</button>
+                        className="button primary"
+                        onClick={() => {
+                            if(socket) {
+                                console.log('going')
+                               socket.emit('go to parent', {
+                                   title: this.state.branchName
+                               })  
+                            }
+                        }}>Go</button>
                     </div>
                     <h3 style={{fontSize: '19px', color: '#fff', padding: '0 0 10px 0', margin: '0 0 10px 0', borderBottom: '2px solid #37DFA6', borderRadius: '0.1rem'}}>
                         Ways to use

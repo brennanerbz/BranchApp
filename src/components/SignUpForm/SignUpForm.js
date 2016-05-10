@@ -157,6 +157,9 @@ export default class SignUpForm extends Component {
 					placeholder="Your email"
 					type="text"
 					value={this.state.email}
+					style={{
+						border: '1px solid #d0d4d9!important'
+					}}
 					className={showEmailError ? 'error' : ''}
 					onChange={(e) => {
 						this.setState({
@@ -168,6 +171,9 @@ export default class SignUpForm extends Component {
 					placeholder="Pick a username"
 					autoFocus={this.props.shouldFocus}
 					value={this.state.username}
+					style={{
+						border: '1px solid #d0d4d9!important'
+					}}
 					className={showUsernameError ? 'error' : ''}
 					onChange={(e) => {
 						this.setState({
@@ -179,6 +185,9 @@ export default class SignUpForm extends Component {
 					type="password" 
 					ref="signup_password"
 					placeholder="Create a password"
+					style={{
+						border: '1px solid #d0d4d9!important'
+					}}
 					className={showPasswordError ? 'error' : ''}
 					onChange={(e) => {
 						this.setState({
@@ -197,7 +206,7 @@ export default class SignUpForm extends Component {
 					<a>Terms of Service</a> and <a>Data Policy</a>
 				</p>
 				<button 
-					style={{width: '100%'}}
+					style={{width: '100%', borderRadius: '5px', background: '#7646FF', color: '#fff'}}
 					className="button primary"
 			    	onClick={::this.handleSubmitSignUp}>
 					Sign up

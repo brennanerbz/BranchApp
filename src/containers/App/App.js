@@ -94,8 +94,9 @@ export default class App extends Component {
       appMounted()
       window.addEventListener('resize', ::this.updateAppSize)
       window.addEventListener('beforeunload', ::this.removeSocketListeners)
+      this.setSocket()
       if((!cookie.load('_token')) && Object.keys(params).length !== 0) {
-        this.setSocket()
+        
       }
     }
   }

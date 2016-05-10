@@ -174,6 +174,9 @@ export default class LogInForm extends Component {
 					autoFocus={true}
 					type="text"
 					value={email}
+					style={{
+						border: '1px solid #d0d4d9!important'
+					}}
 					className={showEmailError ? 'error' : ''}
 					onChange={(e) => {
 						this.setState({
@@ -185,6 +188,9 @@ export default class LogInForm extends Component {
 					ref="login_password"
 					type="password" 
 					placeholder="Password"
+					style={{
+						border: '1px solid #d0d4d9!important'
+					}}
 					className={showPasswordError ? 'error' : ''}
 					onChange={(e) => {
 						this.setState({
@@ -199,7 +205,7 @@ export default class LogInForm extends Component {
 					}}
 					/>
 				<button 
-					style={{width: '100%'}}
+					style={{width: '100%', borderRadius: '5px', background: '#7646FF', color: '#fff'}}
 					className="button primary"
 			    	onClick={::this.handleSubmitLogIn}>
 					Log In
