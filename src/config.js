@@ -16,15 +16,15 @@ module.exports = Object.assign({
   apiHost: '127.0.0.1',
   apiPort: '5000',
   app: {
-    title: 'Branch',
-    description: 'Chat for the 21st century.',
+    title: 'Flunk',
+    description: 'Private chat for students.',
     head: {
-      titleTemplate: 'Branch',
+      titleTemplate: 'Flunk',
       meta: [
-        {name: 'description', content: 'Chat for the 21st century.'},
+        {name: 'description', content: 'Private chat for students.'},
         {charset: 'utf-8'},
-        {property: 'og:title', content: 'Branch'},
-        {property: 'og:description', content: 'Chat for the 21st century.'}
+        {property: 'og:title', content: 'Flunk'},
+        {property: 'og:description', content: 'Private chat for students.'}
       ]
     }
   },
